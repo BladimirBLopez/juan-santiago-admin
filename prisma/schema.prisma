@@ -1,0 +1,86 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Admin {
+  id       String @id @default(cuid())
+  usuario  String @unique
+  password String
+  createdAt DateTime @default(now())
+}
+
+model Cliente {
+  id              String   @id @default(cuid())
+  nombre          String
+  fechaNacimiento DateTime?
+  telefono        String?
+  createdAt       DateTime @default(now())
+  consultas       Consulta[]
+}
+
+enum ServicioTipo {
+  AMARRE
+  ENDULZAMIENTO
+  RETORNO
+  ALEJAMIENTO
+  UNION_PAREJA
+}
+
+enum ConsultaEstado {
+  NUEVO
+  EN_PROCESO
+  COMPLETADO
+}
+
+model Consulta {
+  id           String         @id @default(cuid())
+  clienteId    String
+  cliente      Cliente        @relation(fields: [clienteId], references: [id])
+  servicio     ServicioTipo
+  situacion    String
+  estado       ConsultaEstado @default(NUEVO)
+  fechaInicio  DateTime?
+  diasTrabajo  Int?
+  createdAt    DateTime       @default(now())
+  pagos        Pago[]
+  seguimientos Seguimiento[]
+}
+
+enum PagoEstado {
+  PENDIENTE
+  APROBADO
+  RECHAZADO
+}
+
+model Pago {
+  id             String     @id @default(cuid())
+  consultaId     String
+  consulta       Consulta   @relation(fields: [consultaId], references: [id])
+  monto          Float
+  comprobanteUrl String
+  estado         PagoEstado @default(PENDIENTE)
+  aprobadoAt     DateTime?
+  createdAt      DateTime   @default(now())
+}
+
+enum SeguimientoTipo {
+  RECORDATORIO_AVANCE
+  TESTIMONIO
+  AVISO_PAGO
+}
+
+model Seguimiento {
+  id         String          @id @default(cuid())
+  consultaId String
+  consulta   Consulta        @relation(fields: [consultaId], references: [id])
+  tipo       SeguimientoTipo
+  enviado    Boolean         @default(false)
+  fechaEnvio DateTime?
+  createdAt  DateTime        @default(now())
+}
