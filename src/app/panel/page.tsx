@@ -1,6 +1,7 @@
 import { auth, signOut } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import EstadoSelector from "./EstadoSelector";
 
 export default async function PanelPage() {
   const session = await auth();
@@ -54,6 +55,7 @@ export default async function PanelPage() {
               {c.cliente.telefono ?? "sin teléfono"} ·{" "}
               {new Date(c.createdAt).toLocaleDateString("es-BO")}
             </p>
+            <EstadoSelector consultaId={c.id} estadoActual={c.estado} />
           </div>
         ))}
       </div>
