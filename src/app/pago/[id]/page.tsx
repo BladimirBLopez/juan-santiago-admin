@@ -7,7 +7,7 @@ const CLOUDINARY_PRESET = "juan-santiago-comprobantes";
 
 export default function PagoPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params);
-  const [monto, setMonto] = useState("");
+  const [monto, setMonto] = useState("450");
   const [archivo, setArchivo] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [enviando, setEnviando] = useState(false);
