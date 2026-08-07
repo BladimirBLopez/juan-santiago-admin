@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import EstadoSelector from "./EstadoSelector";
 import NotasConsulta from "./NotasConsulta";
 import EditarConsulta from "./EditarConsulta";
@@ -41,31 +42,41 @@ export default function AccionesPanel({
         )}
       </button>
 
-      {abierto && (
-        <div className="mt-3 space-y-3">
-          <EstadoSelector
-            consultaId={consultaId}
-            estadoActual={estadoActual}
-            fechaInicio={fechaInicio}
-          />
+      <AnimatePresence initial={false}>
+        {abierto && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
+            className="overflow-hidden"
+          >
+            <div className="mt-3 space-y-3">
+              <EstadoSelector
+                consultaId={consultaId}
+                estadoActual={estadoActual}
+                fechaInicio={fechaInicio}
+              />
 
-          <div className="flex items-center justify-between gap-3">
-            <LinkPago consultaId={consultaId} />
-            <EditarConsulta
-              consultaId={consultaId}
-              nombreInicial={nombreCliente}
-              telefonoInicial={telefonoCliente}
-              situacionInicial={situacion}
-            />
-          </div>
+              <div className="flex items-center justify-between gap-3">
+                <LinkPago consultaId={consultaId} />
+                <EditarConsulta
+                  consultaId={consultaId}
+                  nombreInicial={nombreCliente}
+                  telefonoInicial={telefonoCliente}
+                  situacionInicial={situacion}
+                />
+              </div>
 
-          <NotasConsulta consultaId={consultaId} notasIniciales={notas} />
+              <NotasConsulta consultaId={consultaId} notasIniciales={notas} />
 
-          <div className="flex justify-end pt-1">
-            <AccionesConsulta consultaId={consultaId} />
-          </div>
-        </div>
-      )}
+              <div className="flex justify-end pt-1">
+                <AccionesConsulta consultaId={consultaId} />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
