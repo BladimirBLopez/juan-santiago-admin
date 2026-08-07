@@ -4,6 +4,14 @@ import { prisma } from "@/lib/prisma";
 
 const ESTADOS_VALIDOS = ["NUEVO", "EN_PROCESO", "COMPLETADO"];
 
+const DIAS_POR_SERVICIO: Record<string, number> = {
+  AMARRE: 21,
+  UNION_PAREJA: 21,
+  RETORNO: 21,
+  ENDULZAMIENTO: 14,
+  ALEJAMIENTO: 14,
+};
+
 export async function PATCH(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -15,7 +23,25 @@ export async function PATCH(
 
   const { id } = await params;
   const body = await req.json();
-  const { estado } = body;
+  const { estado, iniciarTrabajo } = body;
+
+  if (iniciarTrabajo) {
+    const consultaActual = await prisma.consulta.findUnique({ where: { id } });
+    if (!consultaActual) {
+      return NextResponse.json({ error: "No encontrada" }, { status: 404 });
+    }
+
+    const consulta = await prisma.consulta.update({
+      where: { id },
+      data: {
+        fechaInicio: new Date(),
+        diasTrabajo: DIAS_POR_SERVICIO[consultaActual.servicio] ?? 21,
+        estado: "EN_PROCESO",
+      },
+    });
+
+    return NextResponse.json({ success: true, consulta });
+  }
 
   if (!estado || !ESTADOS_VALIDOS.includes(estado)) {
     return NextResponse.json({ error: "Estado inválido" }, { status: 400 });

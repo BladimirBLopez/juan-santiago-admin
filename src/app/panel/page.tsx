@@ -2,6 +2,7 @@ import { auth, signOut } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import EstadoSelector from "./EstadoSelector";
+import ProgresoTrabajo from "./ProgresoTrabajo";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -104,7 +105,15 @@ export default async function PanelPage() {
               </a>
             )}
 
-            <EstadoSelector consultaId={c.id} estadoActual={c.estado} />
+            {c.fechaInicio && c.diasTrabajo && (
+              <ProgresoTrabajo fechaInicio={c.fechaInicio} diasTrabajo={c.diasTrabajo} />
+            )}
+
+            <EstadoSelector
+              consultaId={c.id}
+              estadoActual={c.estado}
+              fechaInicio={c.fechaInicio}
+            />
           </div>
         ))}
       </main>
