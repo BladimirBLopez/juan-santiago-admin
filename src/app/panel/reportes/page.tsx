@@ -18,7 +18,7 @@ export default async function ReportesPage() {
   inicioMes.setDate(1);
   inicioMes.setHours(0, 0, 0, 0);
 
-  const [consultasDelMes, totalConsultas, porServicio, clientes] = await Promise.all([
+  const [consultasDelMes, totalConsultas, porServicio, clientes, iniciados, completados] = await Promise.all([
     prisma.consulta.count({ where: { createdAt: { gte: inicioMes } } }),
     prisma.consulta.count(),
     prisma.consulta.groupBy({
@@ -29,7 +29,12 @@ export default async function ReportesPage() {
     prisma.cliente.findMany({
       include: { _count: { select: { consultas: true } } },
     }),
+    prisma.consulta.count({ where: { fechaInicio: { not: null } } }),
+    prisma.consulta.count({ where: { estado: "COMPLETADO" } }),
   ]);
+
+  const tasaInicio = totalConsultas > 0 ? Math.round((iniciados / totalConsultas) * 100) : 0;
+  const tasaCompletado = totalConsultas > 0 ? Math.round((completados / totalConsultas) * 100) : 0;
 
   const recurrentes = clientes
     .filter((c) => c._count.consultas > 1)
@@ -47,6 +52,30 @@ export default async function ReportesPage() {
         <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-4">
           <p className="text-2xl font-semibold text-[#e8eaed]">{totalConsultas}</p>
           <p className="text-xs text-[#9099a8] mt-1">Consultas totales</p>
+        </div>
+      </div>
+
+      <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-4">
+        <h2 className="text-sm font-medium text-[#e8eaed] mb-3">Conversión</h2>
+        <div className="space-y-3">
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <span className="text-[#c4c9d4]">Consultas que iniciaron trabajo</span>
+              <span className="text-[#5d6573]">{iniciados} de {totalConsultas} ({tasaInicio}%)</span>
+            </div>
+            <div className="h-1 rounded-full bg-[#262b35] overflow-hidden">
+              <div className="h-full rounded-full bg-[#c9a24b]" style={{ width: `${tasaInicio}%` }} />
+            </div>
+          </div>
+          <div>
+            <div className="flex justify-between text-xs mb-1">
+              <span className="text-[#c4c9d4]">Trabajos completados</span>
+              <span className="text-[#5d6573]">{completados} de {totalConsultas} ({tasaCompletado}%)</span>
+            </div>
+            <div className="h-1 rounded-full bg-[#262b35] overflow-hidden">
+              <div className="h-full rounded-full bg-[#4a9c6a]" style={{ width: `${tasaCompletado}%` }} />
+            </div>
+          </div>
         </div>
       </div>
 
