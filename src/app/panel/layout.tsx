@@ -1,5 +1,5 @@
 import { signOut } from "@/auth";
-import Link from "next/link";
+import NavPanel from "./NavPanel";
 
 export default function PanelLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -26,20 +26,7 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
             </button>
           </form>
         </div>
-        <nav className="px-4 flex gap-1 pb-0">
-          <Link
-            href="/panel"
-            className="text-xs px-3 py-2 border-b-2 border-[#c9a24b] text-[#e8eaed] font-medium"
-          >
-            Consultas
-          </Link>
-          <Link
-            href="/panel/reportes"
-            className="text-xs px-3 py-2 border-b-2 border-transparent text-[#5d6573] hover:text-[#9099a8] transition"
-          >
-            Reportes
-          </Link>
-        </nav>
+        <NavPanel />
       </header>
       {children}
     </div>
