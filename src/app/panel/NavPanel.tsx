@@ -9,6 +9,7 @@ export default function NavPanel() {
   const links = [
     { href: "/panel", label: "Consultas" },
     { href: "/panel/reportes", label: "Reportes" },
+    { href: "/panel/precios", label: "Precios" },
   ];
 
   return (

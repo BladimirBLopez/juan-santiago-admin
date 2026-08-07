@@ -8,6 +8,13 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+model Precio {
+  id       String       @id @default(cuid())
+  servicio ServicioTipo @unique
+  monto    Float
+  updatedAt DateTime    @updatedAt
+}
+
 model Admin {
   id       String @id @default(cuid())
   usuario  String @unique
