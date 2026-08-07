@@ -7,6 +7,7 @@ import { MessageCircle, Calendar } from "lucide-react";
 import PagosConsulta from "./PagosConsulta";
 import AccionesPanel from "./AccionesPanel";
 import Link from "next/link";
+import AvisoPagoPendiente from "./AvisoPagoPendiente";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -149,6 +150,11 @@ export default async function PanelPage({
                   />
                 );
               })()}
+
+              <AvisoPagoPendiente
+                fechaInicio={c.fechaInicio}
+                tienePagoAprobado={c.pagos.some((p) => p.estado === "APROBADO")}
+              />
 
               <PagosConsulta pagos={c.pagos} />
 
