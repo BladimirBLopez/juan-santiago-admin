@@ -79,7 +79,7 @@ export default async function PanelPage({
           return (
             <div
               key={c.id}
-              className="rounded-xl border border-[#1e232c] bg-[#12151b] p-4 shadow-[0_1px_3px_rgba(0,0,0,0.3)]"
+              className="rounded-xl border border-[#2a3140] bg-[#171b24] p-4 shadow-[0_4px_16px_rgba(0,0,0,0.4)]"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">
