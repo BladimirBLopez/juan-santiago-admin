@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import RenovacionCard from "./RenovacionCard";
+import GraficoServicios from "./GraficoServicios";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -103,29 +104,13 @@ export default async function ReportesPage() {
         <h2 className="text-sm font-medium text-[#e8eaed] mb-3">
           Servicios más pedidos
         </h2>
-        {porServicio.length > 0 ? (
-          <div className="space-y-2.5">
-            {porServicio.map((s) => {
-              const pct = totalConsultas > 0 ? (s._count.servicio / totalConsultas) * 100 : 0;
-              return (
-                <div key={s.servicio}>
-                  <div className="flex justify-between text-xs mb-1">
-                    <span className="text-[#c4c9d4]">
-                      {SERVICIO_LABELS[s.servicio] ?? s.servicio}
-                    </span>
-                    <span className="text-[#5d6573]">{s._count.servicio}</span>
-                  </div>
-                  <div className="h-1 rounded-full bg-[#262b35] overflow-hidden">
-                    <div
-                      className="h-full rounded-full bg-[#c9a24b]"
-                      style={{ width: `${pct}%` }}
-                    />
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-        ) : (
+        <GraficoServicios
+          datos={porServicio.map((s) => ({
+            nombre: SERVICIO_LABELS[s.servicio] ?? s.servicio,
+            cantidad: s._count.servicio,
+          }))}
+        />
+        {false && (
           <p className="text-xs text-[#5d6573]">Sin datos aún.</p>
         )}
       </div>
