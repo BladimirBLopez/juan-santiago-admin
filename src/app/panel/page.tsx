@@ -147,13 +147,15 @@ export default async function PanelPage({
                   estadoActual={c.estado}
                   fechaInicio={c.fechaInicio}
                 />
-                <NotasConsulta consultaId={c.id} notasIniciales={c.notas} />
-                <EditarConsulta
-                  consultaId={c.id}
-                  nombreInicial={c.cliente.nombre}
-                  telefonoInicial={c.cliente.telefono}
-                  situacionInicial={c.situacion}
-                />
+                <div className="flex items-center justify-between gap-3 mt-1">
+                  <NotasConsulta consultaId={c.id} notasIniciales={c.notas} />
+                  <EditarConsulta
+                    consultaId={c.id}
+                    nombreInicial={c.cliente.nombre}
+                    telefonoInicial={c.cliente.telefono}
+                    situacionInicial={c.situacion}
+                  />
+                </div>
                 <div className="mt-3 flex justify-end">
                   <AccionesConsulta consultaId={c.id} />
                 </div>
