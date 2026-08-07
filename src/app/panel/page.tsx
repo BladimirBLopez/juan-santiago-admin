@@ -20,6 +20,14 @@ const SERVICIO_LABELS: Record<string, string> = {
   UNION_PAREJA: "Unión de Parejas",
 };
 
+const SERVICIO_COLOR: Record<string, string> = {
+  AMARRE: "#ec4899",
+  UNION_PAREJA: "#8b5cf6",
+  ENDULZAMIENTO: "#f59e0b",
+  RETORNO: "#3b82f6",
+  ALEJAMIENTO: "#64748b",
+};
+
 const ESTADO_BADGE: Record<string, { bg: string; text: string; label: string }> = {
   NUEVO: { bg: "#f97316" + "1f", text: "#f97316", label: "Nuevo" },
   EN_PROCESO: { bg: "#8b5cf6" + "1f", text: "#8b5cf6", label: "En proceso" },
@@ -84,6 +92,7 @@ export default async function PanelPage({
             <div
               key={c.id}
               className="rounded-xl border border-[#2a2a3d] bg-gradient-to-b from-[#17171f] to-[#131319] p-4 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+              style={{ borderLeft: `3px solid ${SERVICIO_COLOR[c.servicio] ?? "#2a2a3d"}` }}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">
@@ -97,7 +106,7 @@ export default async function PanelPage({
                     >
                       {c.cliente.nombre}
                     </Link>
-                    <p className="text-xs text-[#a78bfa] mt-0.5">
+                    <p className="text-xs mt-0.5" style={{ color: SERVICIO_COLOR[c.servicio] ?? "#a78bfa" }}>
                       {SERVICIO_LABELS[c.servicio] ?? c.servicio}
                     </p>
                   </div>
