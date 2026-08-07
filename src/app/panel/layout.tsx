@@ -1,6 +1,7 @@
 import { signOut } from "@/auth";
 import NavPanel from "./NavPanel";
 import ThemeToggle from "./ThemeToggle";
+import Notificaciones from "./Notificaciones";
 
 export default function PanelLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -17,6 +18,7 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
             </div>
           </div>
           <div className="flex items-center gap-3">
+            <Notificaciones />
             <ThemeToggle />
             <form
               action={async () => {
