@@ -63,21 +63,21 @@ export default async function ReportesPage() {
 
   return (
     <main className="px-4 py-5 max-w-2xl mx-auto space-y-3">
-      <h1 className="text-lg font-semibold mb-1">Reportes</h1>
+      <h1 className="text-lg font-semibold mb-1 text-[#0f0f14] dark:text-[#e8eaed]">Reportes</h1>
 
       <div className="grid grid-cols-2 gap-2.5">
-        <div className="rounded-xl border border-[#2a2a3d] bg-[#131319] p-4">
-          <p className="text-2xl font-semibold text-[#e8eaed]">{consultasDelMes}</p>
-          <p className="text-xs text-[#9099a8] mt-1">Consultas este mes</p>
+        <div className="rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4">
+          <p className="text-2xl font-semibold text-[#0f0f14] dark:text-[#e8eaed]">{consultasDelMes}</p>
+          <p className="text-xs text-[#6b6b80] dark:text-[#9099a8] mt-1">Consultas este mes</p>
         </div>
-        <div className="rounded-xl border border-[#2a2a3d] bg-[#131319] p-4">
-          <p className="text-2xl font-semibold text-[#e8eaed]">{totalConsultas}</p>
-          <p className="text-xs text-[#9099a8] mt-1">Consultas totales</p>
+        <div className="rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4">
+          <p className="text-2xl font-semibold text-[#0f0f14] dark:text-[#e8eaed]">{totalConsultas}</p>
+          <p className="text-xs text-[#6b6b80] dark:text-[#9099a8] mt-1">Consultas totales</p>
         </div>
       </div>
 
-      <div className="rounded-xl border border-[#2a2a3d] bg-[#131319] p-4">
-        <h2 className="text-sm font-medium text-[#e8eaed] mb-3">Conversión</h2>
+      <div className="rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4">
+        <h2 className="text-sm font-medium text-[#0f0f14] dark:text-[#e8eaed] mb-3">Conversión</h2>
         <div className="space-y-3">
           <div>
             <div className="flex justify-between text-xs mb-1">
@@ -100,8 +100,8 @@ export default async function ReportesPage() {
         </div>
       </div>
 
-      <div className="rounded-xl border border-[#2a2a3d] bg-[#131319] p-4">
-        <h2 className="text-sm font-medium text-[#e8eaed] mb-3">
+      <div className="rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4">
+        <h2 className="text-sm font-medium text-[#0f0f14] dark:text-[#e8eaed] mb-3">
           Servicios más pedidos
         </h2>
         <GraficoServicios
@@ -111,14 +111,14 @@ export default async function ReportesPage() {
           }))}
         />
         {false && (
-          <p className="text-xs text-[#6b6b80]">Sin datos aún.</p>
+          <p className="text-xs text-[#6b6b80] dark:text-[#6b6b80]">Sin datos aún.</p>
         )}
       </div>
 
       <RenovacionCard clientes={paraRecontactar} />
 
-      <div className="rounded-xl border border-[#2a2a3d] bg-[#131319] p-4">
-        <h2 className="text-sm font-medium text-[#e8eaed] mb-3">
+      <div className="rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4">
+        <h2 className="text-sm font-medium text-[#0f0f14] dark:text-[#e8eaed] mb-3">
           Clientes recurrentes
         </h2>
         {recurrentes.length > 0 ? (
@@ -131,7 +131,7 @@ export default async function ReportesPage() {
             ))}
           </div>
         ) : (
-          <p className="text-xs text-[#6b6b80]">
+          <p className="text-xs text-[#6b6b80] dark:text-[#6b6b80]">
             Aún no hay clientes que hayan vuelto más de una vez.
           </p>
         )}

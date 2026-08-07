@@ -19,7 +19,7 @@ export default async function PreciosPage() {
 
   return (
     <main className="px-4 py-5 max-w-2xl mx-auto">
-      <h1 className="text-xl font-semibold tracking-tight mb-5">Precios</h1>
+      <h1 className="text-xl font-semibold tracking-tight mb-5 text-[#0f0f14] dark:text-[#e8eaed]">Precios</h1>
       <div className="space-y-2.5">
         {precios.map((p) => (
           <EditorPrecios
