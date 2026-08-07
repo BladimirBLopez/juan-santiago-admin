@@ -8,6 +8,7 @@ import FiltrosConsultas from "./FiltrosConsultas";
 import { MessageCircle, Calendar } from "lucide-react";
 import AccionesConsulta from "./AccionesConsulta";
 import EditarConsulta from "./EditarConsulta";
+import LinkPago from "./LinkPago";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -154,13 +155,16 @@ export default async function PanelPage({
                   fechaInicio={c.fechaInicio}
                 />
                 <div className="flex items-center justify-between gap-3 mt-1">
-                  <NotasConsulta consultaId={c.id} notasIniciales={c.notas} />
+                  <LinkPago consultaId={c.id} />
                   <EditarConsulta
                     consultaId={c.id}
                     nombreInicial={c.cliente.nombre}
                     telefonoInicial={c.cliente.telefono}
                     situacionInicial={c.situacion}
                   />
+                </div>
+                <div className="mt-1">
+                  <NotasConsulta consultaId={c.id} notasIniciales={c.notas} />
                 </div>
                 <div className="mt-3 flex justify-end">
                   <AccionesConsulta consultaId={c.id} />

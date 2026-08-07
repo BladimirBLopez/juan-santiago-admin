@@ -1,0 +1,140 @@
+"use client";
+
+import { useState, useEffect, use } from "react";
+
+const CLOUDINARY_CLOUD = "dkq95jus0";
+const CLOUDINARY_PRESET = "juan-santiago-comprobantes";
+
+export default function PagoPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params);
+  const [monto, setMonto] = useState("");
+  const [archivo, setArchivo] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string | null>(null);
+  const [enviando, setEnviando] = useState(false);
+  const [enviado, setEnviado] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!archivo) {
+      setPreview(null);
+      return;
+    }
+    const url = URL.createObjectURL(archivo);
+    setPreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [archivo]);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setError("");
+
+    if (!archivo) {
+      setError("Sube una foto del comprobante");
+      return;
+    }
+
+    setEnviando(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", archivo);
+      formData.append("upload_preset", CLOUDINARY_PRESET);
+
+      const uploadRes = await fetch(
+        `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD}/image/upload`,
+        { method: "POST", body: formData }
+      );
+
+      if (!uploadRes.ok) throw new Error("Error al subir la imagen");
+
+      const uploadData = await uploadRes.json();
+
+      const res = await fetch("/api/pagos", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          consultaId: id,
+          monto,
+          comprobanteUrl: uploadData.secure_url,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Error al registrar el pago");
+
+      setEnviado(true);
+    } catch {
+      setError("Hubo un problema al enviar. Intenta de nuevo.");
+    } finally {
+      setEnviando(false);
+    }
+  }
+
+  if (enviado) {
+    return (
+      <main className="min-h-screen bg-[#0f1115] flex items-center justify-center px-6">
+        <div className="text-center">
+          <p className="text-2xl mb-2">✓</p>
+          <h1 className="text-lg font-semibold text-[#e8eaed]">
+            Comprobante recibido
+          </h1>
+          <p className="text-sm text-[#9099a8] mt-2">
+            El Maestro revisará tu pago y te confirmará por WhatsApp.
+          </p>
+        </div>
+      </main>
+    );
+  }
+
+  return (
+    <main className="min-h-screen bg-[#0f1115] px-6 py-12">
+      <div className="mx-auto max-w-sm">
+        <h1 className="text-xl font-semibold text-[#e8eaed] text-center mb-1">
+          Confirmar tu pago
+        </h1>
+        <p className="text-sm text-[#9099a8] text-center mb-8">
+          Sube tu comprobante de transferencia o QR
+        </p>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="text-xs text-[#9099a8]">Monto pagado (Bs)</label>
+            <input
+              type="number"
+              required
+              min="1"
+              value={monto}
+              onChange={(e) => setMonto(e.target.value)}
+              className="w-full mt-1 rounded-lg border border-[#262b35] bg-[#161a22] text-[#e8eaed] px-3 py-2.5 outline-none focus:border-[#c9a24b]/50"
+              placeholder="Ej: 150"
+            />
+          </div>
+
+          <div>
+            <label className="text-xs text-[#9099a8]">Foto del comprobante</label>
+            <input
+              type="file"
+              accept="image/*"
+              required
+              onChange={(e) => setArchivo(e.target.files?.[0] ?? null)}
+              className="w-full mt-1 text-xs text-[#9099a8] file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-[#c9a24b] file:text-[#0f1115] file:text-xs file:font-medium"
+            />
+          </div>
+
+          {preview && (
+            <img src={preview} alt="Vista previa" className="rounded-lg max-h-48 mx-auto" />
+          )}
+
+          {error && <p className="text-sm text-[#e8752c]">{error}</p>}
+
+          <button
+            type="submit"
+            disabled={enviando}
+            className="w-full rounded-lg bg-[#c9a24b] text-[#0f1115] font-medium text-sm py-3 disabled:opacity-50"
+          >
+            {enviando ? "Enviando..." : "Enviar comprobante"}
+          </button>
+        </form>
+      </div>
+    </main>
+  );
+}
