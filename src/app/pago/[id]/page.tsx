@@ -91,9 +91,20 @@ export default function PagoPage({ params }: { params: Promise<{ id: string }> }
         <h1 className="text-xl font-semibold text-[#e8eaed] text-center mb-1">
           Confirmar tu pago
         </h1>
-        <p className="text-sm text-[#9099a8] text-center mb-8">
-          Sube tu comprobante de transferencia o QR
+        <p className="text-sm text-[#9099a8] text-center mb-6">
+          Escanea el QR para pagar, luego sube tu comprobante
         </p>
+
+        <div className="mb-6 rounded-xl border border-[#262b35] bg-[#161a22] p-4 text-center">
+          <img
+            src="https://res.cloudinary.com/dkq95jus0/image/upload/qr-maestrojuan"
+            alt="QR de pago"
+            className="mx-auto rounded-lg max-w-[220px] w-full"
+          />
+          <p className="text-xs text-[#5d6573] mt-2">
+            Escanea con tu app bancaria o billetera móvil
+          </p>
+        </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
