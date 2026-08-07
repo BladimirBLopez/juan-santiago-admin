@@ -23,7 +23,38 @@ export async function PATCH(
 
   const { id } = await params;
   const body = await req.json();
-  const { estado, iniciarTrabajo, notas } = body;
+  const { estado, iniciarTrabajo, notas, situacion, nombreCliente, telefonoCliente } = body;
+
+  if (
+    situacion !== undefined ||
+    nombreCliente !== undefined ||
+    telefonoCliente !== undefined
+  ) {
+    const consultaActual = await prisma.consulta.findUnique({ where: { id } });
+    if (!consultaActual) {
+      return NextResponse.json({ error: "No encontrada" }, { status: 404 });
+    }
+
+    if (nombreCliente !== undefined || telefonoCliente !== undefined) {
+      await prisma.cliente.update({
+        where: { id: consultaActual.clienteId },
+        data: {
+          ...(nombreCliente !== undefined ? { nombre: nombreCliente } : {}),
+          ...(telefonoCliente !== undefined ? { telefono: telefonoCliente } : {}),
+        },
+      });
+    }
+
+    const consulta = await prisma.consulta.update({
+      where: { id },
+      data: {
+        ...(situacion !== undefined ? { situacion } : {}),
+      },
+      include: { cliente: true },
+    });
+
+    return NextResponse.json({ success: true, consulta });
+  }
 
   if (typeof notas === "string") {
     const consulta = await prisma.consulta.update({
@@ -61,4 +92,20 @@ export async function PATCH(
   });
 
   return NextResponse.json({ success: true, consulta });
+}
+
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ error: "No autorizado" }, { status: 401 });
+  }
+
+  const { id } = await params;
+
+  await prisma.consulta.delete({ where: { id } });
+
+  return NextResponse.json({ success: true });
 }

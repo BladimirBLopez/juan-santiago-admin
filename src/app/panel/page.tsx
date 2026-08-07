@@ -5,6 +5,8 @@ import EstadoSelector from "./EstadoSelector";
 import ProgresoTrabajo from "./ProgresoTrabajo";
 import NotasConsulta from "./NotasConsulta";
 import FiltrosConsultas from "./FiltrosConsultas";
+import AccionesConsulta from "./AccionesConsulta";
+import EditarConsulta from "./EditarConsulta";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -146,6 +148,15 @@ export default async function PanelPage({
                   fechaInicio={c.fechaInicio}
                 />
                 <NotasConsulta consultaId={c.id} notasIniciales={c.notas} />
+                <EditarConsulta
+                  consultaId={c.id}
+                  nombreInicial={c.cliente.nombre}
+                  telefonoInicial={c.cliente.telefono}
+                  situacionInicial={c.situacion}
+                />
+                <div className="mt-3 flex justify-end">
+                  <AccionesConsulta consultaId={c.id} />
+                </div>
               </div>
             </div>
           );
