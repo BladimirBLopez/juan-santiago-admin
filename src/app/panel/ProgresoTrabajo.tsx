@@ -56,13 +56,13 @@ export default function ProgresoTrabajo({
   }
 
   return (
-    <div className="mt-3 rounded-lg bg-[#0a0a0f] border border-[#2a2a3d] p-2.5">
+    <div className="mt-3 rounded-lg bg-[#fafafa] dark:bg-[#0a0a0f] border border-[#e5e5eb] dark:border-[#2a2a3d] p-2.5">
       <div className="flex justify-between items-center mb-1.5">
         <span className="text-xs text-[#9099a8]">
           {completo ? "Trabajo completado" : `Día ${diaActual} de ${diasTrabajo}`}
         </span>
       </div>
-      <div className="h-1 rounded-full bg-[#2a2a3d] overflow-hidden">
+      <div className="h-1 rounded-full bg-[#e5e5eb] dark:bg-[#2a2a3d] overflow-hidden">
         <div
           className="h-full rounded-full bg-[#8b5cf6] transition-all"
           style={{ width: `${progreso}%` }}

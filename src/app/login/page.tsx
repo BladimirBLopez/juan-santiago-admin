@@ -34,10 +34,10 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0a0a0f] px-6">
+    <div className="min-h-screen flex items-center justify-center bg-white dark:bg-[#0a0a0f] px-6">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm rounded-xl border border-[#2a2a3d] bg-[#131319] p-7 space-y-5"
+        className="w-full max-w-sm rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-7 space-y-5"
       >
         <div className="flex items-center gap-2 mb-2">
           <span className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#a78bfa] to-[#7c3aed] flex items-center justify-center text-white text-sm font-bold">
@@ -55,7 +55,7 @@ export default function LoginPage() {
             type="text"
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
-            className="w-full mt-1 rounded-lg border border-[#2a2a3d] bg-[#0a0a0f] text-[#e8eaed] px-3 py-2 outline-none focus:border-[#8b5cf6]/50"
+            className="w-full mt-1 rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-[#fafafa] dark:bg-[#0a0a0f] text-[#0f0f14] dark:text-[#e8eaed] px-3 py-2 outline-none focus:border-[#8b5cf6]/50"
             required
           />
         </div>
@@ -66,7 +66,7 @@ export default function LoginPage() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full mt-1 rounded-lg border border-[#2a2a3d] bg-[#0a0a0f] text-[#e8eaed] px-3 py-2 outline-none focus:border-[#8b5cf6]/50"
+            className="w-full mt-1 rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-[#fafafa] dark:bg-[#0a0a0f] text-[#0f0f14] dark:text-[#e8eaed] px-3 py-2 outline-none focus:border-[#8b5cf6]/50"
             required
           />
         </div>

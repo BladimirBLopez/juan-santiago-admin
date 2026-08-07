@@ -29,7 +29,7 @@ export default function AccionesPanel({
   const [abierto, setAbierto] = useState(false);
 
   return (
-    <div className="mt-3 pt-3 border-t border-[#2a2a3d]">
+    <div className="mt-3 pt-3 border-t border-[#e5e5eb] dark:border-[#2a2a3d]">
       <button
         onClick={() => setAbierto(!abierto)}
         className="w-full flex items-center justify-center gap-1.5 text-xs font-medium text-[#a78bfa] bg-[#8b5cf60f] border border-[#8b5cf6]/25 rounded-lg py-2 hover:bg-[#8b5cf61a] transition"

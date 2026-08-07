@@ -62,7 +62,7 @@ export default function EditarConsulta({
           type="text"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
-          className="w-full mt-1 text-sm rounded-md border border-[#2a2a3d] bg-[#17171f] text-[#e8eaed] px-2.5 py-1.5 outline-none focus:border-[#8b5cf6]/50"
+          className="w-full mt-1 text-sm rounded-md border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#17171f] text-[#0f0f14] dark:text-[#e8eaed] px-2.5 py-1.5 outline-none focus:border-[#8b5cf6]/50"
         />
       </div>
       <div>
@@ -71,7 +71,7 @@ export default function EditarConsulta({
           type="tel"
           value={telefono}
           onChange={(e) => setTelefono(e.target.value)}
-          className="w-full mt-1 text-sm rounded-md border border-[#2a2a3d] bg-[#17171f] text-[#e8eaed] px-2.5 py-1.5 outline-none focus:border-[#8b5cf6]/50"
+          className="w-full mt-1 text-sm rounded-md border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#17171f] text-[#0f0f14] dark:text-[#e8eaed] px-2.5 py-1.5 outline-none focus:border-[#8b5cf6]/50"
         />
       </div>
       <div>
@@ -80,7 +80,7 @@ export default function EditarConsulta({
           value={situacion}
           onChange={(e) => setSituacion(e.target.value)}
           rows={3}
-          className="w-full mt-1 text-sm rounded-md border border-[#2a2a3d] bg-[#17171f] text-[#e8eaed] px-2.5 py-1.5 outline-none focus:border-[#8b5cf6]/50"
+          className="w-full mt-1 text-sm rounded-md border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#17171f] text-[#0f0f14] dark:text-[#e8eaed] px-2.5 py-1.5 outline-none focus:border-[#8b5cf6]/50"
         />
       </div>
       <div className="flex gap-3 pt-1">
