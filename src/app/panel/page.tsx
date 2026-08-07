@@ -6,6 +6,7 @@ import FiltrosConsultas from "./FiltrosConsultas";
 import { MessageCircle, Calendar } from "lucide-react";
 import PagosConsulta from "./PagosConsulta";
 import AccionesPanel from "./AccionesPanel";
+import Link from "next/link";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -86,9 +87,12 @@ export default async function PanelPage({
                     {iniciales(c.cliente.nombre)}
                   </div>
                   <div className="min-w-0">
-                    <p className="font-semibold text-[#e8eaed] truncate leading-tight">
+                    <Link
+                      href={`/panel/clientes/${c.cliente.id}`}
+                      className="font-semibold text-[#e8eaed] truncate leading-tight hover:text-[#c9a24b] transition block"
+                    >
                       {c.cliente.nombre}
-                    </p>
+                    </Link>
                     <p className="text-xs text-[#c9a24b] mt-0.5">
                       {SERVICIO_LABELS[c.servicio] ?? c.servicio}
                     </p>
