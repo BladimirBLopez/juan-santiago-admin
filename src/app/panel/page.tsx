@@ -1,15 +1,11 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import EstadoSelector from "./EstadoSelector";
 import ProgresoTrabajo from "./ProgresoTrabajo";
-import NotasConsulta from "./NotasConsulta";
 import FiltrosConsultas from "./FiltrosConsultas";
 import { MessageCircle, Calendar } from "lucide-react";
-import AccionesConsulta from "./AccionesConsulta";
-import EditarConsulta from "./EditarConsulta";
-import LinkPago from "./LinkPago";
 import PagosConsulta from "./PagosConsulta";
+import AccionesPanel from "./AccionesPanel";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -149,30 +145,17 @@ export default async function PanelPage({
                 );
               })()}
 
-              <div className="mt-3 pt-3 border-t border-[#1e232c]">
-                <EstadoSelector
-                  consultaId={c.id}
-                  estadoActual={c.estado}
-                  fechaInicio={c.fechaInicio}
-                />
-                <div className="flex items-center justify-between gap-3 mt-1">
-                  <LinkPago consultaId={c.id} />
-                  <EditarConsulta
-                    consultaId={c.id}
-                    nombreInicial={c.cliente.nombre}
-                    telefonoInicial={c.cliente.telefono}
-                    situacionInicial={c.situacion}
-                  />
-                </div>
-                <div className="mt-1">
-                  <NotasConsulta consultaId={c.id} notasIniciales={c.notas} />
-                </div>
+              <PagosConsulta pagos={c.pagos} />
 
-                <PagosConsulta pagos={c.pagos} />
-                <div className="mt-3 flex justify-end">
-                  <AccionesConsulta consultaId={c.id} />
-                </div>
-              </div>
+              <AccionesPanel
+                consultaId={c.id}
+                estadoActual={c.estado}
+                fechaInicio={c.fechaInicio}
+                notas={c.notas}
+                nombreCliente={c.cliente.nombre}
+                telefonoCliente={c.cliente.telefono}
+                situacion={c.situacion}
+              />
             </div>
           );
         })}
