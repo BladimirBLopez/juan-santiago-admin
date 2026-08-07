@@ -11,6 +11,7 @@ export default function ProgresoTrabajo({
   telefonoCliente,
   ultimoAvanceEnviado,
   testimonioEnviado,
+  estadoActual,
 }: {
   consultaId: string;
   fechaInicio: Date;
@@ -19,6 +20,7 @@ export default function ProgresoTrabajo({
   telefonoCliente: string | null;
   ultimoAvanceEnviado: Date | null;
   testimonioEnviado: boolean;
+  estadoActual: string;
 }) {
   const router = useRouter();
   const [registrando, setRegistrando] = useState(false);
@@ -29,7 +31,7 @@ export default function ProgresoTrabajo({
   );
   const diaActual = Math.min(diasTranscurridos + 1, diasTrabajo);
   const progreso = Math.min((diaActual / diasTrabajo) * 100, 100);
-  const completo = diaActual >= diasTrabajo;
+  const completo = diaActual >= diasTrabajo || estadoActual === "COMPLETADO";
 
   const telefonoLimpio = telefonoCliente?.replace(/\D/g, "");
   const numeroWa = telefonoLimpio ? `591${telefonoLimpio}` : null;

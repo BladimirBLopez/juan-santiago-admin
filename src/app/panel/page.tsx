@@ -141,6 +141,7 @@ export default async function PanelPage({
                     telefonoCliente={c.cliente.telefono}
                     ultimoAvanceEnviado={avances[0]?.fechaEnvio ?? null}
                     testimonioEnviado={testimonioEnviado}
+                    estadoActual={c.estado}
                   />
                 );
               })()}
