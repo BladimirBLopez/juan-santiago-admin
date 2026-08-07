@@ -63,7 +63,15 @@ export default async function ReportesPage() {
 
   return (
     <main className="px-4 py-5 max-w-2xl mx-auto space-y-3">
-      <h1 className="text-lg font-semibold mb-1 text-[#0f0f14] dark:text-[#e8eaed]">Reportes</h1>
+      <div className="flex items-center justify-between mb-1">
+        <h1 className="text-lg font-semibold text-[#0f0f14] dark:text-[#e8eaed]">Reportes</h1>
+        <a
+          href="/api/exportar-contactos"
+          className="text-xs text-[#8b5cf6] hover:text-[#7c3aed] transition underline underline-offset-4"
+        >
+          Descargar contactos
+        </a>
+      </div>
 
       <div className="grid grid-cols-2 gap-2.5">
         <div className="rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4">
