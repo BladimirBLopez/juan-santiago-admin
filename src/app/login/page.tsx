@@ -34,41 +34,39 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#1a0505] px-6">
+    <div className="min-h-screen flex items-center justify-center bg-[#0f1115] px-6">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm rounded-2xl border border-[#c9a24b]/30 bg-[#2a0a12] p-7 space-y-5"
+        className="w-full max-w-sm rounded-xl border border-[#262b35] bg-[#161a22] p-7 space-y-5"
       >
-        <div className="text-center">
-          <p className="text-xs uppercase tracking-[0.2em] text-[#c9a24b]">
-            Altar del Tata Bombori
-          </p>
-          <h1
-            className="mt-1 text-2xl text-[#f0d78c]"
-            style={{ fontFamily: "var(--font-cinzel)" }}
-          >
-            Panel del Maestro
-          </h1>
+        <div className="flex items-center gap-2 mb-2">
+          <span className="h-8 w-8 rounded bg-[#c9a24b] flex items-center justify-center text-[#0f1115] text-sm font-bold">
+            JS
+          </span>
+          <div>
+            <p className="text-sm font-semibold text-[#e8eaed]">Panel Maestro</p>
+            <p className="text-xs text-[#5d6573]">Juan Santiago</p>
+          </div>
         </div>
 
         <div>
-          <label className="text-xs text-[#f5e6d3]/60">Usuario</label>
+          <label className="text-xs text-[#9099a8]">Usuario</label>
           <input
             type="text"
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
-            className="w-full mt-1 rounded-lg border border-[#c9a24b]/30 bg-[#1a0505] text-[#f5e6d3] px-3 py-2 outline-none focus:border-[#c9a24b]"
+            className="w-full mt-1 rounded-lg border border-[#262b35] bg-[#0f1115] text-[#e8eaed] px-3 py-2 outline-none focus:border-[#c9a24b]/50"
             required
           />
         </div>
 
         <div>
-          <label className="text-xs text-[#f5e6d3]/60">Contraseña</label>
+          <label className="text-xs text-[#9099a8]">Contraseña</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full mt-1 rounded-lg border border-[#c9a24b]/30 bg-[#1a0505] text-[#f5e6d3] px-3 py-2 outline-none focus:border-[#c9a24b]"
+            className="w-full mt-1 rounded-lg border border-[#262b35] bg-[#0f1115] text-[#e8eaed] px-3 py-2 outline-none focus:border-[#c9a24b]/50"
             required
           />
         </div>
@@ -78,7 +76,7 @@ export default function LoginPage() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full rounded-full bg-gradient-to-b from-[#e6c476] to-[#c9a24b] text-[#1a0505] font-bold uppercase tracking-wider text-sm py-3 transition hover:scale-[1.02] disabled:opacity-50"
+          className="w-full rounded-lg bg-[#c9a24b] text-[#0f1115] font-medium text-sm py-2.5 transition hover:bg-[#d9b25b] disabled:opacity-50"
         >
           {loading ? "Entrando..." : "Entrar"}
         </button>

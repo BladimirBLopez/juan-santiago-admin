@@ -1,10 +1,9 @@
-import { auth, signOut } from "@/auth";
+import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import EstadoSelector from "./EstadoSelector";
 import ProgresoTrabajo from "./ProgresoTrabajo";
 import NotasConsulta from "./NotasConsulta";
-import Link from "next/link";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -16,10 +15,7 @@ const SERVICIO_LABELS: Record<string, string> = {
 
 export default async function PanelPage() {
   const session = await auth();
-
-  if (!session) {
-    redirect("/login");
-  }
+  if (!session) redirect("/login");
 
   const consultas = await prisma.consulta.findMany({
     include: { cliente: true },
@@ -29,67 +25,38 @@ export default async function PanelPage() {
   const nuevos = consultas.filter((c) => c.estado === "NUEVO").length;
 
   return (
-    <div className="min-h-screen bg-[#1a0505] text-[#f5e6d3]">
-      <header className="border-b border-[#c9a24b]/20 px-5 py-5">
-        <div className="flex justify-between items-start">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-[#c9a24b]">
-              Altar del Tata Bombori
-            </p>
-            <h1
-              className="text-xl text-[#f0d78c] mt-0.5"
-              style={{ fontFamily: "var(--font-cinzel)" }}
-            >
-              Consultas
-            </h1>
-          </div>
-          <div className="flex items-center gap-4">
-            <Link href="/panel/reportes" className="text-xs text-[#c9a24b] underline underline-offset-4">
-              Reportes
-            </Link>
-            <form
-              action={async () => {
-                "use server";
-                await signOut({ redirectTo: "/login" });
-              }}
-            >
-              <button className="text-xs text-[#f5e6d3]/50 underline underline-offset-4">
-                Cerrar sesión
-              </button>
-            </form>
-          </div>
-        </div>
+    <main className="px-4 py-5 max-w-2xl mx-auto">
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-lg font-semibold">Consultas</h1>
         {nuevos > 0 && (
-          <p className="mt-2 text-xs text-[#e8752c]">
-            {nuevos} consulta{nuevos > 1 ? "s" : ""} nueva{nuevos > 1 ? "s" : ""} sin atender
-          </p>
+          <span className="text-xs px-2 py-1 rounded-full bg-[#e8752c]/15 text-[#e8752c] font-medium">
+            {nuevos} nueva{nuevos > 1 ? "s" : ""}
+          </span>
         )}
-      </header>
+      </div>
 
-      <main className="px-4 py-5 space-y-3">
+      <div className="space-y-2.5">
         {consultas.length === 0 && (
           <div className="text-center py-16">
-            <p className="text-[#f5e6d3]/40 text-sm">
-              Aún no llegaron consultas.
-            </p>
+            <p className="text-[#9099a8] text-sm">Aún no llegaron consultas.</p>
           </div>
         )}
 
         {consultas.map((c) => (
           <div
             key={c.id}
-            className="rounded-2xl border border-[#c9a24b]/20 bg-[#2a0a12] p-4"
+            className="rounded-xl border border-[#262b35] bg-[#161a22] p-4"
           >
             <div className="flex justify-between items-start gap-3">
               <div className="min-w-0">
-                <p className="font-semibold text-[#f5e6d3] truncate">
+                <p className="font-medium text-[#e8eaed] truncate">
                   {c.cliente.nombre}
                 </p>
                 <p className="text-xs text-[#c9a24b] mt-0.5">
                   {SERVICIO_LABELS[c.servicio] ?? c.servicio}
                 </p>
               </div>
-              <span className="text-[10px] text-[#f5e6d3]/40 shrink-0 pt-0.5">
+              <span className="text-[10px] text-[#5d6573] shrink-0 pt-0.5">
                 {new Date(c.createdAt).toLocaleDateString("es-BO", {
                   day: "2-digit",
                   month: "short",
@@ -97,7 +64,7 @@ export default async function PanelPage() {
               </span>
             </div>
 
-            <p className="text-sm text-[#f5e6d3]/80 mt-3 leading-relaxed">
+            <p className="text-sm text-[#c4c9d4] mt-2.5 leading-relaxed">
               {c.situacion}
             </p>
 
@@ -106,9 +73,9 @@ export default async function PanelPage() {
                 href={`https://wa.me/591${c.cliente.telefono.replace(/\D/g, "")}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 mt-3 text-xs text-[#4a7c59]"
+                className="inline-flex items-center gap-1 mt-2.5 text-xs text-[#4a9c6a]"
               >
-                💬 {c.cliente.telefono}
+                WhatsApp · {c.cliente.telefono}
               </a>
             )}
 
@@ -130,7 +97,7 @@ export default async function PanelPage() {
             <NotasConsulta consultaId={c.id} notasIniciales={c.notas} />
           </div>
         ))}
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

@@ -31,29 +31,29 @@ export default function ProgresoTrabajo({
   );
 
   return (
-    <div className="mt-3">
-      <div className="flex justify-between items-center mb-1">
-        <span className="text-xs text-[#c9a24b]">
-          {completo ? "🌕 Trabajo completado" : `🕯️ Día ${diaActual} de ${diasTrabajo}`}
+    <div className="mt-3 rounded-lg bg-[#0f1115] border border-[#262b35] p-2.5">
+      <div className="flex justify-between items-center mb-1.5">
+        <span className="text-xs text-[#9099a8]">
+          {completo ? "Trabajo completado" : `Día ${diaActual} de ${diasTrabajo}`}
         </span>
       </div>
-      <div className="h-1.5 rounded-full bg-[#1a0505] overflow-hidden">
+      <div className="h-1 rounded-full bg-[#262b35] overflow-hidden">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-[#c9a24b] to-[#f0d78c] transition-all"
+          className="h-full rounded-full bg-[#c9a24b] transition-all"
           style={{ width: `${progreso}%` }}
         />
       </div>
 
       {numeroWa && (
-        <div className="flex gap-2 mt-3">
+        <div className="flex gap-2 mt-2.5">
           {!completo && (
             <a
               href={`https://wa.me/${numeroWa}?text=${mensajeAvance}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 text-center text-xs py-2 rounded-full border border-[#4a7c59]/40 text-[#4a7c59]"
+              className="flex-1 text-center text-xs py-1.5 rounded-md border border-[#4a9c6a]/30 text-[#4a9c6a] hover:bg-[#4a9c6a]/10 transition"
             >
-              💬 Enviar avance
+              Enviar avance
             </a>
           )}
           {completo && (
@@ -61,9 +61,9 @@ export default function ProgresoTrabajo({
               href={`https://wa.me/${numeroWa}?text=${mensajeTestimonio}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 text-center text-xs py-2 rounded-full border border-[#f0d78c]/40 text-[#f0d78c]"
+              className="flex-1 text-center text-xs py-1.5 rounded-md border border-[#c9a24b]/30 text-[#c9a24b] hover:bg-[#c9a24b]/10 transition"
             >
-              ✨ Pedir testimonio
+              Pedir testimonio
             </a>
           )}
         </div>

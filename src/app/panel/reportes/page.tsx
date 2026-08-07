@@ -1,7 +1,6 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import Link from "next/link";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -20,9 +19,7 @@ export default async function ReportesPage() {
   inicioMes.setHours(0, 0, 0, 0);
 
   const [consultasDelMes, totalConsultas, porServicio, clientes] = await Promise.all([
-    prisma.consulta.count({
-      where: { createdAt: { gte: inicioMes } },
-    }),
+    prisma.consulta.count({ where: { createdAt: { gte: inicioMes } } }),
     prisma.consulta.count(),
     prisma.consulta.groupBy({
       by: ["servicio"],
@@ -38,90 +35,71 @@ export default async function ReportesPage() {
     .filter((c) => c._count.consultas > 1)
     .sort((a, b) => b._count.consultas - a._count.consultas);
 
-  const servicioTop = porServicio[0];
-
   return (
-    <div className="min-h-screen bg-[#1a0505] text-[#f5e6d3]">
-      <header className="border-b border-[#c9a24b]/20 px-5 py-5">
-        <div className="flex justify-between items-start">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.2em] text-[#c9a24b]">
-              Altar del Tata Bombori
-            </p>
-            <h1
-              className="text-xl text-[#f0d78c] mt-0.5"
-              style={{ fontFamily: "var(--font-cinzel)" }}
-            >
-              Reportes
-            </h1>
-          </div>
-          <Link href="/panel" className="text-xs text-[#f5e6d3]/50 underline underline-offset-4">
-            Ver consultas
-          </Link>
-        </div>
-      </header>
+    <main className="px-4 py-5 max-w-2xl mx-auto space-y-3">
+      <h1 className="text-lg font-semibold mb-1">Reportes</h1>
 
-      <main className="px-4 py-5 space-y-4">
-        <div className="grid grid-cols-2 gap-3">
-          <div className="rounded-2xl border border-[#c9a24b]/20 bg-[#2a0a12] p-4">
-            <p className="text-2xl font-bold text-[#f0d78c]">{consultasDelMes}</p>
-            <p className="text-xs text-[#f5e6d3]/60 mt-1">Consultas este mes</p>
-          </div>
-          <div className="rounded-2xl border border-[#c9a24b]/20 bg-[#2a0a12] p-4">
-            <p className="text-2xl font-bold text-[#f0d78c]">{totalConsultas}</p>
-            <p className="text-xs text-[#f5e6d3]/60 mt-1">Consultas totales</p>
-          </div>
+      <div className="grid grid-cols-2 gap-2.5">
+        <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-4">
+          <p className="text-2xl font-semibold text-[#e8eaed]">{consultasDelMes}</p>
+          <p className="text-xs text-[#9099a8] mt-1">Consultas este mes</p>
         </div>
+        <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-4">
+          <p className="text-2xl font-semibold text-[#e8eaed]">{totalConsultas}</p>
+          <p className="text-xs text-[#9099a8] mt-1">Consultas totales</p>
+        </div>
+      </div>
 
-        <div className="rounded-2xl border border-[#c9a24b]/20 bg-[#2a0a12] p-4">
-          <h2 className="text-sm font-semibold text-[#c9a24b] mb-3">
-            Servicios más pedidos
-          </h2>
-          {servicioTop ? (
-            <div className="space-y-2">
-              {porServicio.map((s) => {
-                const pct = totalConsultas > 0 ? (s._count.servicio / totalConsultas) * 100 : 0;
-                return (
-                  <div key={s.servicio}>
-                    <div className="flex justify-between text-xs mb-1">
-                      <span>{SERVICIO_LABELS[s.servicio] ?? s.servicio}</span>
-                      <span className="text-[#f5e6d3]/50">{s._count.servicio}</span>
-                    </div>
-                    <div className="h-1.5 rounded-full bg-[#1a0505] overflow-hidden">
-                      <div
-                        className="h-full rounded-full bg-gradient-to-r from-[#c9a24b] to-[#f0d78c]"
-                        style={{ width: `${pct}%` }}
-                      />
-                    </div>
+      <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-4">
+        <h2 className="text-sm font-medium text-[#e8eaed] mb-3">
+          Servicios más pedidos
+        </h2>
+        {porServicio.length > 0 ? (
+          <div className="space-y-2.5">
+            {porServicio.map((s) => {
+              const pct = totalConsultas > 0 ? (s._count.servicio / totalConsultas) * 100 : 0;
+              return (
+                <div key={s.servicio}>
+                  <div className="flex justify-between text-xs mb-1">
+                    <span className="text-[#c4c9d4]">
+                      {SERVICIO_LABELS[s.servicio] ?? s.servicio}
+                    </span>
+                    <span className="text-[#5d6573]">{s._count.servicio}</span>
                   </div>
-                );
-              })}
-            </div>
-          ) : (
-            <p className="text-xs text-[#f5e6d3]/40">Sin datos aún.</p>
-          )}
-        </div>
-
-        <div className="rounded-2xl border border-[#c9a24b]/20 bg-[#2a0a12] p-4">
-          <h2 className="text-sm font-semibold text-[#c9a24b] mb-3">
-            Clientes recurrentes
-          </h2>
-          {recurrentes.length > 0 ? (
-            <div className="space-y-2">
-              {recurrentes.map((c) => (
-                <div key={c.id} className="flex justify-between text-xs">
-                  <span>{c.nombre}</span>
-                  <span className="text-[#4a7c59]">{c._count.consultas} consultas</span>
+                  <div className="h-1 rounded-full bg-[#262b35] overflow-hidden">
+                    <div
+                      className="h-full rounded-full bg-[#c9a24b]"
+                      style={{ width: `${pct}%` }}
+                    />
+                  </div>
                 </div>
-              ))}
-            </div>
-          ) : (
-            <p className="text-xs text-[#f5e6d3]/40">
-              Aún no hay clientes que hayan vuelto más de una vez.
-            </p>
-          )}
-        </div>
-      </main>
-    </div>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="text-xs text-[#5d6573]">Sin datos aún.</p>
+        )}
+      </div>
+
+      <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-4">
+        <h2 className="text-sm font-medium text-[#e8eaed] mb-3">
+          Clientes recurrentes
+        </h2>
+        {recurrentes.length > 0 ? (
+          <div className="space-y-2">
+            {recurrentes.map((c) => (
+              <div key={c.id} className="flex justify-between text-xs">
+                <span className="text-[#c4c9d4]">{c.nombre}</span>
+                <span className="text-[#4a9c6a]">{c._count.consultas} consultas</span>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-xs text-[#5d6573]">
+            Aún no hay clientes que hayan vuelto más de una vez.
+          </p>
+        )}
+      </div>
+    </main>
   );
 }
