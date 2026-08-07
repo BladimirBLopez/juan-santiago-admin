@@ -27,7 +27,7 @@ export default function FiltrosConsultas() {
   return (
     <div className="mb-5 space-y-2.5">
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#5d6573]" strokeWidth={2} />
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-[#6b6b80]" strokeWidth={2} />
         <input
           type="text"
           value={q}
@@ -36,7 +36,7 @@ export default function FiltrosConsultas() {
             if (e.key === "Enter") aplicarFiltros(q, estadoActual);
           }}
           placeholder="Buscar por nombre"
-          className="w-full text-sm rounded-lg border border-[#262b35] bg-[#161a22] text-[#e8eaed] pl-9 pr-9 py-2.5 outline-none focus:border-[#c9a24b]/50 transition placeholder:text-[#5d6573]"
+          className="w-full text-sm rounded-lg border border-[#2a2a3d] bg-[#131319] text-[#e8eaed] pl-9 pr-9 py-2.5 outline-none focus:border-[#8b5cf6]/50 transition placeholder:text-[#6b6b80]"
         />
         {q && (
           <button
@@ -44,14 +44,14 @@ export default function FiltrosConsultas() {
               setQ("");
               aplicarFiltros("", estadoActual);
             }}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#5d6573] hover:text-[#9099a8]"
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-[#6b6b80] hover:text-[#9099a8]"
           >
             <X className="h-4 w-4" strokeWidth={2} />
           </button>
         )}
       </div>
 
-      <div className="inline-flex p-0.5 rounded-lg bg-[#161a22] border border-[#262b35] gap-0.5">
+      <div className="inline-flex p-0.5 rounded-lg bg-[#131319] border border-[#2a2a3d] gap-0.5">
         {ESTADOS.map((e) => {
           const activo = estadoActual === e.value;
           return (
@@ -60,8 +60,8 @@ export default function FiltrosConsultas() {
               onClick={() => aplicarFiltros(q, e.value)}
               className="text-xs px-3 py-1.5 rounded-md whitespace-nowrap transition font-medium"
               style={{
-                backgroundColor: activo ? "#c9a24b" : "transparent",
-                color: activo ? "#0f1115" : "#9099a8",
+                backgroundColor: activo ? "#8b5cf6" : "transparent",
+                color: activo ? "#0a0a0f" : "#9099a8",
               }}
             >
               {e.label}

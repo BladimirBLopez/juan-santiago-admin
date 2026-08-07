@@ -21,8 +21,8 @@ export default function NavPanel() {
             href={link.href}
             className="text-xs px-3 py-2 border-b-2 transition"
             style={{
-              borderColor: activo ? "#c9a24b" : "transparent",
-              color: activo ? "#e8eaed" : "#5d6573",
+              borderColor: activo ? "#8b5cf6" : "transparent",
+              color: activo ? "#e8eaed" : "#6b6b80",
               fontWeight: activo ? 500 : 400,
             }}
           >

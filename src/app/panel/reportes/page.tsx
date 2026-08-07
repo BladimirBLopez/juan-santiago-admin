@@ -66,41 +66,41 @@ export default async function ReportesPage() {
       <h1 className="text-lg font-semibold mb-1">Reportes</h1>
 
       <div className="grid grid-cols-2 gap-2.5">
-        <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-4">
+        <div className="rounded-xl border border-[#2a2a3d] bg-[#131319] p-4">
           <p className="text-2xl font-semibold text-[#e8eaed]">{consultasDelMes}</p>
           <p className="text-xs text-[#9099a8] mt-1">Consultas este mes</p>
         </div>
-        <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-4">
+        <div className="rounded-xl border border-[#2a2a3d] bg-[#131319] p-4">
           <p className="text-2xl font-semibold text-[#e8eaed]">{totalConsultas}</p>
           <p className="text-xs text-[#9099a8] mt-1">Consultas totales</p>
         </div>
       </div>
 
-      <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-4">
+      <div className="rounded-xl border border-[#2a2a3d] bg-[#131319] p-4">
         <h2 className="text-sm font-medium text-[#e8eaed] mb-3">Conversión</h2>
         <div className="space-y-3">
           <div>
             <div className="flex justify-between text-xs mb-1">
               <span className="text-[#c4c9d4]">Consultas que iniciaron trabajo</span>
-              <span className="text-[#5d6573]">{iniciados} de {totalConsultas} ({tasaInicio}%)</span>
+              <span className="text-[#6b6b80]">{iniciados} de {totalConsultas} ({tasaInicio}%)</span>
             </div>
-            <div className="h-1 rounded-full bg-[#262b35] overflow-hidden">
-              <div className="h-full rounded-full bg-[#c9a24b]" style={{ width: `${tasaInicio}%` }} />
+            <div className="h-1 rounded-full bg-[#2a2a3d] overflow-hidden">
+              <div className="h-full rounded-full bg-[#8b5cf6]" style={{ width: `${tasaInicio}%` }} />
             </div>
           </div>
           <div>
             <div className="flex justify-between text-xs mb-1">
               <span className="text-[#c4c9d4]">Trabajos completados</span>
-              <span className="text-[#5d6573]">{completados} de {totalConsultas} ({tasaCompletado}%)</span>
+              <span className="text-[#6b6b80]">{completados} de {totalConsultas} ({tasaCompletado}%)</span>
             </div>
-            <div className="h-1 rounded-full bg-[#262b35] overflow-hidden">
-              <div className="h-full rounded-full bg-[#4a9c6a]" style={{ width: `${tasaCompletado}%` }} />
+            <div className="h-1 rounded-full bg-[#2a2a3d] overflow-hidden">
+              <div className="h-full rounded-full bg-[#22c55e]" style={{ width: `${tasaCompletado}%` }} />
             </div>
           </div>
         </div>
       </div>
 
-      <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-4">
+      <div className="rounded-xl border border-[#2a2a3d] bg-[#131319] p-4">
         <h2 className="text-sm font-medium text-[#e8eaed] mb-3">
           Servicios más pedidos
         </h2>
@@ -111,13 +111,13 @@ export default async function ReportesPage() {
           }))}
         />
         {false && (
-          <p className="text-xs text-[#5d6573]">Sin datos aún.</p>
+          <p className="text-xs text-[#6b6b80]">Sin datos aún.</p>
         )}
       </div>
 
       <RenovacionCard clientes={paraRecontactar} />
 
-      <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-4">
+      <div className="rounded-xl border border-[#2a2a3d] bg-[#131319] p-4">
         <h2 className="text-sm font-medium text-[#e8eaed] mb-3">
           Clientes recurrentes
         </h2>
@@ -126,12 +126,12 @@ export default async function ReportesPage() {
             {recurrentes.map((c) => (
               <div key={c.id} className="flex justify-between text-xs">
                 <span className="text-[#c4c9d4]">{c.nombre}</span>
-                <span className="text-[#4a9c6a]">{c._count.consultas} consultas</span>
+                <span className="text-[#22c55e]">{c._count.consultas} consultas</span>
               </div>
             ))}
           </div>
         ) : (
-          <p className="text-xs text-[#5d6573]">
+          <p className="text-xs text-[#6b6b80]">
             Aún no hay clientes que hayan vuelto más de una vez.
           </p>
         )}

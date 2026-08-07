@@ -47,7 +47,7 @@ export default function EditarConsulta({
     return (
       <button
         onClick={() => setEditando(true)}
-        className="text-xs text-[#5d6573] hover:text-[#c9a24b] transition"
+        className="text-xs text-[#6b6b80] hover:text-[#8b5cf6] transition"
       >
         Editar
       </button>
@@ -55,45 +55,45 @@ export default function EditarConsulta({
   }
 
   return (
-    <div className="space-y-2 mt-2 p-3 rounded-lg bg-[#0b0d12] border border-[#1e232c]">
+    <div className="space-y-2 mt-2 p-3 rounded-lg bg-[#0b0d12] border border-[#2a2a3d]">
       <div>
-        <label className="text-xs text-[#5d6573]">Nombre</label>
+        <label className="text-xs text-[#6b6b80]">Nombre</label>
         <input
           type="text"
           value={nombre}
           onChange={(e) => setNombre(e.target.value)}
-          className="w-full mt-1 text-sm rounded-md border border-[#262b35] bg-[#12151b] text-[#e8eaed] px-2.5 py-1.5 outline-none focus:border-[#c9a24b]/50"
+          className="w-full mt-1 text-sm rounded-md border border-[#2a2a3d] bg-[#17171f] text-[#e8eaed] px-2.5 py-1.5 outline-none focus:border-[#8b5cf6]/50"
         />
       </div>
       <div>
-        <label className="text-xs text-[#5d6573]">Teléfono</label>
+        <label className="text-xs text-[#6b6b80]">Teléfono</label>
         <input
           type="tel"
           value={telefono}
           onChange={(e) => setTelefono(e.target.value)}
-          className="w-full mt-1 text-sm rounded-md border border-[#262b35] bg-[#12151b] text-[#e8eaed] px-2.5 py-1.5 outline-none focus:border-[#c9a24b]/50"
+          className="w-full mt-1 text-sm rounded-md border border-[#2a2a3d] bg-[#17171f] text-[#e8eaed] px-2.5 py-1.5 outline-none focus:border-[#8b5cf6]/50"
         />
       </div>
       <div>
-        <label className="text-xs text-[#5d6573]">Situación</label>
+        <label className="text-xs text-[#6b6b80]">Situación</label>
         <textarea
           value={situacion}
           onChange={(e) => setSituacion(e.target.value)}
           rows={3}
-          className="w-full mt-1 text-sm rounded-md border border-[#262b35] bg-[#12151b] text-[#e8eaed] px-2.5 py-1.5 outline-none focus:border-[#c9a24b]/50"
+          className="w-full mt-1 text-sm rounded-md border border-[#2a2a3d] bg-[#17171f] text-[#e8eaed] px-2.5 py-1.5 outline-none focus:border-[#8b5cf6]/50"
         />
       </div>
       <div className="flex gap-3 pt-1">
         <button
           onClick={guardar}
           disabled={guardando}
-          className="text-xs text-[#c9a24b] font-medium disabled:opacity-50"
+          className="text-xs text-[#8b5cf6] font-medium disabled:opacity-50"
         >
           {guardando ? "Guardando..." : "Guardar cambios"}
         </button>
         <button
           onClick={() => setEditando(false)}
-          className="text-xs text-[#5d6573]"
+          className="text-xs text-[#6b6b80]"
         >
           Cancelar
         </button>

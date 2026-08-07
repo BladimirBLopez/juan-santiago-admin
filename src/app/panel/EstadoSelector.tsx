@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 
 const ESTADOS = [
-  { value: "NUEVO", label: "Nuevo", color: "#e8752c", Icon: Circle },
-  { value: "EN_PROCESO", label: "En proceso", color: "#c9a24b", Icon: Loader2 },
-  { value: "COMPLETADO", label: "Completado", color: "#4a9c6a", Icon: CheckCircle2 },
+  { value: "NUEVO", label: "Nuevo", color: "#f97316", Icon: Circle },
+  { value: "EN_PROCESO", label: "En proceso", color: "#8b5cf6", Icon: Loader2 },
+  { value: "COMPLETADO", label: "Completado", color: "#22c55e", Icon: CheckCircle2 },
 ];
 
 export default function EstadoSelector({
@@ -64,7 +64,7 @@ export default function EstadoSelector({
           onClick={iniciarTrabajo}
           disabled={loading}
           size="sm"
-          className="w-full mb-2 bg-[#c9a24b] text-[#0f1115] hover:bg-[#d9b25b]"
+          className="w-full mb-2 bg-[#8b5cf6] text-white hover:bg-[#7c3aed]"
         >
           <Flame className="h-3.5 w-3.5" strokeWidth={2} />
           {loading ? "Iniciando..." : "Iniciar trabajo"}
@@ -84,7 +84,7 @@ export default function EstadoSelector({
               size="sm"
               className="text-xs h-auto py-1.5 px-2.5"
               style={{
-                borderColor: activo ? estado.color : "#262b35",
+                borderColor: activo ? estado.color : "#2a2a3d",
                 backgroundColor: activo ? `${estado.color}18` : "transparent",
                 color: activo ? estado.color : "#9099a8",
               }}

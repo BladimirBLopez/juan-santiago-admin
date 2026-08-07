@@ -29,10 +29,10 @@ export default function AccionesPanel({
   const [abierto, setAbierto] = useState(false);
 
   return (
-    <div className="mt-3 pt-3 border-t border-[#1e232c]">
+    <div className="mt-3 pt-3 border-t border-[#2a2a3d]">
       <button
         onClick={() => setAbierto(!abierto)}
-        className="w-full flex items-center justify-center gap-1.5 text-xs font-medium text-[#c9a24b] bg-[#c9a24b0f] border border-[#c9a24b]/25 rounded-lg py-2 hover:bg-[#c9a24b1a] transition"
+        className="w-full flex items-center justify-center gap-1.5 text-xs font-medium text-[#a78bfa] bg-[#8b5cf60f] border border-[#8b5cf6]/25 rounded-lg py-2 hover:bg-[#8b5cf61a] transition"
       >
         Gestionar consulta
         {abierto ? (

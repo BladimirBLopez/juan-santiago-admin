@@ -41,13 +41,13 @@ export default function PagosConsulta({ pagos }: { pagos: Pago[] }) {
       {pendientes.map((pago) => (
         <div
           key={pago.id}
-          className="rounded-lg border border-[#c9a24b]/30 bg-[#c9a24b]/5 p-3"
+          className="rounded-lg border border-[#8b5cf6]/30 bg-[#8b5cf6]/5 p-3"
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-semibold text-[#c9a24b]">
+            <span className="text-sm font-semibold text-[#8b5cf6]">
               Bs {pago.monto}
             </span>
-            <span className="text-[10px] text-[#5d6573]">
+            <span className="text-[10px] text-[#6b6b80]">
               {new Date(pago.createdAt).toLocaleDateString("es-BO", {
                 day: "2-digit",
                 month: "short",
@@ -67,14 +67,14 @@ export default function PagosConsulta({ pagos }: { pagos: Pago[] }) {
             <button
               onClick={() => actualizarPago(pago.id, "APROBADO")}
               disabled={procesando === pago.id}
-              className="flex-1 text-xs py-1.5 rounded-md bg-[#4a9c6a] text-[#0f1115] font-medium disabled:opacity-50"
+              className="flex-1 text-xs py-1.5 rounded-md bg-[#22c55e] text-[#0a0a0f] font-medium disabled:opacity-50"
             >
               Aprobar
             </button>
             <button
               onClick={() => actualizarPago(pago.id, "RECHAZADO")}
               disabled={procesando === pago.id}
-              className="flex-1 text-xs py-1.5 rounded-md border border-[#e8752c]/40 text-[#e8752c] disabled:opacity-50"
+              className="flex-1 text-xs py-1.5 rounded-md border border-[#f97316]/40 text-[#f97316] disabled:opacity-50"
             >
               Rechazar
             </button>

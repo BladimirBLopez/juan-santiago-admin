@@ -9,7 +9,7 @@ type DatoServicio = {
 
 export default function GraficoServicios({ datos }: { datos: DatoServicio[] }) {
   if (datos.length === 0) {
-    return <p className="text-xs text-[#5d6573]">Sin datos aún.</p>;
+    return <p className="text-xs text-[#6b6b80]">Sin datos aún.</p>;
   }
 
   return (
@@ -27,18 +27,18 @@ export default function GraficoServicios({ datos }: { datos: DatoServicio[] }) {
           />
           <Tooltip
             contentStyle={{
-              backgroundColor: "#161a22",
-              border: "1px solid #262b35",
+              backgroundColor: "#131319",
+              border: "1px solid #2a2a3d",
               borderRadius: 8,
               fontSize: 12,
               color: "#e8eaed",
             }}
             labelStyle={{ color: "#e8eaed" }}
-            cursor={{ fill: "#c9a24b0f" }}
+            cursor={{ fill: "#8b5cf60f" }}
           />
           <Bar dataKey="cantidad" radius={[0, 4, 4, 0]}>
             {datos.map((_, index) => (
-              <Cell key={index} fill="#c9a24b" />
+              <Cell key={index} fill="#8b5cf6" />
             ))}
           </Bar>
         </BarChart>

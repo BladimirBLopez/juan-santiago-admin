@@ -13,9 +13,9 @@ const SERVICIO_LABELS: Record<string, string> = {
 };
 
 const ESTADO_BADGE: Record<string, { bg: string; text: string; label: string }> = {
-  NUEVO: { bg: "#e8752c1f", text: "#e8752c", label: "Nuevo" },
-  EN_PROCESO: { bg: "#c9a24b1f", text: "#c9a24b", label: "En proceso" },
-  COMPLETADO: { bg: "#4a9c6a1f", text: "#4a9c6a", label: "Completado" },
+  NUEVO: { bg: "#f973161f", text: "#f97316", label: "Nuevo" },
+  EN_PROCESO: { bg: "#8b5cf61f", text: "#8b5cf6", label: "En proceso" },
+  COMPLETADO: { bg: "#22c55e1f", text: "#22c55e", label: "Completado" },
 };
 
 export default async function ClienteDetallePage({
@@ -41,7 +41,7 @@ export default async function ClienteDetallePage({
   if (!cliente) {
     return (
       <main className="px-4 py-5 max-w-2xl mx-auto">
-        <p className="text-[#5d6573] text-sm">Cliente no encontrado.</p>
+        <p className="text-[#6b6b80] text-sm">Cliente no encontrado.</p>
       </main>
     );
   }
@@ -55,20 +55,20 @@ export default async function ClienteDetallePage({
     <main className="px-4 py-5 max-w-2xl mx-auto">
       <Link
         href="/panel"
-        className="inline-flex items-center gap-1 text-xs text-[#5d6573] hover:text-[#9099a8] transition mb-4"
+        className="inline-flex items-center gap-1 text-xs text-[#6b6b80] hover:text-[#9099a8] transition mb-4"
       >
         <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2} />
         Volver a consultas
       </Link>
 
-      <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-4 mb-4">
+      <div className="rounded-xl border border-[#2a2a3d] bg-[#131319] p-4 mb-4">
         <h1 className="text-lg font-semibold text-[#e8eaed]">{cliente.nombre}</h1>
         {cliente.telefono && (
           <a
             href={`https://wa.me/591${cliente.telefono.replace(/\D/g, "")}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 text-xs text-[#4a9c6a] mt-1"
+            className="inline-flex items-center gap-1 text-xs text-[#22c55e] mt-1"
           >
             <MessageCircle className="h-3.5 w-3.5" strokeWidth={2} />
             {cliente.telefono}
@@ -76,17 +76,17 @@ export default async function ClienteDetallePage({
         )}
 
         <div className="grid grid-cols-2 gap-2.5 mt-4">
-          <div className="rounded-lg bg-[#0f1115] p-3">
+          <div className="rounded-lg bg-[#0a0a0f] p-3">
             <p className="text-xl font-semibold text-[#e8eaed]">
               {cliente.consultas.length}
             </p>
-            <p className="text-xs text-[#5d6573] mt-0.5">Consultas totales</p>
+            <p className="text-xs text-[#6b6b80] mt-0.5">Consultas totales</p>
           </div>
-          <div className="rounded-lg bg-[#0f1115] p-3">
-            <p className="text-xl font-semibold text-[#4a9c6a]">
+          <div className="rounded-lg bg-[#0a0a0f] p-3">
+            <p className="text-xl font-semibold text-[#22c55e]">
               Bs {totalPagado}
             </p>
-            <p className="text-xs text-[#5d6573] mt-0.5">Total pagado</p>
+            <p className="text-xs text-[#6b6b80] mt-0.5">Total pagado</p>
           </div>
         </div>
       </div>
@@ -101,10 +101,10 @@ export default async function ClienteDetallePage({
           return (
             <div
               key={c.id}
-              className="rounded-lg border border-[#1e232c] bg-[#12151b] p-3"
+              className="rounded-lg border border-[#2a2a3d] bg-[#17171f] p-3"
             >
               <div className="flex justify-between items-start">
-                <p className="text-xs text-[#c9a24b] font-medium">
+                <p className="text-xs text-[#8b5cf6] font-medium">
                   {SERVICIO_LABELS[c.servicio] ?? c.servicio}
                 </p>
                 <span
@@ -115,7 +115,7 @@ export default async function ClienteDetallePage({
                 </span>
               </div>
               <p className="text-xs text-[#9099a8] mt-1.5">{c.situacion}</p>
-              <p className="text-[10px] text-[#5d6573] mt-1.5">
+              <p className="text-[10px] text-[#6b6b80] mt-1.5">
                 {new Date(c.createdAt).toLocaleDateString("es-BO", {
                   day: "2-digit",
                   month: "short",
@@ -123,15 +123,15 @@ export default async function ClienteDetallePage({
                 })}
               </p>
               {c.pagos.length > 0 && (
-                <div className="mt-2 pt-2 border-t border-[#1e232c] flex gap-2 flex-wrap">
+                <div className="mt-2 pt-2 border-t border-[#2a2a3d] flex gap-2 flex-wrap">
                   {c.pagos.map((p) => (
                     <span
                       key={p.id}
                       className="text-[10px] px-2 py-0.5 rounded"
                       style={{
                         backgroundColor:
-                          p.estado === "APROBADO" ? "#4a9c6a1f" : "#e8752c1f",
-                        color: p.estado === "APROBADO" ? "#4a9c6a" : "#e8752c",
+                          p.estado === "APROBADO" ? "#22c55e1f" : "#f973161f",
+                        color: p.estado === "APROBADO" ? "#22c55e" : "#f97316",
                       }}
                     >
                       Bs {p.monto} · {p.estado}

@@ -56,15 +56,15 @@ export default function ProgresoTrabajo({
   }
 
   return (
-    <div className="mt-3 rounded-lg bg-[#0b0d12] border border-[#1e232c] p-2.5">
+    <div className="mt-3 rounded-lg bg-[#0a0a0f] border border-[#2a2a3d] p-2.5">
       <div className="flex justify-between items-center mb-1.5">
         <span className="text-xs text-[#9099a8]">
           {completo ? "Trabajo completado" : `Día ${diaActual} de ${diasTrabajo}`}
         </span>
       </div>
-      <div className="h-1 rounded-full bg-[#262b35] overflow-hidden">
+      <div className="h-1 rounded-full bg-[#2a2a3d] overflow-hidden">
         <div
-          className="h-full rounded-full bg-[#c9a24b] transition-all"
+          className="h-full rounded-full bg-[#8b5cf6] transition-all"
           style={{ width: `${progreso}%` }}
         />
       </div>
@@ -78,12 +78,12 @@ export default function ProgresoTrabajo({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => registrarEnvio("RECORDATORIO_AVANCE")}
-                className="block text-center text-xs py-1.5 rounded-md border border-[#4a9c6a]/30 text-[#4a9c6a] hover:bg-[#4a9c6a]/10 transition"
+                className="block text-center text-xs py-1.5 rounded-md border border-[#22c55e]/30 text-[#22c55e] hover:bg-[#22c55e]/10 transition"
               >
                 {registrando ? "..." : "Enviar avance"}
               </a>
               {ultimoAvanceEnviado && (
-                <p className="text-[10px] text-[#5d6573] mt-1 text-center">
+                <p className="text-[10px] text-[#6b6b80] mt-1 text-center">
                   Último avance enviado:{" "}
                   {new Date(ultimoAvanceEnviado).toLocaleDateString("es-BO", {
                     day: "2-digit",
@@ -100,12 +100,12 @@ export default function ProgresoTrabajo({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => registrarEnvio("TESTIMONIO")}
-                className="block text-center text-xs py-1.5 rounded-md border border-[#c9a24b]/30 text-[#c9a24b] hover:bg-[#c9a24b]/10 transition"
+                className="block text-center text-xs py-1.5 rounded-md border border-[#8b5cf6]/30 text-[#a78bfa] hover:bg-[#8b5cf6]/10 transition"
               >
                 {registrando ? "..." : "Pedir testimonio"}
               </a>
               {testimonioEnviado && (
-                <p className="text-[10px] text-[#5d6573] mt-1 text-center">
+                <p className="text-[10px] text-[#6b6b80] mt-1 text-center">
                   Ya se pidió el testimonio
                 </p>
               )}

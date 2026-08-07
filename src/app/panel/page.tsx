@@ -8,9 +8,9 @@ import PagosConsulta from "./PagosConsulta";
 import AccionesPanel from "./AccionesPanel";
 import Link from "next/link";
 import AvisoPagoPendiente from "./AvisoPagoPendiente";
-import { Badge } from "@/components/ui/badge";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
+import { Badge } from "@/components/ui/badge";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -21,9 +21,9 @@ const SERVICIO_LABELS: Record<string, string> = {
 };
 
 const ESTADO_BADGE: Record<string, { bg: string; text: string; label: string }> = {
-  NUEVO: { bg: "#e8752c1f", text: "#e8752c", label: "Nuevo" },
-  EN_PROCESO: { bg: "#c9a24b1f", text: "#c9a24b", label: "En proceso" },
-  COMPLETADO: { bg: "#4a9c6a1f", text: "#4a9c6a", label: "Completado" },
+  NUEVO: { bg: "#f97316" + "1f", text: "#f97316", label: "Nuevo" },
+  EN_PROCESO: { bg: "#8b5cf6" + "1f", text: "#8b5cf6", label: "En proceso" },
+  COMPLETADO: { bg: "#22c55e" + "1f", text: "#22c55e", label: "Completado" },
 };
 
 function iniciales(nombre: string) {
@@ -63,7 +63,7 @@ export default async function PanelPage({
       <div className="flex items-center justify-between mb-5">
         <h1 className="text-xl font-semibold tracking-tight">Consultas</h1>
         {nuevos > 0 && (
-          <span className="text-xs px-2.5 py-1 rounded-full bg-[#e8752c1f] text-[#e8752c] font-medium">
+          <span className="text-xs px-2.5 py-1 rounded-full bg-[#f973161f] text-[#f97316] font-medium">
             {nuevos} nueva{nuevos > 1 ? "s" : ""}
           </span>
         )}
@@ -74,7 +74,7 @@ export default async function PanelPage({
       <div className="space-y-3">
         {consultas.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-[#5d6573] text-sm">No se encontraron consultas.</p>
+            <p className="text-[#6b6b80] text-sm">No se encontraron consultas.</p>
           </div>
         )}
 
@@ -83,21 +83,21 @@ export default async function PanelPage({
           return (
             <div
               key={c.id}
-              className="rounded-xl border border-[#2a3140] bg-[#171b24] p-4 shadow-[0_4px_16px_rgba(0,0,0,0.4)]"
+              className="rounded-xl border border-[#2a2a3d] bg-gradient-to-b from-[#17171f] to-[#131319] p-4 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="h-9 w-9 rounded-full bg-[#1e232c] border border-[#262b35] flex items-center justify-center text-xs font-semibold text-[#c9a24b] shrink-0">
+                  <div className="h-9 w-9 rounded-full bg-[#8b5cf61a] border border-[#8b5cf640] flex items-center justify-center text-xs font-semibold text-[#a78bfa] shrink-0">
                     {iniciales(c.cliente.nombre)}
                   </div>
                   <div className="min-w-0">
                     <Link
                       href={`/panel/clientes/${c.cliente.id}`}
-                      className="font-semibold text-[#e8eaed] truncate leading-tight hover:text-[#c9a24b] transition block"
+                      className="font-semibold text-[#e8eaed] truncate leading-tight hover:text-[#a78bfa] transition block"
                     >
                       {c.cliente.nombre}
                     </Link>
-                    <p className="text-xs text-[#c9a24b] mt-0.5">
+                    <p className="text-xs text-[#a78bfa] mt-0.5">
                       {SERVICIO_LABELS[c.servicio] ?? c.servicio}
                     </p>
                   </div>
@@ -114,13 +114,13 @@ export default async function PanelPage({
                 {c.situacion}
               </p>
 
-              <div className="flex items-center gap-3 mt-3 text-xs text-[#5d6573]">
+              <div className="flex items-center gap-3 mt-3 text-xs text-[#6b6b80]">
                 {c.cliente.telefono && (
                   <a
                     href={`https://wa.me/591${c.cliente.telefono.replace(/\D/g, "")}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[#4a9c6a] hover:text-[#5bb87d] transition"
+                    className="inline-flex items-center gap-1 text-[#22c55e] hover:text-[#4ade80] transition"
                   >
                     <MessageCircle className="h-3.5 w-3.5" strokeWidth={2} />
                     {c.cliente.telefono}
