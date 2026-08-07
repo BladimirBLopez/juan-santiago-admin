@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import EstadoSelector from "./EstadoSelector";
 import ProgresoTrabajo from "./ProgresoTrabajo";
+import NotasConsulta from "./NotasConsulta";
 import Link from "next/link";
 
 const SERVICIO_LABELS: Record<string, string> = {
@@ -125,6 +126,8 @@ export default async function PanelPage() {
               estadoActual={c.estado}
               fechaInicio={c.fechaInicio}
             />
+
+            <NotasConsulta consultaId={c.id} notasIniciales={c.notas} />
           </div>
         ))}
       </main>

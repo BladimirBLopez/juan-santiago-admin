@@ -47,6 +47,7 @@ model Consulta {
   estado       ConsultaEstado @default(NUEVO)
   fechaInicio  DateTime?
   diasTrabajo  Int?
+  notas        String?
   createdAt    DateTime       @default(now())
   pagos        Pago[]
   seguimientos Seguimiento[]

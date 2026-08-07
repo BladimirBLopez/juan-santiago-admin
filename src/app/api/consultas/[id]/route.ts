@@ -23,7 +23,15 @@ export async function PATCH(
 
   const { id } = await params;
   const body = await req.json();
-  const { estado, iniciarTrabajo } = body;
+  const { estado, iniciarTrabajo, notas } = body;
+
+  if (typeof notas === "string") {
+    const consulta = await prisma.consulta.update({
+      where: { id },
+      data: { notas },
+    });
+    return NextResponse.json({ success: true, consulta });
+  }
 
   if (iniciarTrabajo) {
     const consultaActual = await prisma.consulta.findUnique({ where: { id } });
