@@ -94,7 +94,7 @@ export default async function PanelPage({
               className="rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-gradient-to-b from-white to-[#fafafa] dark:from-[#17171f] dark:to-[#131319] p-4 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
               style={{
                 borderLeft: `3px solid ${SERVICIO_COLOR[c.servicio] ?? "#2a2a3d"}`,
-                backgroundImage: `linear-gradient(135deg, ${SERVICIO_COLOR[c.servicio] ?? "#2a2a3d"}0d, transparent 60%)`,
+                backgroundColor: `${SERVICIO_COLOR[c.servicio] ?? "#2a2a3d"}26`,
               }}
             >
               <div className="flex items-start justify-between gap-3">
