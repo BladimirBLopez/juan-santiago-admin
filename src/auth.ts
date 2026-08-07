@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
+import Google from "next-auth/providers/google";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
@@ -29,11 +30,38 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return { id: admin.id, name: admin.usuario };
       },
     }),
+    Google({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+      authorization: {
+        params: {
+          scope: "openid email profile https://www.googleapis.com/auth/calendar.events",
+          access_type: "offline",
+          prompt: "consent",
+        },
+      },
+    }),
   ],
   pages: {
     signIn: "/login",
   },
   session: {
     strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({ token, account }) {
+      if (account?.provider === "google") {
+        token.googleAccessToken = account.access_token;
+        token.googleRefreshToken = account.refresh_token;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (token.googleAccessToken) {
+        (session as typeof session & { googleAccessToken?: string }).googleAccessToken =
+          token.googleAccessToken as string;
+      }
+      return session;
+    },
   },
 });
