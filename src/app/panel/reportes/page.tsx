@@ -10,6 +10,8 @@ const SERVICIO_LABELS: Record<string, string> = {
   RETORNO: "Retorno del Ser Amado",
   ALEJAMIENTO: "Alejamiento de Terceros",
   UNION_PAREJA: "Unión de Parejas",
+  CONSULTA_TAROT: "Consulta de Tarot",
+  CONSULTA_COCA: "Consulta de Hojas de Coca",
 };
 
 export default async function ReportesPage() {

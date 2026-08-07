@@ -26,6 +26,8 @@ const SERVICIOS_VALIDOS = [
   "RETORNO",
   "ALEJAMIENTO",
   "UNION_PAREJA",
+  "CONSULTA_TAROT",
+  "CONSULTA_COCA",
 ];
 
 export async function POST(req: NextRequest) {

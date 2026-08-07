@@ -37,6 +37,8 @@ enum ServicioTipo {
   RETORNO
   ALEJAMIENTO
   UNION_PAREJA
+  CONSULTA_TAROT
+  CONSULTA_COCA
 }
 
 enum ConsultaEstado {

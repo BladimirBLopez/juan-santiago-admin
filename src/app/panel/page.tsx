@@ -18,6 +18,8 @@ const SERVICIO_LABELS: Record<string, string> = {
   RETORNO: "Retorno del Ser Amado",
   ALEJAMIENTO: "Alejamiento de Terceros",
   UNION_PAREJA: "Unión de Parejas",
+  CONSULTA_TAROT: "Consulta de Tarot",
+  CONSULTA_COCA: "Consulta de Hojas de Coca",
 };
 
 const SERVICIO_COLOR: Record<string, string> = {
@@ -26,6 +28,8 @@ const SERVICIO_COLOR: Record<string, string> = {
   ENDULZAMIENTO: "#f59e0b",
   RETORNO: "#3b82f6",
   ALEJAMIENTO: "#64748b",
+  CONSULTA_TAROT: "#14b8a6",
+  CONSULTA_COCA: "#84cc16",
 };
 
 const ESTADO_BADGE: Record<string, { bg: string; text: string; label: string }> = {
