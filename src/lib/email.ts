@@ -1,0 +1,36 @@
+import { Resend } from "resend";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+export async function notificarNuevaConsulta({
+  nombre,
+  servicio,
+  situacion,
+  telefono,
+}: {
+  nombre: string;
+  servicio: string;
+  situacion: string;
+  telefono: string | null;
+}) {
+  const destino = process.env.NOTIFICACION_EMAIL;
+  if (!destino) return;
+
+  try {
+    await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: destino,
+      subject: `Nueva consulta: ${nombre} (${servicio})`,
+      html: `
+        <h2>Nueva consulta recibida</h2>
+        <p><strong>Nombre:</strong> ${nombre}</p>
+        <p><strong>Servicio:</strong> ${servicio}</p>
+        <p><strong>Teléfono:</strong> ${telefono ?? "no proporcionado"}</p>
+        <p><strong>Situación:</strong> ${situacion}</p>
+        <p><a href="https://juan-santiago-admin.vercel.app/panel">Ver en el panel</a></p>
+      `,
+    });
+  } catch (err) {
+    console.error("Error enviando email de notificación:", err);
+  }
+}
