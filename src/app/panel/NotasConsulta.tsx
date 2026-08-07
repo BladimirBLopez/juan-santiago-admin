@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function NotasConsulta({
   consultaId,
@@ -11,12 +12,10 @@ export default function NotasConsulta({
 }) {
   const [notas, setNotas] = useState(notasIniciales ?? "");
   const [guardando, setGuardando] = useState(false);
-  const [guardado, setGuardado] = useState(false);
   const [abierto, setAbierto] = useState(!!notasIniciales);
 
   async function guardar() {
     setGuardando(true);
-    setGuardado(false);
     const res = await fetch(`/api/consultas/${consultaId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -24,8 +23,9 @@ export default function NotasConsulta({
     });
     setGuardando(false);
     if (res.ok) {
-      setGuardado(true);
-      setTimeout(() => setGuardado(false), 2000);
+      toast.success("Nota guardada");
+    } else {
+      toast.error("No se pudo guardar la nota");
     }
   }
 
@@ -60,7 +60,6 @@ export default function NotasConsulta({
         >
           {guardando ? "Guardando..." : "Guardar"}
         </button>
-        {guardado && <span className="text-xs text-[#4a9c6a]">Guardado</span>}
       </div>
     </div>
   );

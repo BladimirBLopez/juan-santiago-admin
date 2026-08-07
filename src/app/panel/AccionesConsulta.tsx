@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function AccionesConsulta({ consultaId }: { consultaId: string }) {
   const router = useRouter();
@@ -15,7 +16,10 @@ export default function AccionesConsulta({ consultaId }: { consultaId: string })
     });
     setEliminando(false);
     if (res.ok) {
+      toast.success("Consulta eliminada");
       router.refresh();
+    } else {
+      toast.error("No se pudo eliminar");
     }
   }
 

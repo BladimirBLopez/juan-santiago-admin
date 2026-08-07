@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 export default function EditarConsulta({
   consultaId,
@@ -34,8 +35,11 @@ export default function EditarConsulta({
     });
     setGuardando(false);
     if (res.ok) {
+      toast.success("Consulta actualizada");
       setEditando(false);
       router.refresh();
+    } else {
+      toast.error("No se pudo guardar los cambios");
     }
   }
 

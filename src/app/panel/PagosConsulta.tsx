@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 type Pago = {
   id: string;
@@ -25,7 +26,12 @@ export default function PagosConsulta({ pagos }: { pagos: Pago[] }) {
       body: JSON.stringify({ estado }),
     });
     setProcesando(null);
-    if (res.ok) router.refresh();
+    if (res.ok) {
+      toast.success(estado === "APROBADO" ? "Pago aprobado" : "Pago rechazado");
+      router.refresh();
+    } else {
+      toast.error("No se pudo actualizar el pago");
+    }
   }
 
   if (pendientes.length === 0) return null;
