@@ -95,15 +95,23 @@ export default function PagoPage({ params }: { params: Promise<{ id: string }> }
           Escanea el QR para pagar, luego sube tu comprobante
         </p>
 
-        <div className="mb-6 rounded-xl border border-[#262b35] bg-[#161a22] p-4 text-center">
-          <img
-            src="https://res.cloudinary.com/dkq95jus0/image/upload/qr-maestrojuan"
-            alt="QR de pago"
-            className="mx-auto rounded-lg max-w-[220px] w-full"
-          />
-          <p className="text-xs text-[#5d6573] mt-2">
-            Escanea con tu app bancaria o billetera móvil
-          </p>
+        <div className="mb-6 grid grid-cols-2 gap-3">
+          <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-3 text-center">
+            <img
+              src="https://res.cloudinary.com/dkq95jus0/image/upload/qr-union"
+              alt="QR Union"
+              className="mx-auto rounded-lg w-full"
+            />
+            <p className="text-xs text-[#9099a8] mt-2 font-medium">Unión / Transferencia</p>
+          </div>
+          <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-3 text-center">
+            <img
+              src="https://res.cloudinary.com/dkq95jus0/image/upload/qr-tigomoney"
+              alt="QR Tigo Money"
+              className="mx-auto rounded-lg w-full"
+            />
+            <p className="text-xs text-[#9099a8] mt-2 font-medium">Tigo Money</p>
+          </div>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
