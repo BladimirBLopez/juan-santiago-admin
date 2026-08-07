@@ -69,7 +69,7 @@ export default async function PanelPage({
   return (
     <main className="px-4 py-5 max-w-2xl mx-auto">
       <div className="flex items-center justify-between mb-5">
-        <h1 className="text-xl font-semibold tracking-tight">Consultas</h1>
+        <h1 className="text-xl font-semibold tracking-tight text-[#0f0f14] dark:text-[#e8eaed]">Consultas</h1>
         {nuevos > 0 && (
           <span className="text-xs px-2.5 py-1 rounded-full bg-[#f973161f] text-[#f97316] font-medium">
             {nuevos} nueva{nuevos > 1 ? "s" : ""}
@@ -82,7 +82,7 @@ export default async function PanelPage({
       <div className="space-y-3">
         {consultas.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-[#6b6b80] text-sm">No se encontraron consultas.</p>
+            <p className="text-[#6b6b80] dark:text-[#6b6b80] text-sm">No se encontraron consultas.</p>
           </div>
         )}
 
@@ -91,7 +91,7 @@ export default async function PanelPage({
           return (
             <div
               key={c.id}
-              className="rounded-xl border border-[#2a2a3d] bg-gradient-to-b from-[#17171f] to-[#131319] p-4 shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
+              className="rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-gradient-to-b from-white to-[#fafafa] dark:from-[#17171f] dark:to-[#131319] p-4 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
               style={{ borderLeft: `3px solid ${SERVICIO_COLOR[c.servicio] ?? "#2a2a3d"}` }}
             >
               <div className="flex items-start justify-between gap-3">
@@ -102,7 +102,7 @@ export default async function PanelPage({
                   <div className="min-w-0">
                     <Link
                       href={`/panel/clientes/${c.cliente.id}`}
-                      className="font-semibold text-[#e8eaed] truncate leading-tight hover:text-[#a78bfa] transition block"
+                      className="font-semibold text-[#0f0f14] dark:text-[#e8eaed] truncate leading-tight hover:text-[#8b5cf6] dark:hover:text-[#a78bfa] transition block"
                     >
                       {c.cliente.nombre}
                     </Link>
@@ -119,11 +119,11 @@ export default async function PanelPage({
                 </Badge>
               </div>
 
-              <p className="text-sm text-[#c4c9d4] mt-3 leading-relaxed">
+              <p className="text-sm text-[#4a4a5a] dark:text-[#c4c9d4] mt-3 leading-relaxed">
                 {c.situacion}
               </p>
 
-              <div className="flex items-center gap-3 mt-3 text-xs text-[#6b6b80]">
+              <div className="flex items-center gap-3 mt-3 text-xs text-[#6b6b80] dark:text-[#6b6b80]">
                 {c.cliente.telefono && (
                   <a
                     href={`https://wa.me/591${c.cliente.telefono.replace(/\D/g, "")}`}
