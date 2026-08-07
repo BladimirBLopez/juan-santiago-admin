@@ -9,6 +9,7 @@ import { MessageCircle, Calendar } from "lucide-react";
 import AccionesConsulta from "./AccionesConsulta";
 import EditarConsulta from "./EditarConsulta";
 import LinkPago from "./LinkPago";
+import PagosConsulta from "./PagosConsulta";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -50,7 +51,7 @@ export default async function PanelPage({
         ? { cliente: { nombre: { contains: q, mode: "insensitive" } } }
         : {}),
     },
-    include: { cliente: true, seguimientos: true },
+    include: { cliente: true, seguimientos: true, pagos: true },
     orderBy: { createdAt: "desc" },
   });
 
@@ -166,6 +167,8 @@ export default async function PanelPage({
                 <div className="mt-1">
                   <NotasConsulta consultaId={c.id} notasIniciales={c.notas} />
                 </div>
+
+                <PagosConsulta pagos={c.pagos} />
                 <div className="mt-3 flex justify-end">
                   <AccionesConsulta consultaId={c.id} />
                 </div>
