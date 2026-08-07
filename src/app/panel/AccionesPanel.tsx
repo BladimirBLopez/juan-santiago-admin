@@ -31,9 +31,9 @@ export default function AccionesPanel({
     <div className="mt-3 pt-3 border-t border-[#1e232c]">
       <button
         onClick={() => setAbierto(!abierto)}
-        className="flex items-center gap-1 text-xs text-[#9099a8] hover:text-[#e8eaed] transition"
+        className="w-full flex items-center justify-center gap-1.5 text-xs font-medium text-[#c9a24b] bg-[#c9a24b0f] border border-[#c9a24b]/25 rounded-lg py-2 hover:bg-[#c9a24b1a] transition"
       >
-        Gestionar
+        Gestionar consulta
         {abierto ? (
           <ChevronUp className="h-3.5 w-3.5" strokeWidth={2} />
         ) : (
