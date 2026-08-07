@@ -48,7 +48,7 @@ export default async function PanelPage({
         ? { cliente: { nombre: { contains: q, mode: "insensitive" } } }
         : {}),
     },
-    include: { cliente: true },
+    include: { cliente: true, seguimientos: true },
     orderBy: { createdAt: "desc" },
   });
 
@@ -132,14 +132,23 @@ export default async function PanelPage({
                 </span>
               </div>
 
-              {c.fechaInicio && c.diasTrabajo && (
-                <ProgresoTrabajo
-                  fechaInicio={c.fechaInicio}
-                  diasTrabajo={c.diasTrabajo}
-                  nombreCliente={c.cliente.nombre}
-                  telefonoCliente={c.cliente.telefono}
-                />
-              )}
+              {c.fechaInicio && c.diasTrabajo && (() => {
+                const avances = c.seguimientos
+                  .filter((s) => s.tipo === "RECORDATORIO_AVANCE" && s.fechaEnvio)
+                  .sort((a, b) => (b.fechaEnvio!.getTime() - a.fechaEnvio!.getTime()));
+                const testimonioEnviado = c.seguimientos.some((s) => s.tipo === "TESTIMONIO");
+                return (
+                  <ProgresoTrabajo
+                    consultaId={c.id}
+                    fechaInicio={c.fechaInicio}
+                    diasTrabajo={c.diasTrabajo}
+                    nombreCliente={c.cliente.nombre}
+                    telefonoCliente={c.cliente.telefono}
+                    ultimoAvanceEnviado={avances[0]?.fechaEnvio ?? null}
+                    testimonioEnviado={testimonioEnviado}
+                  />
+                );
+              })()}
 
               <div className="mt-3 pt-3 border-t border-[#1e232c]">
                 <EstadoSelector
