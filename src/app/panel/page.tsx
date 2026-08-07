@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import EstadoSelector from "./EstadoSelector";
 import ProgresoTrabajo from "./ProgresoTrabajo";
 import NotasConsulta from "./NotasConsulta";
+import FiltrosConsultas from "./FiltrosConsultas";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -13,11 +14,23 @@ const SERVICIO_LABELS: Record<string, string> = {
   UNION_PAREJA: "Unión de Parejas",
 };
 
-export default async function PanelPage() {
+export default async function PanelPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string; estado?: string }>;
+}) {
   const session = await auth();
   if (!session) redirect("/login");
 
+  const { q, estado } = await searchParams;
+
   const consultas = await prisma.consulta.findMany({
+    where: {
+      ...(estado ? { estado: estado as "NUEVO" | "EN_PROCESO" | "COMPLETADO" } : {}),
+      ...(q
+        ? { cliente: { nombre: { contains: q, mode: "insensitive" } } }
+        : {}),
+    },
     include: { cliente: true },
     orderBy: { createdAt: "desc" },
   });
@@ -34,6 +47,8 @@ export default async function PanelPage() {
           </span>
         )}
       </div>
+
+      <FiltrosConsultas />
 
       <div className="space-y-2.5">
         {consultas.length === 0 && (
