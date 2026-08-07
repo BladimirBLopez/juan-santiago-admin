@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { notificarNuevoPago } from "@/lib/email";
 
 export async function POST(req: NextRequest) {
   try {
@@ -19,7 +20,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Comprobante requerido" }, { status: 400 });
     }
 
-    const consulta = await prisma.consulta.findUnique({ where: { id: consultaId } });
+    const consulta = await prisma.consulta.findUnique({
+      where: { id: consultaId },
+      include: { cliente: true },
+    });
     if (!consulta) {
       return NextResponse.json({ error: "Consulta no encontrada" }, { status: 404 });
     }
@@ -30,6 +34,12 @@ export async function POST(req: NextRequest) {
         monto: montoNum,
         comprobanteUrl,
       },
+    });
+
+    await notificarNuevoPago({
+      nombreCliente: consulta.cliente.nombre,
+      monto: montoNum,
+      comprobanteUrl,
     });
 
     return NextResponse.json({ success: true, pagoId: pago.id }, { status: 201 });
