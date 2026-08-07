@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import EstadoSelector from "./EstadoSelector";
 import ProgresoTrabajo from "./ProgresoTrabajo";
+import Link from "next/link";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -41,16 +42,21 @@ export default async function PanelPage() {
               Consultas
             </h1>
           </div>
-          <form
-            action={async () => {
-              "use server";
-              await signOut({ redirectTo: "/login" });
-            }}
-          >
-            <button className="text-xs text-[#f5e6d3]/50 underline underline-offset-4">
-              Cerrar sesión
-            </button>
-          </form>
+          <div className="flex items-center gap-4">
+            <Link href="/panel/reportes" className="text-xs text-[#c9a24b] underline underline-offset-4">
+              Reportes
+            </Link>
+            <form
+              action={async () => {
+                "use server";
+                await signOut({ redirectTo: "/login" });
+              }}
+            >
+              <button className="text-xs text-[#f5e6d3]/50 underline underline-offset-4">
+                Cerrar sesión
+              </button>
+            </form>
+          </div>
         </div>
         {nuevos > 0 && (
           <p className="mt-2 text-xs text-[#e8752c]">
