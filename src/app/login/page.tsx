@@ -34,43 +34,51 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-neutral-950 px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#1a0505] px-6">
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-sm bg-neutral-900 rounded-xl p-6 space-y-4 border border-neutral-800"
+        className="w-full max-w-sm rounded-2xl border border-[#c9a24b]/30 bg-[#2a0a12] p-7 space-y-5"
       >
-        <h1 className="text-xl font-semibold text-white text-center">
-          Panel Maestro Juan Santiago
-        </h1>
+        <div className="text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-[#c9a24b]">
+            Altar del Tata Bombori
+          </p>
+          <h1
+            className="mt-1 text-2xl text-[#f0d78c]"
+            style={{ fontFamily: "var(--font-cinzel)" }}
+          >
+            Panel del Maestro
+          </h1>
+        </div>
 
         <div>
-          <label className="text-sm text-neutral-400">Usuario</label>
+          <label className="text-xs text-[#f5e6d3]/60">Usuario</label>
           <input
             type="text"
             value={usuario}
             onChange={(e) => setUsuario(e.target.value)}
-            className="w-full mt-1 rounded-md bg-neutral-800 text-white px-3 py-2 outline-none focus:ring-2 focus:ring-amber-600"
+            className="w-full mt-1 rounded-lg border border-[#c9a24b]/30 bg-[#1a0505] text-[#f5e6d3] px-3 py-2 outline-none focus:border-[#c9a24b]"
             required
           />
         </div>
 
         <div>
-          <label className="text-sm text-neutral-400">Contraseña</label>
+          <label className="text-xs text-[#f5e6d3]/60">Contraseña</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full mt-1 rounded-md bg-neutral-800 text-white px-3 py-2 outline-none focus:ring-2 focus:ring-amber-600"
+            className="w-full mt-1 rounded-lg border border-[#c9a24b]/30 bg-[#1a0505] text-[#f5e6d3] px-3 py-2 outline-none focus:border-[#c9a24b]"
             required
           />
         </div>
 
-        {error && <p className="text-red-500 text-sm">{error}</p>}
+        {error && <p className="text-sm text-[#e8752c]">{error}</p>}
 
         <button
           type="submit"
           disabled={loading}
-          className="w-full bg-amber-600 hover:bg-amber-500 text-white rounded-md py-2 font-medium transition disabled:opacity-50"
+          className="w-full rounded-full bg-gradient-to-b from-[#e6c476] to-[#c9a24b] text-[#1a0505] font-bold uppercase tracking-wider text-sm py-3 transition hover:scale-[1.02] disabled:opacity-50"
         >
           {loading ? "Entrando..." : "Entrar"}
         </button>

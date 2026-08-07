@@ -3,13 +3,11 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-const ESTADOS = ["NUEVO", "EN_PROCESO", "COMPLETADO"];
-
-const ESTADO_LABELS: Record<string, string> = {
-  NUEVO: "Nuevo",
-  EN_PROCESO: "En proceso",
-  COMPLETADO: "Completado",
-};
+const ESTADOS = [
+  { value: "NUEVO", label: "Nuevo", color: "#e8752c" },
+  { value: "EN_PROCESO", label: "En proceso", color: "#c9a24b" },
+  { value: "COMPLETADO", label: "Completado", color: "#4a7c59" },
+];
 
 export default function EstadoSelector({
   consultaId,
@@ -39,21 +37,32 @@ export default function EstadoSelector({
   }
 
   return (
-    <div className="flex gap-1 mt-2">
-      {ESTADOS.map((estado) => (
-        <button
-          key={estado}
-          onClick={() => cambiarEstado(estado)}
-          disabled={loading}
-          className={`text-xs px-2 py-1 rounded transition disabled:opacity-50 ${
-            estado === estadoActual
-              ? "bg-amber-600 text-white"
-              : "bg-neutral-800 text-neutral-400 hover:bg-neutral-700"
-          }`}
-        >
-          {ESTADO_LABELS[estado]}
-        </button>
-      ))}
+    <div className="flex gap-2 mt-3">
+      {ESTADOS.map((estado) => {
+        const activo = estado.value === estadoActual;
+        return (
+          <button
+            key={estado.value}
+            onClick={() => cambiarEstado(estado.value)}
+            disabled={loading}
+            className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-full border transition disabled:opacity-50"
+            style={{
+              borderColor: activo ? estado.color : "rgba(201,162,75,0.2)",
+              backgroundColor: activo ? `${estado.color}22` : "transparent",
+              color: activo ? estado.color : "#f5e6d3aa",
+            }}
+          >
+            <span
+              className="h-2 w-2 rounded-full shrink-0"
+              style={{
+                backgroundColor: estado.color,
+                opacity: activo ? 1 : 0.35,
+              }}
+            />
+            {estado.label}
+          </button>
+        );
+      })}
     </div>
   );
 }
