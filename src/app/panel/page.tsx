@@ -5,6 +5,7 @@ import EstadoSelector from "./EstadoSelector";
 import ProgresoTrabajo from "./ProgresoTrabajo";
 import NotasConsulta from "./NotasConsulta";
 import FiltrosConsultas from "./FiltrosConsultas";
+import { MessageCircle, Calendar } from "lucide-react";
 import AccionesConsulta from "./AccionesConsulta";
 import EditarConsulta from "./EditarConsulta";
 
@@ -115,16 +116,12 @@ export default async function PanelPage({
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-1 text-[#4a9c6a] hover:text-[#5bb87d] transition"
                   >
-                    <svg className="h-3.5 w-3.5" viewBox="0 0 32 32" fill="currentColor">
-                      <path d="M16.04 3C9.37 3 3.98 8.39 3.98 15.06c0 2.24.6 4.34 1.65 6.15L3 29l7.98-2.6a12.03 12.03 0 0 0 5.06 1.11h.01c6.67 0 12.06-5.39 12.06-12.06C28.11 8.79 22.71 3 16.04 3z"/>
-                    </svg>
+                    <MessageCircle className="h-3.5 w-3.5" strokeWidth={2} />
                     {c.cliente.telefono}
                   </a>
                 )}
                 <span className="inline-flex items-center gap-1">
-                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                  </svg>
+                  <Calendar className="h-3.5 w-3.5" strokeWidth={2} />
                   {new Date(c.createdAt).toLocaleDateString("es-BO", {
                     day: "2-digit",
                     month: "short",

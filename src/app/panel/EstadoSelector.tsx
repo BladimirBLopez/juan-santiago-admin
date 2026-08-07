@@ -2,11 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { Circle, Loader2, CheckCircle2, Flame } from "lucide-react";
 
 const ESTADOS = [
-  { value: "NUEVO", label: "Nuevo", color: "#e8752c" },
-  { value: "EN_PROCESO", label: "En proceso", color: "#c9a24b" },
-  { value: "COMPLETADO", label: "Completado", color: "#4a9c6a" },
+  { value: "NUEVO", label: "Nuevo", color: "#e8752c", Icon: Circle },
+  { value: "EN_PROCESO", label: "En proceso", color: "#c9a24b", Icon: Loader2 },
+  { value: "COMPLETADO", label: "Completado", color: "#4a9c6a", Icon: CheckCircle2 },
 ];
 
 export default function EstadoSelector({
@@ -50,8 +51,9 @@ export default function EstadoSelector({
         <button
           onClick={iniciarTrabajo}
           disabled={loading}
-          className="w-full text-xs font-medium py-2 rounded-lg bg-[#c9a24b] text-[#0f1115] disabled:opacity-50 mb-2 hover:bg-[#d9b25b] transition"
+          className="w-full flex items-center justify-center gap-1.5 text-xs font-medium py-2 rounded-lg bg-[#c9a24b] text-[#0f1115] disabled:opacity-50 mb-2 hover:bg-[#d9b25b] transition"
         >
+          <Flame className="h-3.5 w-3.5" strokeWidth={2} />
           {loading ? "Iniciando..." : "Iniciar trabajo"}
         </button>
       )}
@@ -59,6 +61,7 @@ export default function EstadoSelector({
       <div className="flex gap-1.5">
         {ESTADOS.map((estado) => {
           const activo = estado.value === estadoActual;
+          const Icon = estado.Icon;
           return (
             <button
               key={estado.value}
@@ -71,13 +74,7 @@ export default function EstadoSelector({
                 color: activo ? estado.color : "#9099a8",
               }}
             >
-              <span
-                className="h-1.5 w-1.5 rounded-full shrink-0"
-                style={{
-                  backgroundColor: estado.color,
-                  opacity: activo ? 1 : 0.4,
-                }}
-              />
+              <Icon className="h-3 w-3" strokeWidth={2.5} />
               {estado.label}
             </button>
           );
