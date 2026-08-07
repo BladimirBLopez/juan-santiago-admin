@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import RenovacionCard from "./RenovacionCard";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -39,6 +40,25 @@ export default async function ReportesPage() {
   const recurrentes = clientes
     .filter((c) => c._count.consultas > 1)
     .sort((a, b) => b._count.consultas - a._count.consultas);
+
+  const clientesConUltimaConsulta = await prisma.cliente.findMany({
+    include: {
+      consultas: { orderBy: { createdAt: "desc" }, take: 1 },
+    },
+  });
+
+  const hoy = new Date();
+  const paraRecontactar = clientesConUltimaConsulta
+    .map((c) => {
+      const ultima = c.consultas[0];
+      if (!ultima) return null;
+      const dias = Math.floor(
+        (hoy.getTime() - new Date(ultima.createdAt).getTime()) / (1000 * 60 * 60 * 24)
+      );
+      return { nombre: c.nombre, telefono: c.telefono, diasSinConsulta: dias };
+    })
+    .filter((c): c is { nombre: string; telefono: string | null; diasSinConsulta: number } => c !== null && c.diasSinConsulta >= 60)
+    .sort((a, b) => b.diasSinConsulta - a.diasSinConsulta);
 
   return (
     <main className="px-4 py-5 max-w-2xl mx-auto space-y-3">
@@ -109,6 +129,8 @@ export default async function ReportesPage() {
           <p className="text-xs text-[#5d6573]">Sin datos aún.</p>
         )}
       </div>
+
+      <RenovacionCard clientes={paraRecontactar} />
 
       <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-4">
         <h2 className="text-sm font-medium text-[#e8eaed] mb-3">
