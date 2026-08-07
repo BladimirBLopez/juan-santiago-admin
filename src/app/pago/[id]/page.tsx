@@ -124,6 +124,11 @@ export default function PagoPage({ params }: { params: Promise<{ id: string }> }
             <img src={preview} alt="Vista previa" className="rounded-lg max-h-48 mx-auto" />
           )}
 
+          <p className="text-[11px] text-[#5d6573] text-center leading-relaxed">
+            Confirma que esta es una foto real de tu comprobante de pago.
+            Subir una imagen falsa o incorrecta puede invalidar tu trabajo.
+          </p>
+
           {error && <p className="text-sm text-[#e8752c]">{error}</p>}
 
           <button
