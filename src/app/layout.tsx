@@ -22,6 +22,8 @@ const cinzel = Cinzel({
 export const metadata: Metadata = {
   title: "Panel · Maestro Juan Santiago",
   description: "Panel de administración del Altar del Tata Bombori",
+  manifest: "/manifest.json",
+  themeColor: "#8b5cf6",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

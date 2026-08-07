@@ -1,0 +1,21 @@
+{
+  "name": "Panel Maestro Juan Santiago",
+  "short_name": "Panel Maestro",
+  "description": "Sistema de gestión del Altar del Tata Bombori",
+  "start_url": "/panel",
+  "display": "standalone",
+  "background_color": "#0a0a0f",
+  "theme_color": "#8b5cf6",
+  "icons": [
+    {
+      "src": "https://res.cloudinary.com/dkq95jus0/image/upload/icon-192",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://res.cloudinary.com/dkq95jus0/image/upload/icon-512",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
