@@ -8,6 +8,8 @@ import PagosConsulta from "./PagosConsulta";
 import AccionesPanel from "./AccionesPanel";
 import Link from "next/link";
 import AvisoPagoPendiente from "./AvisoPagoPendiente";
+import { formatDistanceToNow } from "date-fns";
+import { es } from "date-fns/locale";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -123,12 +125,9 @@ export default async function PanelPage({
                     {c.cliente.telefono}
                   </a>
                 )}
-                <span className="inline-flex items-center gap-1">
+                <span className="inline-flex items-center gap-1" title={new Date(c.createdAt).toLocaleDateString("es-BO", { day: "2-digit", month: "short", year: "numeric" })}>
                   <Calendar className="h-3.5 w-3.5" strokeWidth={2} />
-                  {new Date(c.createdAt).toLocaleDateString("es-BO", {
-                    day: "2-digit",
-                    month: "short",
-                  })}
+                  {formatDistanceToNow(new Date(c.createdAt), { addSuffix: true, locale: es })}
                 </span>
               </div>
 
