@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Circle, Loader2, CheckCircle2, Flame } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 const ESTADOS = [
   { value: "NUEVO", label: "Nuevo", color: "#e8752c", Icon: Circle },
@@ -31,7 +33,12 @@ export default function EstadoSelector({
       body: JSON.stringify({ estado: nuevoEstado }),
     });
     setLoading(false);
-    if (res.ok) router.refresh();
+    if (res.ok) {
+      toast.success("Estado actualizado");
+      router.refresh();
+    } else {
+      toast.error("No se pudo actualizar el estado");
+    }
   }
 
   async function iniciarTrabajo() {
@@ -42,20 +49,26 @@ export default function EstadoSelector({
       body: JSON.stringify({ iniciarTrabajo: true }),
     });
     setLoading(false);
-    if (res.ok) router.refresh();
+    if (res.ok) {
+      toast.success("Trabajo iniciado");
+      router.refresh();
+    } else {
+      toast.error("No se pudo iniciar el trabajo");
+    }
   }
 
   return (
-    <div className="mt-3">
+    <div>
       {estadoActual === "NUEVO" && !fechaInicio && (
-        <button
+        <Button
           onClick={iniciarTrabajo}
           disabled={loading}
-          className="w-full flex items-center justify-center gap-1.5 text-xs font-medium py-2 rounded-lg bg-[#c9a24b] text-[#0f1115] disabled:opacity-50 mb-2 hover:bg-[#d9b25b] transition"
+          size="sm"
+          className="w-full mb-2 bg-[#c9a24b] text-[#0f1115] hover:bg-[#d9b25b]"
         >
           <Flame className="h-3.5 w-3.5" strokeWidth={2} />
           {loading ? "Iniciando..." : "Iniciar trabajo"}
-        </button>
+        </Button>
       )}
 
       <div className="flex gap-1.5">
@@ -63,11 +76,13 @@ export default function EstadoSelector({
           const activo = estado.value === estadoActual;
           const Icon = estado.Icon;
           return (
-            <button
+            <Button
               key={estado.value}
               onClick={() => cambiarEstado(estado.value)}
               disabled={loading}
-              className="flex items-center gap-1.5 text-xs px-2.5 py-1.5 rounded-md border transition disabled:opacity-50"
+              variant="outline"
+              size="sm"
+              className="text-xs h-auto py-1.5 px-2.5"
               style={{
                 borderColor: activo ? estado.color : "#262b35",
                 backgroundColor: activo ? `${estado.color}18` : "transparent",
@@ -76,7 +91,7 @@ export default function EstadoSelector({
             >
               <Icon className="h-3 w-3" strokeWidth={2.5} />
               {estado.label}
-            </button>
+            </Button>
           );
         })}
       </div>

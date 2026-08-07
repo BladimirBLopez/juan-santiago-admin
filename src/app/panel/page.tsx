@@ -8,6 +8,7 @@ import PagosConsulta from "./PagosConsulta";
 import AccionesPanel from "./AccionesPanel";
 import Link from "next/link";
 import AvisoPagoPendiente from "./AvisoPagoPendiente";
+import { Badge } from "@/components/ui/badge";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
 
@@ -101,12 +102,12 @@ export default async function PanelPage({
                     </p>
                   </div>
                 </div>
-                <span
-                  className="text-[10px] px-2 py-1 rounded-full font-medium shrink-0"
+                <Badge
+                  className="shrink-0 border-0"
                   style={{ backgroundColor: badge.bg, color: badge.text }}
                 >
                   {badge.label}
-                </span>
+                </Badge>
               </div>
 
               <p className="text-sm text-[#c4c9d4] mt-3 leading-relaxed">
