@@ -106,7 +106,12 @@ export default async function PanelPage() {
             )}
 
             {c.fechaInicio && c.diasTrabajo && (
-              <ProgresoTrabajo fechaInicio={c.fechaInicio} diasTrabajo={c.diasTrabajo} />
+              <ProgresoTrabajo
+                fechaInicio={c.fechaInicio}
+                diasTrabajo={c.diasTrabajo}
+                nombreCliente={c.cliente.nombre}
+                telefonoCliente={c.cliente.telefono}
+              />
             )}
 
             <EstadoSelector
