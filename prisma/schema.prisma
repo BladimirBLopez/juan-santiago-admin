@@ -75,6 +75,7 @@ model Pago {
   monto          Float
   comprobanteUrl String
   estado         PagoEstado @default(PENDIENTE)
+  verificadoOcr  Boolean    @default(false)
   aprobadoAt     DateTime?
   createdAt      DateTime   @default(now())
 }

@@ -9,6 +9,7 @@ type Pago = {
   monto: number;
   comprobanteUrl: string;
   estado: string;
+  verificadoOcr?: boolean;
   createdAt: Date;
 };
 
@@ -44,8 +45,13 @@ export default function PagosConsulta({ pagos }: { pagos: Pago[] }) {
           className="rounded-lg border border-[#8b5cf6]/30 bg-[#8b5cf6]/5 p-3"
         >
           <div className="flex items-center justify-between mb-2">
-            <span className="text-sm font-semibold text-[#8b5cf6]">
+            <span className="text-sm font-semibold text-[#8b5cf6] flex items-center gap-1.5">
               Bs {pago.monto}
+              {pago.verificadoOcr && (
+                <span className="text-[10px] font-medium text-[#22c55e] bg-[#22c55e1a] px-1.5 py-0.5 rounded">
+                  ✓ Auto-verificado
+                </span>
+              )}
             </span>
             <span className="text-[10px] text-[#6b6b80]">
               {new Date(pago.createdAt).toLocaleDateString("es-BO", {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, use } from "react";
+import Tesseract from "tesseract.js";
 
 const CLOUDINARY_CLOUD = "dkq95jus0";
 const CLOUDINARY_PRESET = "juan-santiago-comprobantes";
@@ -13,6 +14,9 @@ export default function PagoPage({ params }: { params: Promise<{ id: string }> }
   const [enviando, setEnviando] = useState(false);
   const [enviado, setEnviado] = useState(false);
   const [error, setError] = useState("");
+  const [analizando, setAnalizando] = useState(false);
+  const [montoDetectado, setMontoDetectado] = useState<string | null>(null);
+  const [verificado, setVerificado] = useState<"si" | "no" | null>(null);
 
   useEffect(() => {
     if (!archivo) {
@@ -21,8 +25,42 @@ export default function PagoPage({ params }: { params: Promise<{ id: string }> }
     }
     const url = URL.createObjectURL(archivo);
     setPreview(url);
+    analizarComprobante(archivo);
     return () => URL.revokeObjectURL(url);
   }, [archivo]);
+
+  async function analizarComprobante(file: File) {
+    setAnalizando(true);
+    setMontoDetectado(null);
+    setVerificado(null);
+
+    try {
+      const { data } = await Tesseract.recognize(file, "spa");
+      const texto = data.text;
+
+      const numeros = texto.match(/\d{1,4}[.,]?\d{0,2}/g) ?? [];
+      const numerosLimpios = numeros
+        .map((n) => n.replace(",", "."))
+        .map(Number)
+        .filter((n) => n >= 10 && n <= 100000);
+
+      if (numerosLimpios.length > 0) {
+        const montoActual = Number(monto);
+        const coincide = numerosLimpios.some(
+          (n) => Math.abs(n - montoActual) < 1
+        );
+
+        setMontoDetectado(numerosLimpios.join(", "));
+        setVerificado(coincide ? "si" : "no");
+      } else {
+        setVerificado(null);
+      }
+    } catch {
+      setVerificado(null);
+    } finally {
+      setAnalizando(false);
+    }
+  }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -56,6 +94,7 @@ export default function PagoPage({ params }: { params: Promise<{ id: string }> }
           consultaId: id,
           monto,
           comprobanteUrl: uploadData.secure_url,
+          verificadoOcr: verificado === "si",
         }),
       });
 
@@ -141,6 +180,22 @@ export default function PagoPage({ params }: { params: Promise<{ id: string }> }
 
           {preview && (
             <img src={preview} alt="Vista previa" className="rounded-lg max-h-48 mx-auto" />
+          )}
+
+          {analizando && (
+            <p className="text-xs text-[#9099a8] text-center">Analizando comprobante...</p>
+          )}
+
+          {!analizando && verificado === "si" && (
+            <p className="text-xs text-[#22c55e] text-center">
+              ✓ Monto detectado coincide ({montoDetectado})
+            </p>
+          )}
+
+          {!analizando && verificado === "no" && (
+            <p className="text-xs text-[#f97316] text-center">
+              ⚠️ No pudimos confirmar el monto en la imagen (detectamos: {montoDetectado}). El Maestro lo revisará igual.
+            </p>
           )}
 
           <p className="text-[11px] text-[#5d6573] text-center leading-relaxed">

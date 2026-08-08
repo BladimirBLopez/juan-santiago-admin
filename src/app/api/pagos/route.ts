@@ -5,7 +5,7 @@ import { notificarNuevoPago } from "@/lib/email";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { consultaId, monto, comprobanteUrl } = body;
+    const { consultaId, monto, comprobanteUrl, verificadoOcr } = body;
 
     if (!consultaId || typeof consultaId !== "string") {
       return NextResponse.json({ error: "Consulta inválida" }, { status: 400 });
@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
         consultaId,
         monto: montoNum,
         comprobanteUrl,
+        verificadoOcr: Boolean(verificadoOcr),
       },
     });
 
