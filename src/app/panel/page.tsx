@@ -100,8 +100,11 @@ export default async function PanelPage({
           return (
             <div
               key={c.id}
-              className="rounded-lg border border-[#e4e4e7] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-shadow"
-              style={{ borderLeft: `3px solid ${SERVICIO_COLOR[c.servicio] ?? "#e4e4e7"}` }}
+              className="rounded-xl border border-[#e4e4e7] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.12)] transition-shadow"
+              style={{
+                borderLeft: `5px solid ${SERVICIO_COLOR[c.servicio] ?? "#e4e4e7"}`,
+                backgroundColor: `${SERVICIO_COLOR[c.servicio] ?? "#e4e4e7"}08`,
+              }}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">
