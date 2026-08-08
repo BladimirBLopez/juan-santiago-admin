@@ -6,6 +6,7 @@ import FiltrosConsultas from "./FiltrosConsultas";
 import { MessageCircle, Calendar } from "lucide-react";
 import PagosConsulta from "./PagosConsulta";
 import AccionesPanel from "./AccionesPanel";
+import LinkPago from "./LinkPago";
 import Link from "next/link";
 import AvisoPagoPendiente from "./AvisoPagoPendiente";
 import DashboardMetricas from "./DashboardMetricas";
@@ -171,6 +172,10 @@ export default async function PanelPage({
                   />
                 );
               })()}
+
+              <div className="mt-3">
+                <LinkPago consultaId={c.id} />
+              </div>
 
               <AvisoPagoPendiente
                 fechaInicio={c.fechaInicio}

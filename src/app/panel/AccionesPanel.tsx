@@ -6,7 +6,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import EstadoSelector from "./EstadoSelector";
 import NotasConsulta from "./NotasConsulta";
 import EditarConsulta from "./EditarConsulta";
-import LinkPago from "./LinkPago";
 import AccionesConsulta from "./AccionesConsulta";
 
 export default function AccionesPanel({
@@ -61,15 +60,12 @@ export default function AccionesPanel({
                 servicio={servicio}
               />
 
-              <div className="flex items-center justify-between gap-3">
-                <LinkPago consultaId={consultaId} />
-                <EditarConsulta
-                  consultaId={consultaId}
-                  nombreInicial={nombreCliente}
-                  telefonoInicial={telefonoCliente}
-                  situacionInicial={situacion}
-                />
-              </div>
+              <EditarConsulta
+                consultaId={consultaId}
+                nombreInicial={nombreCliente}
+                telefonoInicial={telefonoCliente}
+                situacionInicial={situacion}
+              />
 
               <NotasConsulta consultaId={consultaId} notasIniciales={notas} />
 
