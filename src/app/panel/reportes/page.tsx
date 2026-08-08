@@ -4,6 +4,16 @@ import { prisma } from "@/lib/prisma";
 import RenovacionCard from "./RenovacionCard";
 import GraficoServicios from "./GraficoServicios";
 
+const SERVICIO_COLOR: Record<string, string> = {
+  AMARRE: "#e11d48",
+  UNION_PAREJA: "#6366f1",
+  ENDULZAMIENTO: "#d97706",
+  RETORNO: "#2563eb",
+  ALEJAMIENTO: "#52525b",
+  CONSULTA_TAROT: "#0d9488",
+  CONSULTA_COCA: "#65a30d",
+};
+
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
   ENDULZAMIENTO: "Endulzamiento",
@@ -118,6 +128,7 @@ export default async function ReportesPage() {
           datos={porServicio.map((s) => ({
             nombre: SERVICIO_LABELS[s.servicio] ?? s.servicio,
             cantidad: s._count.servicio,
+            color: SERVICIO_COLOR[s.servicio] ?? "#6366f1",
           }))}
           total={totalConsultas}
         />

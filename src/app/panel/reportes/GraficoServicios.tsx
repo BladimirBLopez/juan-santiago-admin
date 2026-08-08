@@ -5,6 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from 
 type DatoServicio = {
   nombre: string;
   cantidad: number;
+  color: string;
 };
 
 export default function GraficoServicios({
@@ -43,8 +44,8 @@ export default function GraficoServicios({
             cursor={{ fill: "#6366f10f" }}
           />
           <Bar dataKey="cantidad" radius={[0, 4, 4, 0]}>
-            {datos.map((_, index) => (
-              <Cell key={index} fill="#6366f1" />
+            {datos.map((d, index) => (
+              <Cell key={index} fill={d.color} />
             ))}
           </Bar>
         </BarChart>
