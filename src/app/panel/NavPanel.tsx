@@ -11,6 +11,7 @@ export default function NavPanel() {
     { href: "/panel/calendario", label: "Calendario" },
     { href: "/panel/reportes", label: "Reportes" },
     { href: "/panel/precios", label: "Precios" },
+    { href: "/panel/testimonios", label: "Testimonios" },
     { href: "/panel/configuracion", label: "Config" },
   ];
 

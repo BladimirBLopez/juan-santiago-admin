@@ -8,6 +8,23 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
+enum TipoMedia {
+  IMAGEN
+  VIDEO
+  AUDIO
+}
+
+model Testimonio {
+  id          String     @id @default(cuid())
+  nombre      String
+  servicio    ServicioTipo?
+  texto       String
+  mediaUrl    String?
+  mediaTipo   TipoMedia?
+  visible     Boolean    @default(true)
+  createdAt   DateTime   @default(now())
+}
+
 model Configuracion {
   id        String   @id @default(cuid())
   clave     String   @unique
