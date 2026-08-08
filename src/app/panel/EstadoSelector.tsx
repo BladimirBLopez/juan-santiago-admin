@@ -23,20 +23,28 @@ export default function EstadoSelector({
 }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
+  const [estadoLocal, setEstadoLocal] = useState(estadoActual);
 
   async function cambiarEstado(nuevoEstado: string) {
-    if (nuevoEstado === estadoActual) return;
+    if (nuevoEstado === estadoLocal) return;
+
+    const anterior = estadoLocal;
+    setEstadoLocal(nuevoEstado);
     setLoading(true);
+
     const res = await fetch(`/api/consultas/${consultaId}`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ estado: nuevoEstado }),
     });
+
     setLoading(false);
+
     if (res.ok) {
       toast.success("Estado actualizado");
       router.refresh();
     } else {
+      setEstadoLocal(anterior);
       toast.error("No se pudo actualizar el estado");
     }
   }
@@ -50,6 +58,7 @@ export default function EstadoSelector({
     });
     setLoading(false);
     if (res.ok) {
+      setEstadoLocal("EN_PROCESO");
       toast.success("Trabajo iniciado");
       router.refresh();
     } else {
@@ -59,7 +68,7 @@ export default function EstadoSelector({
 
   return (
     <div>
-      {estadoActual === "NUEVO" && !fechaInicio && (
+      {estadoLocal === "NUEVO" && !fechaInicio && (
         <Button
           onClick={iniciarTrabajo}
           disabled={loading}
@@ -73,7 +82,7 @@ export default function EstadoSelector({
 
       <div className="flex gap-1.5">
         {ESTADOS.map((estado) => {
-          const activo = estado.value === estadoActual;
+          const activo = estado.value === estadoLocal;
           const Icon = estado.Icon;
           return (
             <Button
