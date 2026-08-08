@@ -16,14 +16,14 @@ export default function NavPanel() {
   ];
 
   return (
-    <nav className="px-5 max-w-3xl mx-auto flex gap-5">
+    <nav className="px-5 max-w-3xl mx-auto flex gap-5 overflow-x-auto whitespace-nowrap [&::-webkit-scrollbar]:hidden" style={{ scrollbarWidth: "none" }}>
       {links.map((link) => {
         const activo = pathname === link.href;
         return (
           <Link
             key={link.href}
             href={link.href}
-            className="text-[13px] py-2.5 border-b-2 transition font-medium"
+            className="text-[13px] py-2.5 border-b-2 transition font-medium shrink-0"
             style={{
               borderColor: activo ? "#6366f1" : "transparent",
               color: activo ? "#18181b" : "#a1a1aa",
