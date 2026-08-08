@@ -93,6 +93,16 @@ export async function PATCH(
     return NextResponse.json({ error: "Estado inválido" }, { status: 400 });
   }
 
+  if (estado === "NUEVO") {
+    const consultaActual = await prisma.consulta.findUnique({ where: { id } });
+    if (consultaActual?.fechaInicio) {
+      return NextResponse.json(
+        { error: "No se puede volver a Nuevo despues de iniciar el trabajo" },
+        { status: 400 }
+      );
+    }
+  }
+
   const consulta = await prisma.consulta.update({
     where: { id },
     data: { estado },

@@ -85,7 +85,7 @@ export default function EstadoSelector({
       )}
 
       <div className="flex gap-1.5">
-        {ESTADOS.map((estado) => {
+        {ESTADOS.filter((estado) => !(estado.value === "NUEVO" && fechaInicio)).map((estado) => {
           const activo = estado.value === estadoLocal;
           const Icon = estado.Icon;
           return (

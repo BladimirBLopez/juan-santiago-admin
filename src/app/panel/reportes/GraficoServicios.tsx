@@ -7,7 +7,13 @@ type DatoServicio = {
   cantidad: number;
 };
 
-export default function GraficoServicios({ datos }: { datos: DatoServicio[] }) {
+export default function GraficoServicios({
+  datos,
+  total,
+}: {
+  datos: DatoServicio[];
+  total: number;
+}) {
   if (datos.length === 0) {
     return <p className="text-xs text-[#6b6b80]">Sin datos aún.</p>;
   }
@@ -16,7 +22,7 @@ export default function GraficoServicios({ datos }: { datos: DatoServicio[] }) {
     <div className="h-56 -ml-2">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={datos} layout="vertical" margin={{ left: 0, right: 16 }}>
-          <XAxis type="number" hide />
+          <XAxis type="number" domain={[0, total]} hide />
           <YAxis
             type="category"
             dataKey="nombre"

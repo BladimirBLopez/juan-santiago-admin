@@ -119,6 +119,7 @@ export default async function ReportesPage() {
             nombre: SERVICIO_LABELS[s.servicio] ?? s.servicio,
             cantidad: s._count.servicio,
           }))}
+          total={totalConsultas}
         />
         {false && (
           <p className="text-xs text-[#6b6b80] dark:text-[#6b6b80]">Sin datos aún.</p>
