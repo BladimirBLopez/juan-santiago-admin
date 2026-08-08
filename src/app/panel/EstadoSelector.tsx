@@ -12,14 +12,18 @@ const ESTADOS = [
   { value: "COMPLETADO", label: "Completado", color: "#22c55e", Icon: CheckCircle2 },
 ];
 
+const SERVICIOS_CON_SEGUIMIENTO = ["AMARRE", "UNION_PAREJA", "RETORNO", "ENDULZAMIENTO", "ALEJAMIENTO"];
+
 export default function EstadoSelector({
   consultaId,
   estadoActual,
   fechaInicio,
+  servicio,
 }: {
   consultaId: string;
   estadoActual: string;
   fechaInicio: Date | null;
+  servicio: string;
 }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -68,7 +72,7 @@ export default function EstadoSelector({
 
   return (
     <div>
-      {estadoLocal === "NUEVO" && !fechaInicio && (
+      {estadoLocal === "NUEVO" && !fechaInicio && SERVICIOS_CON_SEGUIMIENTO.includes(servicio) && (
         <Button
           onClick={iniciarTrabajo}
           disabled={loading}

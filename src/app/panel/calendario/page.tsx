@@ -17,6 +17,7 @@ export default async function CalendarioPage() {
 
   const eventos = consultas.map((c) => ({
     id: c.id,
+    clienteId: c.cliente.id,
     nombre: c.cliente.nombre,
     servicio: c.servicio,
     fecha: c.createdAt,

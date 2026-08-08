@@ -17,6 +17,7 @@ export default function AccionesPanel({
   nombreCliente,
   telefonoCliente,
   situacion,
+  servicio,
 }: {
   consultaId: string;
   estadoActual: string;
@@ -25,6 +26,7 @@ export default function AccionesPanel({
   nombreCliente: string;
   telefonoCliente: string | null;
   situacion: string;
+  servicio: string;
 }) {
   const [abierto, setAbierto] = useState(false);
 
@@ -56,6 +58,7 @@ export default function AccionesPanel({
                 consultaId={consultaId}
                 estadoActual={estadoActual}
                 fechaInicio={fechaInicio}
+                servicio={servicio}
               />
 
               <div className="flex items-center justify-between gap-3">

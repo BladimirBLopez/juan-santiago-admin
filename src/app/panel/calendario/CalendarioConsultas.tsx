@@ -6,6 +6,7 @@ import Link from "next/link";
 
 type Evento = {
   id: string;
+  clienteId: string;
   nombre: string;
   servicio: string;
   fecha: Date;
@@ -73,7 +74,7 @@ export default function CalendarioConsultas({ eventos }: { eventos: Evento[] }) 
           {eventosDelDia.map((e) => (
             <Link
               key={e.id}
-              href={`/panel/clientes/${e.id}`}
+              href={`/panel/clientes/${e.clienteId}`}
               className="block rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#17171f] p-3 hover:border-[#8b5cf6]/40 transition"
             >
               <p className="text-sm font-medium text-[#0f0f14] dark:text-[#e8eaed]">

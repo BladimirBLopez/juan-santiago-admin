@@ -70,11 +70,18 @@ export async function PATCH(
       return NextResponse.json({ error: "No encontrada" }, { status: 404 });
     }
 
+    if (!DIAS_POR_SERVICIO[consultaActual.servicio]) {
+      return NextResponse.json(
+        { error: "Este servicio no requiere seguimiento de días" },
+        { status: 400 }
+      );
+    }
+
     const consulta = await prisma.consulta.update({
       where: { id },
       data: {
         fechaInicio: new Date(),
-        diasTrabajo: DIAS_POR_SERVICIO[consultaActual.servicio] ?? 21,
+        diasTrabajo: DIAS_POR_SERVICIO[consultaActual.servicio],
         estado: "EN_PROCESO",
       },
     });

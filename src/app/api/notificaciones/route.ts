@@ -31,13 +31,13 @@ export async function GET() {
       tipo: "consulta" as const,
       texto: `Nueva consulta de ${c.cliente.nombre}`,
       fecha: c.createdAt,
-      id: c.id,
+      id: c.cliente.id,
     })),
     ...pagos.map((p) => ({
       tipo: "pago" as const,
       texto: `Pago de Bs ${p.monto} de ${p.consulta.cliente.nombre}`,
       fecha: p.createdAt,
-      id: p.consultaId,
+      id: p.consulta.cliente.id,
     })),
   ].sort((a, b) => b.fecha.getTime() - a.fecha.getTime());
 

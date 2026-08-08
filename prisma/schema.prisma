@@ -71,7 +71,7 @@ enum PagoEstado {
 model Pago {
   id             String     @id @default(cuid())
   consultaId     String
-  consulta       Consulta   @relation(fields: [consultaId], references: [id])
+  consulta       Consulta   @relation(fields: [consultaId], references: [id], onDelete: Cascade)
   monto          Float
   comprobanteUrl String
   estado         PagoEstado @default(PENDIENTE)
@@ -89,7 +89,7 @@ enum SeguimientoTipo {
 model Seguimiento {
   id         String          @id @default(cuid())
   consultaId String
-  consulta   Consulta        @relation(fields: [consultaId], references: [id])
+  consulta   Consulta        @relation(fields: [consultaId], references: [id], onDelete: Cascade)
   tipo       SeguimientoTipo
   enviado    Boolean         @default(false)
   fechaEnvio DateTime?

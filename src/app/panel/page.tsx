@@ -181,6 +181,7 @@ export default async function PanelPage({
                 nombreCliente={c.cliente.nombre}
                 telefonoCliente={c.cliente.telefono}
                 situacion={c.situacion}
+                servicio={c.servicio}
               />
             </div>
           );
