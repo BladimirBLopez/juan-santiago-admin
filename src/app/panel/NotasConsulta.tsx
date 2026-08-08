@@ -49,14 +49,14 @@ export default function NotasConsulta({
         value={notas}
         onChange={(e) => setNotas(e.target.value)}
         rows={2}
-        className="w-full text-xs rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#0a0a0f] text-[#0f0f14] dark:text-[#e8eaed] px-2.5 py-2 outline-none focus:border-[#8b5cf6]/50"
+        className="w-full text-xs rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#0a0a0f] text-[#0f0f14] dark:text-[#e8eaed] px-2.5 py-2 outline-none focus:border-[#6366f1]/50"
         placeholder="Ej: pidió que la contactemos solo después de las 6pm..."
       />
       <div className="flex items-center gap-2 mt-1.5">
         <button
           onClick={guardar}
           disabled={guardando}
-          className="text-xs text-[#8b5cf6] disabled:opacity-50"
+          className="text-xs text-[#6366f1] disabled:opacity-50"
         >
           {guardando ? "Guardando..." : "Guardar"}
         </button>

@@ -34,7 +34,7 @@ export default function AccionesPanel({
     <div className="mt-3 pt-3 border-t border-[#e5e5eb] dark:border-[#2a2a3d]">
       <button
         onClick={() => setAbierto(!abierto)}
-        className="w-full flex items-center justify-center gap-1.5 text-xs font-medium text-[#a78bfa] bg-[#8b5cf60f] border border-[#8b5cf6]/25 rounded-lg py-2 hover:bg-[#8b5cf61a] transition"
+        className="w-full flex items-center justify-center gap-1.5 text-xs font-medium text-[#818cf8] bg-[#6366f10f] border border-[#6366f1]/25 rounded-lg py-2 hover:bg-[#6366f11a] transition"
       >
         Gestionar consulta
         {abierto ? (

@@ -16,7 +16,7 @@ const SERVICIO_LABELS: Record<string, string> = {
 
 const ESTADO_BADGE: Record<string, { bg: string; text: string; label: string }> = {
   NUEVO: { bg: "#f973161f", text: "#f97316", label: "Nuevo" },
-  EN_PROCESO: { bg: "#8b5cf61f", text: "#8b5cf6", label: "En proceso" },
+  EN_PROCESO: { bg: "#6366f11f", text: "#6366f1", label: "En proceso" },
   COMPLETADO: { bg: "#22c55e1f", text: "#22c55e", label: "Completado" },
 };
 
@@ -106,7 +106,7 @@ export default async function ClienteDetallePage({
               className="rounded-lg border border-[#2a2a3d] bg-[#17171f] p-3"
             >
               <div className="flex justify-between items-start">
-                <p className="text-xs text-[#8b5cf6] font-medium">
+                <p className="text-xs text-[#6366f1] font-medium">
                   {SERVICIO_LABELS[c.servicio] ?? c.servicio}
                 </p>
                 <span

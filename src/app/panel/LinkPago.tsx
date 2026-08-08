@@ -13,7 +13,7 @@ export default function LinkPago({ consultaId }: { consultaId: string }) {
   return (
     <button
       onClick={copiar}
-      className="flex items-center gap-1.5 text-xs text-[#9099a8] hover:text-[#8b5cf6] transition"
+      className="flex items-center gap-1.5 text-xs text-[#9099a8] hover:text-[#6366f1] transition"
     >
       <Link2 className="h-3.5 w-3.5" strokeWidth={2} />
       Link de pago

@@ -8,7 +8,7 @@ import { toast } from "sonner";
 
 const ESTADOS = [
   { value: "NUEVO", label: "Nuevo", color: "#f97316", Icon: Circle },
-  { value: "EN_PROCESO", label: "En proceso", color: "#8b5cf6", Icon: Loader2 },
+  { value: "EN_PROCESO", label: "En proceso", color: "#6366f1", Icon: Loader2 },
   { value: "COMPLETADO", label: "Completado", color: "#22c55e", Icon: CheckCircle2 },
 ];
 
@@ -77,7 +77,7 @@ export default function EstadoSelector({
           onClick={iniciarTrabajo}
           disabled={loading}
           size="sm"
-          className="w-full mb-2 bg-[#8b5cf6] text-white hover:bg-[#7c3aed]"
+          className="w-full mb-2 bg-[#6366f1] text-white hover:bg-[#4f46e5]"
         >
           <Flame className="h-3.5 w-3.5" strokeWidth={2} />
           {loading ? "Iniciando..." : "Iniciar trabajo"}

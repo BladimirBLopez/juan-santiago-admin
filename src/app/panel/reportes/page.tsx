@@ -69,7 +69,7 @@ export default async function ReportesPage() {
         <h1 className="text-lg font-semibold text-[#0f0f14] dark:text-[#e8eaed]">Reportes</h1>
         <a
           href="/api/exportar-contactos"
-          className="text-xs text-[#8b5cf6] hover:text-[#7c3aed] transition underline underline-offset-4"
+          className="text-xs text-[#6366f1] hover:text-[#4f46e5] transition underline underline-offset-4"
         >
           Descargar contactos
         </a>
@@ -95,7 +95,7 @@ export default async function ReportesPage() {
               <span className="text-[#6b6b80]">{iniciados} de {totalConsultas} ({tasaInicio}%)</span>
             </div>
             <div className="h-1 rounded-full bg-[#2a2a3d] overflow-hidden">
-              <div className="h-full rounded-full bg-[#8b5cf6]" style={{ width: `${tasaInicio}%` }} />
+              <div className="h-full rounded-full bg-[#6366f1]" style={{ width: `${tasaInicio}%` }} />
             </div>
           </div>
           <div>

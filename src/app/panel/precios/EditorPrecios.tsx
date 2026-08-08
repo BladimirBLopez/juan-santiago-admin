@@ -39,12 +39,12 @@ export default function EditorPrecios({
           type="number"
           value={monto}
           onChange={(e) => setMonto(e.target.value)}
-          className="w-20 text-sm rounded-md border border-[#e5e5eb] dark:border-[#2a2a3d] bg-[#fafafa] dark:bg-[#0a0a0f] text-[#0f0f14] dark:text-[#e8eaed] px-2 py-1.5 outline-none focus:border-[#8b5cf6]/50"
+          className="w-20 text-sm rounded-md border border-[#e5e5eb] dark:border-[#2a2a3d] bg-[#fafafa] dark:bg-[#0a0a0f] text-[#0f0f14] dark:text-[#e8eaed] px-2 py-1.5 outline-none focus:border-[#6366f1]/50"
         />
         <button
           onClick={guardar}
           disabled={guardando}
-          className="text-xs text-[#8b5cf6] font-medium disabled:opacity-50"
+          className="text-xs text-[#6366f1] font-medium disabled:opacity-50"
         >
           {guardando ? "..." : "Guardar"}
         </button>

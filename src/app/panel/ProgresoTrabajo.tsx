@@ -64,7 +64,7 @@ export default function ProgresoTrabajo({
       </div>
       <div className="h-1 rounded-full bg-[#e5e5eb] dark:bg-[#2a2a3d] overflow-hidden">
         <div
-          className="h-full rounded-full bg-[#8b5cf6] transition-all"
+          className="h-full rounded-full bg-[#6366f1] transition-all"
           style={{ width: `${progreso}%` }}
         />
       </div>
@@ -100,7 +100,7 @@ export default function ProgresoTrabajo({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => registrarEnvio("TESTIMONIO")}
-                className="block text-center text-xs py-1.5 rounded-md border border-[#8b5cf6]/30 text-[#a78bfa] hover:bg-[#8b5cf6]/10 transition"
+                className="block text-center text-xs py-1.5 rounded-md border border-[#6366f1]/30 text-[#818cf8] hover:bg-[#6366f1]/10 transition"
               >
                 {registrando ? "..." : "Pedir testimonio"}
               </a>

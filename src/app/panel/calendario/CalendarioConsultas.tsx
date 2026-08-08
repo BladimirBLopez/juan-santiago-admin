@@ -49,7 +49,7 @@ export default function CalendarioConsultas({ eventos }: { eventos: Evento[] }) 
           onSelect={setFechaSeleccionada}
           modifiers={{ tieneEvento: diasConEventos }}
           modifiersClassNames={{
-            tieneEvento: "font-bold text-[#8b5cf6] underline decoration-2 underline-offset-4",
+            tieneEvento: "font-bold text-[#6366f1] underline decoration-2 underline-offset-4",
           }}
           className="mx-auto"
         />
@@ -75,12 +75,12 @@ export default function CalendarioConsultas({ eventos }: { eventos: Evento[] }) 
             <Link
               key={e.id}
               href={`/panel/clientes/${e.clienteId}`}
-              className="block rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#17171f] p-3 hover:border-[#8b5cf6]/40 transition"
+              className="block rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#17171f] p-3 hover:border-[#6366f1]/40 transition"
             >
               <p className="text-sm font-medium text-[#0f0f14] dark:text-[#e8eaed]">
                 {e.nombre}
               </p>
-              <p className="text-xs text-[#8b5cf6] mt-0.5">
+              <p className="text-xs text-[#6366f1] mt-0.5">
                 {SERVICIO_LABELS[e.servicio] ?? e.servicio}
               </p>
             </Link>

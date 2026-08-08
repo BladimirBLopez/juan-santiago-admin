@@ -34,11 +34,11 @@ export default function GraficoServicios({ datos }: { datos: DatoServicio[] }) {
               color: "#e8eaed",
             }}
             labelStyle={{ color: "#e8eaed" }}
-            cursor={{ fill: "#8b5cf60f" }}
+            cursor={{ fill: "#6366f10f" }}
           />
           <Bar dataKey="cantidad" radius={[0, 4, 4, 0]}>
             {datos.map((_, index) => (
-              <Cell key={index} fill="#8b5cf6" />
+              <Cell key={index} fill="#6366f1" />
             ))}
           </Bar>
         </BarChart>

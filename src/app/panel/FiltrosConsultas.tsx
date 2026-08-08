@@ -36,7 +36,7 @@ export default function FiltrosConsultas() {
             if (e.key === "Enter") aplicarFiltros(q, estadoActual);
           }}
           placeholder="Buscar por nombre"
-          className="w-full text-sm rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] text-[#0f0f14] dark:text-[#e8eaed] pl-9 pr-9 py-2.5 outline-none focus:border-[#8b5cf6]/50 transition placeholder:text-[#6b6b80]"
+          className="w-full text-sm rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] text-[#0f0f14] dark:text-[#e8eaed] pl-9 pr-9 py-2.5 outline-none focus:border-[#6366f1]/50 transition placeholder:text-[#6b6b80]"
         />
         {q && (
           <button
@@ -60,7 +60,7 @@ export default function FiltrosConsultas() {
               onClick={() => aplicarFiltros(q, e.value)}
               className="text-xs px-3 py-1.5 rounded-md whitespace-nowrap transition font-medium"
               style={{
-                backgroundColor: activo ? "#8b5cf6" : "transparent",
+                backgroundColor: activo ? "#6366f1" : "transparent",
                 color: activo ? "#0a0a0f" : "#9099a8",
               }}
             >
