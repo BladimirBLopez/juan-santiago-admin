@@ -14,18 +14,17 @@ export default function NavPanel() {
   ];
 
   return (
-    <nav className="px-4 flex gap-1 pb-0">
+    <nav className="px-5 max-w-3xl mx-auto flex gap-5">
       {links.map((link) => {
         const activo = pathname === link.href;
         return (
           <Link
             key={link.href}
             href={link.href}
-            className="text-xs px-3 py-2 border-b-2 transition"
+            className="text-[13px] py-2.5 border-b-2 transition font-medium"
             style={{
-              borderColor: activo ? "#8b5cf6" : "transparent",
-              color: activo ? "#e8eaed" : "#6b6b80",
-              fontWeight: activo ? 500 : 400,
+              borderColor: activo ? "#6366f1" : "transparent",
+              color: activo ? "#18181b" : "#a1a1aa",
             }}
           >
             {link.label}

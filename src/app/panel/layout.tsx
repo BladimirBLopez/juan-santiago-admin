@@ -5,19 +5,19 @@ import Notificaciones from "./Notificaciones";
 
 export default function PanelLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-white dark:bg-[#0a0a0f] text-[#0f0f14] dark:text-[#e8eaed]">
-      <header className="sticky top-0 z-10 border-b border-[#e5e5eb] dark:border-[#1f1f2e] bg-white/95 dark:bg-[#0a0a0f]/95 backdrop-blur">
-        <div className="px-4 py-3.5 flex items-center justify-between">
+    <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0f] text-[#18181b] dark:text-[#e8eaed]">
+      <header className="sticky top-0 z-10 border-b border-[#e4e4e7] dark:border-[#1f1f2e] bg-white/80 dark:bg-[#0a0a0f]/95 backdrop-blur-md">
+        <div className="px-5 py-3.5 flex items-center justify-between max-w-3xl mx-auto">
           <div className="flex items-center gap-2.5">
-            <span className="h-8 w-8 rounded-lg bg-gradient-to-br from-[#a78bfa] to-[#7c3aed] flex items-center justify-center text-white text-xs font-bold shadow-sm">
+            <span className="h-7 w-7 rounded-md bg-[#6366f1] flex items-center justify-center text-white text-xs font-semibold">
               JS
             </span>
             <div>
-              <p className="text-sm font-semibold leading-tight">Panel Maestro</p>
-              <p className="text-[10px] text-[#6b6b80] leading-tight">Juan Santiago</p>
+              <p className="text-sm font-medium leading-tight tracking-tight">Panel Maestro</p>
+              <p className="text-[11px] text-[#71717a] leading-tight">Juan Santiago</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-4">
             <Notificaciones />
             <ThemeToggle />
             <form
@@ -26,7 +26,7 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
                 await signOut({ redirectTo: "/login" });
               }}
             >
-              <button className="text-xs text-[#6b6b80] hover:text-[#9099a8] transition">
+              <button className="text-xs text-[#71717a] hover:text-[#18181b] dark:hover:text-[#e8eaed] transition">
                 Salir
               </button>
             </form>

@@ -23,19 +23,19 @@ const SERVICIO_LABELS: Record<string, string> = {
 };
 
 const SERVICIO_COLOR: Record<string, string> = {
-  AMARRE: "#ec4899",
-  UNION_PAREJA: "#8b5cf6",
-  ENDULZAMIENTO: "#f59e0b",
-  RETORNO: "#3b82f6",
-  ALEJAMIENTO: "#64748b",
-  CONSULTA_TAROT: "#14b8a6",
-  CONSULTA_COCA: "#84cc16",
+  AMARRE: "#e11d48",
+  UNION_PAREJA: "#6366f1",
+  ENDULZAMIENTO: "#d97706",
+  RETORNO: "#2563eb",
+  ALEJAMIENTO: "#52525b",
+  CONSULTA_TAROT: "#0d9488",
+  CONSULTA_COCA: "#65a30d",
 };
 
 const ESTADO_BADGE: Record<string, { bg: string; text: string; label: string }> = {
-  NUEVO: { bg: "#f97316" + "1f", text: "#f97316", label: "Nuevo" },
-  EN_PROCESO: { bg: "#8b5cf6" + "1f", text: "#8b5cf6", label: "En proceso" },
-  COMPLETADO: { bg: "#22c55e" + "1f", text: "#22c55e", label: "Completado" },
+  NUEVO: { bg: "#fff7ed", text: "#c2410c", label: "Nuevo" },
+  EN_PROCESO: { bg: "#eef2ff", text: "#4338ca", label: "En proceso" },
+  COMPLETADO: { bg: "#f0fdf4", text: "#15803d", label: "Completado" },
 };
 
 function iniciales(nombre: string) {
@@ -71,11 +71,13 @@ export default async function PanelPage({
   const nuevos = consultas.filter((c) => c.estado === "NUEVO").length;
 
   return (
-    <main className="px-4 py-5 max-w-2xl mx-auto">
+    <main className="px-5 py-6 max-w-3xl mx-auto">
       <div className="flex items-center justify-between mb-5">
-        <h1 className="text-xl font-semibold tracking-tight text-[#0f0f14] dark:text-[#e8eaed]">Consultas</h1>
+        <h1 className="text-[22px] font-semibold tracking-tight text-[#18181b] dark:text-[#e8eaed]">
+          Consultas
+        </h1>
         {nuevos > 0 && (
-          <span className="text-xs px-2.5 py-1 rounded-full bg-[#f973161f] text-[#f97316] font-medium">
+          <span className="text-xs px-2.5 py-1 rounded-full bg-[#fff7ed] text-[#c2410c] font-medium">
             {nuevos} nueva{nuevos > 1 ? "s" : ""}
           </span>
         )}
@@ -83,10 +85,10 @@ export default async function PanelPage({
 
       <FiltrosConsultas />
 
-      <div className="space-y-3">
+      <div className="space-y-2.5">
         {consultas.length === 0 && (
           <div className="text-center py-20">
-            <p className="text-[#6b6b80] dark:text-[#6b6b80] text-sm">No se encontraron consultas.</p>
+            <p className="text-[#a1a1aa] text-sm">No se encontraron consultas.</p>
           </div>
         )}
 
@@ -95,48 +97,45 @@ export default async function PanelPage({
           return (
             <div
               key={c.id}
-              className="rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-gradient-to-b from-white to-[#fafafa] dark:from-[#17171f] dark:to-[#131319] p-4 shadow-sm dark:shadow-[0_4px_20px_rgba(0,0,0,0.5)]"
-              style={{
-                borderLeft: `3px solid ${SERVICIO_COLOR[c.servicio] ?? "#2a2a3d"}`,
-                backgroundColor: `${SERVICIO_COLOR[c.servicio] ?? "#2a2a3d"}26`,
-              }}
+              className="rounded-lg border border-[#e4e4e7] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4 shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-[0_2px_8px_rgba(0,0,0,0.06)] transition-shadow"
+              style={{ borderLeft: `3px solid ${SERVICIO_COLOR[c.servicio] ?? "#e4e4e7"}` }}
             >
               <div className="flex items-start justify-between gap-3">
                 <div className="flex items-center gap-3 min-w-0">
-                  <div className="h-9 w-9 rounded-full bg-[#8b5cf61a] border border-[#8b5cf640] flex items-center justify-center text-xs font-semibold text-[#a78bfa] shrink-0">
+                  <div className="h-8 w-8 rounded-full bg-[#f4f4f5] dark:bg-[#1e232c] border border-[#e4e4e7] dark:border-[#2a2a3d] flex items-center justify-center text-[11px] font-medium text-[#52525b] dark:text-[#a1a1aa] shrink-0">
                     {iniciales(c.cliente.nombre)}
                   </div>
                   <div className="min-w-0">
                     <Link
                       href={`/panel/clientes/${c.cliente.id}`}
-                      className="font-semibold text-[#0f0f14] dark:text-[#e8eaed] truncate leading-tight hover:text-[#8b5cf6] dark:hover:text-[#a78bfa] transition block"
+                      className="font-medium text-[15px] text-[#18181b] dark:text-[#e8eaed] truncate leading-tight hover:text-[#6366f1] transition block"
                     >
                       {c.cliente.nombre}
                     </Link>
-                    <p className="text-xs mt-0.5" style={{ color: SERVICIO_COLOR[c.servicio] ?? "#a78bfa" }}>
+                    <p className="text-[13px] mt-0.5" style={{ color: SERVICIO_COLOR[c.servicio] ?? "#71717a" }}>
                       {SERVICIO_LABELS[c.servicio] ?? c.servicio}
                     </p>
                   </div>
                 </div>
                 <Badge
-                  className="shrink-0 border-0"
+                  className="shrink-0 border-0 font-medium text-[11px]"
                   style={{ backgroundColor: badge.bg, color: badge.text }}
                 >
                   {badge.label}
                 </Badge>
               </div>
 
-              <p className="text-sm text-[#4a4a5a] dark:text-[#c4c9d4] mt-3 leading-relaxed">
+              <p className="text-[13px] text-[#3f3f46] dark:text-[#c4c9d4] mt-3 leading-relaxed">
                 {c.situacion}
               </p>
 
-              <div className="flex items-center gap-3 mt-3 text-xs text-[#6b6b80] dark:text-[#6b6b80]">
+              <div className="flex items-center gap-3 mt-3 text-xs text-[#a1a1aa]">
                 {c.cliente.telefono && (
                   <a
                     href={`https://wa.me/591${c.cliente.telefono.replace(/\D/g, "")}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1 text-[#22c55e] hover:text-[#4ade80] transition"
+                    className="inline-flex items-center gap-1 text-[#16a34a] hover:text-[#15803d] transition"
                   >
                     <MessageCircle className="h-3.5 w-3.5" strokeWidth={2} />
                     {c.cliente.telefono}
