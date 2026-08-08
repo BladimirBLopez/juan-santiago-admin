@@ -55,7 +55,7 @@ export default function EditarConsulta({
   }
 
   return (
-    <div className="space-y-2 mt-2 p-3 rounded-lg bg-[#0b0d12] border border-[#2a2a3d]">
+    <div className="space-y-2 mt-2 p-3 rounded-lg bg-[#fafafa] dark:bg-[#0b0d12] border border-[#e4e4e7] dark:border-[#2a2a3d]">
       <div>
         <label className="text-xs text-[#6b6b80]">Nombre</label>
         <input
