@@ -9,7 +9,10 @@ export async function GET() {
   }
 
   const clientes = await prisma.cliente.findMany({
-    where: { telefono: { not: null } },
+    where: {
+      telefono: { not: null },
+      consultas: { some: {} },
+    },
     orderBy: { nombre: "asc" },
   });
 
