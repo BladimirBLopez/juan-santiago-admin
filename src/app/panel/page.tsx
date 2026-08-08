@@ -8,6 +8,7 @@ import PagosConsulta from "./PagosConsulta";
 import AccionesPanel from "./AccionesPanel";
 import Link from "next/link";
 import AvisoPagoPendiente from "./AvisoPagoPendiente";
+import DashboardMetricas from "./DashboardMetricas";
 import { formatDistanceToNow } from "date-fns";
 import { es } from "date-fns/locale";
 import { Badge } from "@/components/ui/badge";
@@ -82,6 +83,8 @@ export default async function PanelPage({
           </span>
         )}
       </div>
+
+      <DashboardMetricas />
 
       <FiltrosConsultas />
 
