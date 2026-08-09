@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { notificarNuevaCita } from "@/lib/email";
 
 const ALLOWED_ORIGINS = [
   "https://juansantiagoamarres.online",
@@ -93,6 +94,13 @@ export async function POST(req: NextRequest) {
     });
 
     const consulta = cliente.consultas[0];
+
+    await notificarNuevaCita({
+      nombre: cliente.nombre,
+      servicio,
+      telefono: cliente.telefono,
+      fechaCita: fechaCitaDate,
+    });
 
     return NextResponse.json(
       {

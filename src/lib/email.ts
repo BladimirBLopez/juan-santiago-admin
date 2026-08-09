@@ -32,6 +32,46 @@ export async function notificarNuevoPago({
   }
 }
 
+export async function notificarNuevaCita({
+  nombre,
+  servicio,
+  telefono,
+  fechaCita,
+}: {
+  nombre: string;
+  servicio: string;
+  telefono: string | null;
+  fechaCita: Date;
+}) {
+  const destino = process.env.NOTIFICACION_EMAIL;
+  if (!destino) return;
+
+  const fechaFormateada = fechaCita.toLocaleString("es-BO", {
+    dateStyle: "full",
+    timeStyle: "short",
+    timeZone: "America/La_Paz",
+  });
+
+  try {
+    await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: destino,
+      subject: `Nueva cita reservada: ${nombre} - ${fechaFormateada}`,
+      html: `
+        <h2>Nueva cita por videollamada reservada</h2>
+        <p><strong>Nombre:</strong> ${nombre}</p>
+        <p><strong>Servicio:</strong> ${servicio}</p>
+        <p><strong>Teléfono:</strong> ${telefono ?? "no proporcionado"}</p>
+        <p><strong>Fecha y hora:</strong> ${fechaFormateada}</p>
+        <p style="color:#b45309"><strong>Nota:</strong> la cita queda pendiente de confirmar hasta que se apruebe el pago.</p>
+        <p><a href="https://juan-santiago-admin.vercel.app/panel">Ver en el panel</a></p>
+      `,
+    });
+  } catch (err) {
+    console.error("Error enviando email de notificacion de cita:", err);
+  }
+}
+
 export async function notificarNuevaConsulta({
   nombre,
   servicio,
