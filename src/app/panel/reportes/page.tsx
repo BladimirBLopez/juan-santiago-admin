@@ -77,12 +77,20 @@ export default async function ReportesPage() {
     <main className="px-4 py-5 max-w-2xl mx-auto space-y-3">
       <div className="flex items-center justify-between mb-1">
         <h1 className="text-lg font-semibold text-[#0f0f14] dark:text-[#e8eaed]">Reportes</h1>
-        <a
-          href="/api/exportar-contactos"
-          className="text-xs text-[#6366f1] hover:text-[#4f46e5] transition underline underline-offset-4"
-        >
-          Descargar contactos
-        </a>
+        <div className="flex items-center gap-3">
+          <a
+            href="/api/exportar-reporte"
+            className="text-xs text-[#6366f1] hover:text-[#4f46e5] transition underline underline-offset-4"
+          >
+            Descargar PDF
+          </a>
+          <a
+            href="/api/exportar-contactos"
+            className="text-xs text-[#6366f1] hover:text-[#4f46e5] transition underline underline-offset-4"
+          >
+            Descargar contactos
+          </a>
+        </div>
       </div>
 
       <div className="grid grid-cols-2 gap-2.5">
