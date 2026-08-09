@@ -50,5 +50,12 @@ export async function PATCH(
     }
   }
 
+  if (estado === "RECHAZADO" && pago.consulta.fechaCita) {
+    await prisma.consulta.update({
+      where: { id: pago.consultaId },
+      data: { citaExpiraEn: null },
+    });
+  }
+
   return NextResponse.json({ success: true, pago });
 }
