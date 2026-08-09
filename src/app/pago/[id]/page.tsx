@@ -6,9 +6,10 @@ import Tesseract from "tesseract.js";
 const CLOUDINARY_CLOUD = "dkq95jus0";
 const CLOUDINARY_PRESET = "juan-santiago-comprobantes";
 
-export default function PagoPage({ params }: { params: Promise<{ id: string }> }) {
+export default function PagoPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ monto?: string }> }) {
   const { id } = use(params);
-  const [monto, setMonto] = useState("450");
+  const { monto: montoParam } = use(searchParams);
+  const [monto, setMonto] = useState(montoParam ?? "450");
   const [archivo, setArchivo] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [enviando, setEnviando] = useState(false);
