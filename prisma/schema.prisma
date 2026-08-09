@@ -81,6 +81,8 @@ model Consulta {
   fechaInicio  DateTime?
   diasTrabajo  Int?
   notas        String?
+  fechaCita    DateTime?
+  citaExpiraEn DateTime?
   createdAt    DateTime       @default(now())
   pagos        Pago[]
   seguimientos Seguimiento[]
