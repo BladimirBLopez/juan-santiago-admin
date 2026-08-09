@@ -130,7 +130,7 @@ export async function GET() {
 
   const buffer = await renderToBuffer(doc);
 
-  return new NextResponse(buffer, {
+  return new NextResponse(new Uint8Array(buffer), {
     headers: {
       "Content-Type": "application/pdf",
       "Content-Disposition": `attachment; filename="reporte-${new Date().toISOString().slice(0, 10)}.pdf"`,
