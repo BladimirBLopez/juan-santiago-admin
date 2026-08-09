@@ -14,12 +14,38 @@ type Pago = {
   createdAt: Date;
 };
 
-export default function PagosConsulta({ pagos }: { pagos: Pago[] }) {
+const SERVICIO_LABELS: Record<string, string> = {
+  CONSULTA_TAROT: "Consulta de Tarot",
+  CONSULTA_COCA: "Consulta de Hojas de Coca",
+};
+
+export default function PagosConsulta({
+  pagos,
+  fechaCita,
+  servicio,
+  nombreCliente,
+  telefonoCliente,
+}: {
+  pagos: Pago[];
+  fechaCita?: Date | null;
+  servicio?: string;
+  nombreCliente?: string;
+  telefonoCliente?: string | null;
+}) {
   const router = useRouter();
   const [procesando, setProcesando] = useState<string | null>(null);
   const [imagenAmpliada, setImagenAmpliada] = useState<string | null>(null);
 
   const pendientes = pagos.filter((p) => p.estado === "PENDIENTE");
+  const tieneCitaAprobada = fechaCita && pagos.some((p) => p.estado === "APROBADO");
+
+  const linkConfirmacion = tieneCitaAprobada
+    ? `https://wa.me/${telefonoCliente?.replace(/\D/g, "")}?text=${encodeURIComponent(
+        `Hola ${nombreCliente ?? ""}, tu cita de ${SERVICIO_LABELS[servicio ?? ""] ?? "consulta"} quedó confirmada para el ${new Date(
+          fechaCita!
+        ).toLocaleString("es-BO", { dateStyle: "full", timeStyle: "short", timeZone: "America/La_Paz" })} 🙏 Nos vemos por videollamada.`
+      )}`
+    : null;
 
   async function actualizarPago(pagoId: string, estado: "APROBADO" | "RECHAZADO") {
     setProcesando(pagoId);
@@ -37,10 +63,21 @@ export default function PagosConsulta({ pagos }: { pagos: Pago[] }) {
     }
   }
 
-  if (pendientes.length === 0) return null;
+  if (pendientes.length === 0 && !linkConfirmacion) return null;
 
   return (
     <>
+      {linkConfirmacion && (
+        <a
+          href={linkConfirmacion}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 flex items-center justify-center gap-2 rounded-lg bg-[#25D366] text-white text-xs font-semibold py-2.5"
+        >
+          Confirmar cita por WhatsApp
+        </a>
+      )}
+
       <div className="mt-3 space-y-2">
         {pendientes.map((pago) => (
           <div

@@ -182,7 +182,13 @@ export default async function PanelPage({
                 tienePagoAprobado={c.pagos.some((p) => p.estado === "APROBADO")}
               />
 
-              <PagosConsulta pagos={c.pagos} />
+              <PagosConsulta
+                pagos={c.pagos}
+                fechaCita={c.fechaCita}
+                servicio={c.servicio}
+                nombreCliente={c.cliente.nombre}
+                telefonoCliente={c.cliente.telefono}
+              />
 
               <AccionesPanel
                 consultaId={c.id}
