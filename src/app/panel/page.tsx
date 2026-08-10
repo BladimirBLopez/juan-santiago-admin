@@ -173,9 +173,11 @@ export default async function PanelPage({
                 );
               })()}
 
-              <div className="mt-3">
-                <LinkPago consultaId={c.id} servicio={c.servicio} />
-              </div>
+              {c.pagos.length === 0 && (
+                <div className="mt-3">
+                  <LinkPago consultaId={c.id} servicio={c.servicio} />
+                </div>
+              )}
 
               <AvisoPagoPendiente
                 fechaInicio={c.fechaInicio}
