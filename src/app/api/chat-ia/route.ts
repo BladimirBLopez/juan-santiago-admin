@@ -91,8 +91,26 @@ Responde UNICAMENTE con un JSON valido, sin texto adicional, sin markdown, con e
       }
     );
 
-    const geminiData = await geminiRes.json();
+    const geminiTextoCrudo = await geminiRes.text();
+    let geminiData;
+    try {
+      geminiData = JSON.parse(geminiTextoCrudo);
+    } catch {
+      return NextResponse.json(
+        { respuesta: "Error tecnico", datos: { nombre: null, telefono: null, servicio: null, situacion: null }, completo: false, debugStatus: geminiRes.status, debugRaw: geminiTextoCrudo.slice(0, 500) },
+        { status: 200, headers: corsHeaders(req.headers.get("origin")) }
+      );
+    }
+
     const textoRaw: string = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+
+    if (!textoRaw) {
+      return NextResponse.json(
+        { respuesta: "Error tecnico", datos: { nombre: null, telefono: null, servicio: null, situacion: null }, completo: false, debugStatus: geminiRes.status, debugGeminiData: geminiData },
+        { status: 200, headers: corsHeaders(req.headers.get("origin")) }
+      );
+    }
+
     const limpio = textoRaw.replace(/```json|```/g, "").trim();
     const parsed = JSON.parse(limpio);
 
