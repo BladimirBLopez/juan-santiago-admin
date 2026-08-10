@@ -89,10 +89,36 @@ Responde UNICAMENTE con un JSON valido, sin texto adicional, sin markdown, con e
       }
     );
 
-    const geminiData = await geminiRes.json();
+    const geminiTextoCrudo = await geminiRes.text();
+    let geminiData;
+    try {
+      geminiData = JSON.parse(geminiTextoCrudo);
+    } catch {
+      return NextResponse.json(
+        { respuesta: "Error tecnico", datos: { nombre: null, telefono: null, servicio: null, situacion: null }, completo: false, debugError: "Gemini no devolvio JSON", debugStatus: geminiRes.status, debugRaw: geminiTextoCrudo.slice(0, 800) },
+        { status: 200, headers: corsHeaders(req.headers.get("origin")) }
+      );
+    }
+
     const textoRaw: string = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
+
+    if (!textoRaw) {
+      return NextResponse.json(
+        { respuesta: "Error tecnico", datos: { nombre: null, telefono: null, servicio: null, situacion: null }, completo: false, debugError: "Gemini sin texto", debugGeminiData: geminiData },
+        { status: 200, headers: corsHeaders(req.headers.get("origin")) }
+      );
+    }
+
     const limpio = textoRaw.replace(/```json|```/g, "").trim();
-    const parsed = JSON.parse(limpio);
+    let parsed;
+    try {
+      parsed = JSON.parse(limpio);
+    } catch {
+      return NextResponse.json(
+        { respuesta: "Error tecnico", datos: { nombre: null, telefono: null, servicio: null, situacion: null }, completo: false, debugError: "No se pudo parsear respuesta de Gemini", debugRaw: limpio.slice(0, 800) },
+        { status: 200, headers: corsHeaders(req.headers.get("origin")) }
+      );
+    }
 
     const nombre = typeof parsed.nombre === "string" ? parsed.nombre.trim() : null;
     const telefono = typeof parsed.telefono === "string" ? parsed.telefono.trim() : null;
