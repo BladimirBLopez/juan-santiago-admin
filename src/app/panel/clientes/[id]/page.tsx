@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { ArrowLeft, MessageCircle } from "lucide-react";
+import NuevoServicio from "./NuevoServicio";
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -76,6 +77,8 @@ export default async function ClienteDetallePage({
             {cliente.telefono}
           </a>
         )}
+
+        <NuevoServicio clienteId={cliente.id} />
 
         <div className="grid grid-cols-2 gap-2.5 mt-4">
           <div className="rounded-lg bg-[#0a0a0f] p-3">
