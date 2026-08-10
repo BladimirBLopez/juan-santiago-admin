@@ -106,7 +106,6 @@ export default async function PanelPage({
               className="rounded-xl border border-[#e4e4e7] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4 shadow-[0_2px_8px_rgba(0,0,0,0.08)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.12)] transition-shadow"
               style={{
                 borderLeft: `5px solid ${SERVICIO_COLOR[c.servicio] ?? "#e4e4e7"}`,
-                backgroundColor: `${SERVICIO_COLOR[c.servicio] ?? "#e4e4e7"}08`,
               }}
             >
               <div className="flex items-start justify-between gap-3">
