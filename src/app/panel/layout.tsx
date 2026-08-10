@@ -5,7 +5,7 @@ import Notificaciones from "./Notificaciones";
 
 export default function PanelLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-[#fafafa] dark:bg-[#0a0a0f] text-[#18181b] dark:text-[#e8eaed]">
+    <div className="min-h-screen bg-[#eef0f3] dark:bg-[#0a0a0f] text-[#18181b] dark:text-[#e8eaed]">
       <header className="sticky top-0 z-10 border-b border-[#e4e4e7] dark:border-[#1f1f2e] bg-white/80 dark:bg-[#0a0a0f]/95 backdrop-blur-md">
         <div className="px-5 py-3.5 flex items-center justify-between max-w-3xl mx-auto">
           <div className="flex items-center gap-2.5">
