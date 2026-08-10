@@ -123,6 +123,7 @@ Responde UNICAMENTE con un JSON valido, sin texto adicional, sin markdown, con e
         respuesta: "Hubo un problema tecnico. ¿Puedes escribirme de nuevo?",
         datos: { nombre: null, telefono: null, servicio: null, situacion: null },
         completo: false,
+        debugError: String(err),
       },
       { status: 200, headers: corsHeaders(req.headers.get("origin")) }
     );
