@@ -64,8 +64,8 @@ export default async function ClienteDetallePage({
         Volver a consultas
       </Link>
 
-      <div className="rounded-xl border border-[#2a2a3d] bg-[#131319] p-4 mb-4">
-        <h1 className="text-lg font-semibold text-[#e8eaed]">{cliente.nombre}</h1>
+      <div className="rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4 mb-4">
+        <h1 className="text-lg font-semibold text-[#0f0f14] dark:text-[#e8eaed]">{cliente.nombre}</h1>
         {cliente.telefono && (
           <a
             href={`https://wa.me/591${cliente.telefono.replace(/\D/g, "")}`}
@@ -81,13 +81,13 @@ export default async function ClienteDetallePage({
         <NuevoServicio clienteId={cliente.id} />
 
         <div className="grid grid-cols-2 gap-2.5 mt-4">
-          <div className="rounded-lg bg-[#0a0a0f] p-3">
-            <p className="text-xl font-semibold text-[#e8eaed]">
+          <div className="rounded-lg bg-[#f5f5f7] dark:bg-[#0a0a0f] p-3">
+            <p className="text-xl font-semibold text-[#0f0f14] dark:text-[#e8eaed]">
               {cliente.consultas.length}
             </p>
             <p className="text-xs text-[#6b6b80] mt-0.5">Consultas totales</p>
           </div>
-          <div className="rounded-lg bg-[#0a0a0f] p-3">
+          <div className="rounded-lg bg-[#f5f5f7] dark:bg-[#0a0a0f] p-3">
             <p className="text-xl font-semibold text-[#22c55e]">
               Bs {totalPagado}
             </p>
@@ -96,7 +96,7 @@ export default async function ClienteDetallePage({
         </div>
       </div>
 
-      <h2 className="text-sm font-medium text-[#e8eaed] mb-2.5">
+      <h2 className="text-sm font-medium text-[#0f0f14] dark:text-[#e8eaed] mb-2.5">
         Historial de consultas
       </h2>
 
@@ -106,7 +106,7 @@ export default async function ClienteDetallePage({
           return (
             <div
               key={c.id}
-              className="rounded-lg border border-[#2a2a3d] bg-[#17171f] p-3"
+              className="rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#17171f] p-3"
             >
               <div className="flex justify-between items-start">
                 <p className="text-xs text-[#6366f1] font-medium">
@@ -119,7 +119,7 @@ export default async function ClienteDetallePage({
                   {badge.label}
                 </span>
               </div>
-              <p className="text-xs text-[#9099a8] mt-1.5">{c.situacion}</p>
+              <p className="text-xs text-[#6b6b80] dark:text-[#9099a8] mt-1.5">{c.situacion}</p>
               <p className="text-[10px] text-[#6b6b80] mt-1.5">
                 {new Date(c.createdAt).toLocaleDateString("es-BO", {
                   day: "2-digit",
@@ -128,7 +128,7 @@ export default async function ClienteDetallePage({
                 })}
               </p>
               {c.pagos.length > 0 && (
-                <div className="mt-2 pt-2 border-t border-[#2a2a3d] flex gap-2 flex-wrap">
+                <div className="mt-2 pt-2 border-t border-[#e5e5eb] dark:border-[#2a2a3d] flex gap-2 flex-wrap">
                   {c.pagos.map((p) => (
                     <span
                       key={p.id}
