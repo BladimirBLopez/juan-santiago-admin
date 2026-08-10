@@ -25,12 +25,16 @@ export default function PagosConsulta({
   servicio,
   nombreCliente,
   telefonoCliente,
+  consultaId,
+  estadoActual,
 }: {
   pagos: Pago[];
   fechaCita?: Date | null;
   servicio?: string;
   nombreCliente?: string;
   telefonoCliente?: string | null;
+  consultaId?: string;
+  estadoActual?: string;
 }) {
   const router = useRouter();
   const [procesando, setProcesando] = useState<string | null>(null);
@@ -70,6 +74,19 @@ export default function PagosConsulta({
 
   if (pendientes.length === 0 && !linkConfirmacion) return null;
 
+  async function confirmarYAvanzarEstado() {
+    if (consultaId && estadoActual === "NUEVO") {
+      try {
+        await fetch(`/api/consultas/${consultaId}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ estado: "EN_PROCESO" }),
+        });
+        router.refresh();
+      } catch {}
+    }
+  }
+
   return (
     <>
       {linkConfirmacion && (
@@ -77,6 +94,7 @@ export default function PagosConsulta({
           href={linkConfirmacion}
           target="_blank"
           rel="noopener noreferrer"
+          onClick={confirmarYAvanzarEstado}
           className="mt-3 flex items-center justify-center gap-2 rounded-lg bg-[#25D366] text-white text-xs font-semibold py-2.5"
         >
           Confirmar cita por WhatsApp

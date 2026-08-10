@@ -190,6 +190,8 @@ export default async function PanelPage({
                 servicio={c.servicio}
                 nombreCliente={c.cliente.nombre}
                 telefonoCliente={c.cliente.telefono}
+                consultaId={c.id}
+                estadoActual={c.estado}
               />
 
               <AccionesPanel
