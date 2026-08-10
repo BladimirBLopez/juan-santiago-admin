@@ -203,6 +203,7 @@ export default async function PanelPage({
                 telefonoCliente={c.cliente.telefono}
                 situacion={c.situacion}
                 servicio={c.servicio}
+                fechaCita={c.fechaCita}
               />
             </div>
           );

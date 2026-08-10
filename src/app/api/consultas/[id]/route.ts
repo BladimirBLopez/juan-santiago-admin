@@ -23,7 +23,15 @@ export async function PATCH(
 
   const { id } = await params;
   const body = await req.json();
-  const { estado, iniciarTrabajo, notas, situacion, nombreCliente, telefonoCliente } = body;
+  const { estado, iniciarTrabajo, notas, situacion, nombreCliente, telefonoCliente, fechaCita } = body;
+
+  if (fechaCita !== undefined) {
+    const consulta = await prisma.consulta.update({
+      where: { id },
+      data: { fechaCita: fechaCita ? new Date(fechaCita) : null },
+    });
+    return NextResponse.json({ success: true, consulta });
+  }
 
   if (
     situacion !== undefined ||

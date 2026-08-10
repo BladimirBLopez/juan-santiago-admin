@@ -7,6 +7,7 @@ import EstadoSelector from "./EstadoSelector";
 import NotasConsulta from "./NotasConsulta";
 import EditarConsulta from "./EditarConsulta";
 import AccionesConsulta from "./AccionesConsulta";
+import AgregarCita from "./AgregarCita";
 
 export default function AccionesPanel({
   consultaId,
@@ -17,6 +18,7 @@ export default function AccionesPanel({
   telefonoCliente,
   situacion,
   servicio,
+  fechaCita,
 }: {
   consultaId: string;
   estadoActual: string;
@@ -26,6 +28,7 @@ export default function AccionesPanel({
   telefonoCliente: string | null;
   situacion: string;
   servicio: string;
+  fechaCita?: Date | null;
 }) {
   const [abierto, setAbierto] = useState(false);
 
@@ -68,6 +71,8 @@ export default function AccionesPanel({
               />
 
               <NotasConsulta consultaId={consultaId} notasIniciales={notas} />
+
+              <AgregarCita consultaId={consultaId} servicio={servicio} fechaCitaActual={fechaCita ?? null} />
 
               <div className="flex justify-end pt-1">
                 <AccionesConsulta consultaId={consultaId} />
