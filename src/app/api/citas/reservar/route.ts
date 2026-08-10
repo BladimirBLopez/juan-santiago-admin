@@ -42,6 +42,24 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (telefono) {
+      const hace10Min = new Date(Date.now() - 10 * 60 * 1000);
+      const telefonoLimpio = String(telefono).replace(/\D/g, "");
+      const intentosRecientes = await prisma.consulta.count({
+        where: {
+          fechaCita: { not: null },
+          createdAt: { gte: hace10Min },
+          cliente: { telefono: telefonoLimpio },
+        },
+      });
+      if (intentosRecientes >= 3) {
+        return NextResponse.json(
+          { error: "Demasiados intentos de reserva. Espera unos minutos e intenta de nuevo." },
+          { status: 429, headers: corsHeaders(req.headers.get("origin")) }
+        );
+      }
+    }
+
     if (!fechaCita || isNaN(Date.parse(fechaCita))) {
       return NextResponse.json(
         { error: "Fecha de cita invalida" },
