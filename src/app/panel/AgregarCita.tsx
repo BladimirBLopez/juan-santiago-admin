@@ -65,13 +65,15 @@ export default function AgregarCita({
           type="date"
           value={fecha}
           onChange={(e) => setFecha(e.target.value)}
-          className="flex-1 rounded-md border border-[#2a2a3d] bg-[#0a0a0f] text-[#e8eaed] text-xs px-2.5 py-2"
+          className="flex-1 rounded-md border border-[#2a2a3d] bg-white dark:bg-[#0a0a0f] text-[#0f0f14] dark:text-[#e8eaed] text-xs px-2.5 py-2"
+          style={{ colorScheme: "light dark" }}
         />
         <input
           type="time"
           value={hora}
           onChange={(e) => setHora(e.target.value)}
-          className="flex-1 rounded-md border border-[#2a2a3d] bg-[#0a0a0f] text-[#e8eaed] text-xs px-2.5 py-2"
+          className="flex-1 rounded-md border border-[#2a2a3d] bg-white dark:bg-[#0a0a0f] text-[#0f0f14] dark:text-[#e8eaed] text-xs px-2.5 py-2"
+          style={{ colorScheme: "light dark" }}
         />
       </div>
       <div className="flex gap-2">
