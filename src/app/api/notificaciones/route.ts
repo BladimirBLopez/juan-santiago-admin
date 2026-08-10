@@ -33,12 +33,16 @@ export async function GET() {
       fecha: c.createdAt,
       id: c.cliente.id,
     })),
-    ...pagos.map((p) => ({
-      tipo: "pago" as const,
-      texto: `Pago de Bs ${p.monto} de ${p.consulta.cliente.nombre}`,
-      fecha: p.createdAt,
-      id: p.consulta.cliente.id,
-    })),
+    ...pagos.map((p) => {
+      const estadoTexto =
+        p.estado === "APROBADO" ? "aprobado" : p.estado === "RECHAZADO" ? "rechazado" : "pendiente de revision";
+      return {
+        tipo: "pago" as const,
+        texto: `Pago de Bs ${p.monto} de ${p.consulta.cliente.nombre} (${estadoTexto})`,
+        fecha: p.createdAt,
+        id: p.consulta.cliente.id,
+      };
+    }),
   ].sort((a, b) => b.fecha.getTime() - a.fecha.getTime());
 
   return NextResponse.json({ notificaciones });
