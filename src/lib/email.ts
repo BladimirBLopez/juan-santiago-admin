@@ -32,6 +32,35 @@ export async function notificarNuevoPago({
   }
 }
 
+export async function notificarRecordatorioCitas(citas: { nombre: string; telefono: string | null; hora: string; servicio: string }[]) {
+  const destino = process.env.NOTIFICACION_EMAIL;
+  if (!destino || citas.length === 0) return;
+
+  const filas = citas
+    .map((c) => {
+      const tel = (c.telefono ?? "").replace(/\D/g, "");
+      const telConPrefijo = tel.startsWith("591") ? tel : `591${tel}`;
+      const linkWa = `https://wa.me/${telConPrefijo}`;
+      return `<li><strong>${c.hora}</strong> - ${c.nombre} (${c.servicio}) - <a href="${linkWa}">Abrir WhatsApp</a></li>`;
+    })
+    .join("");
+
+  try {
+    await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: destino,
+      subject: `Recordatorio: ${citas.length} cita(s) hoy`,
+      html: `
+        <h2>Citas de hoy</h2>
+        <ul>${filas}</ul>
+        <p><a href="https://juan-santiago-admin.vercel.app/panel">Ver en el panel</a></p>
+      `,
+    });
+  } catch (err) {
+    console.error("Error enviando recordatorio de citas:", err);
+  }
+}
+
 export async function notificarNuevaCita({
   nombre,
   servicio,
