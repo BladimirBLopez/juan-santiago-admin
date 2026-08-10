@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import CambiarPassword from "./CambiarPassword";
+import EditorCorreosAutorizados from "./EditorCorreosAutorizados";
 import EditorHorario from "./EditorHorario";
 import EditorMensajeBienvenida from "./EditorMensajeBienvenida";
 
@@ -23,6 +24,7 @@ export default async function ConfiguracionPage() {
 
       <EditorHorario horarioInicial={map.horario_atencion ?? ""} />
       <EditorMensajeBienvenida mensajeInicial={map.mensaje_bienvenida ?? ""} />
+      <EditorCorreosAutorizados />
       <CambiarPassword />
     </main>
   );
