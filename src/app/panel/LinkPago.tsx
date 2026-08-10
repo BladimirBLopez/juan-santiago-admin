@@ -3,11 +3,14 @@
 import { Link2 } from "lucide-react";
 import { toast } from "sonner";
 
-export default function LinkPago({ consultaId }: { consultaId: string }) {
+const SERVICIOS_CONSULTA = ["CONSULTA_TAROT", "CONSULTA_COCA"];
+
+export default function LinkPago({ consultaId, servicio }: { consultaId: string; servicio?: string }) {
   function copiar() {
-    const url = `https://juan-santiago-admin.vercel.app/pago/${consultaId}`;
+    const monto = servicio && SERVICIOS_CONSULTA.includes(servicio) ? 50 : 450;
+    const url = `https://juan-santiago-admin.vercel.app/pago/${consultaId}?monto=${monto}`;
     navigator.clipboard.writeText(url);
-    toast.success("Link de pago copiado");
+    toast.success(`Link de pago copiado (Bs ${monto})`);
   }
 
   return (
