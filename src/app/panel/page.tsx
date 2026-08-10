@@ -205,6 +205,13 @@ export default async function PanelPage({
                 servicio={c.servicio}
                 fechaCita={c.fechaCita}
               />
+
+              <Link
+                href={`/panel/clientes/${c.cliente.id}`}
+                className="mt-2 flex items-center justify-center gap-1.5 rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] text-[#6366f1] text-xs font-medium py-2 hover:bg-[#6366f10f] transition"
+              >
+                Ver perfil del cliente
+              </Link>
             </div>
           );
         })}
