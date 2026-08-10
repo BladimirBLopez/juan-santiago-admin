@@ -39,8 +39,13 @@ export default function PagosConsulta({
   const pendientes = pagos.filter((p) => p.estado === "PENDIENTE");
   const tieneCitaAprobada = fechaCita && pagos.some((p) => p.estado === "APROBADO");
 
+  const telefonoConPrefijo = (() => {
+    const soloDigitos = telefonoCliente?.replace(/\D/g, "") ?? "";
+    return soloDigitos.startsWith("591") ? soloDigitos : `591${soloDigitos}`;
+  })();
+
   const linkConfirmacion = tieneCitaAprobada
-    ? `https://wa.me/${telefonoCliente?.replace(/\D/g, "")}?text=${encodeURIComponent(
+    ? `https://wa.me/${telefonoConPrefijo}?text=${encodeURIComponent(
         `Hola ${nombreCliente ?? ""}, tu cita de ${SERVICIO_LABELS[servicio ?? ""] ?? "consulta"} quedó confirmada para el ${new Date(
           fechaCita!
         ).toLocaleString("es-BO", { dateStyle: "full", timeStyle: "short", timeZone: "America/La_Paz" })} 🙏 Nos vemos por videollamada.`
