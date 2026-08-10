@@ -75,9 +75,6 @@ Nuevo mensaje del cliente: "${mensaje}"
 Responde UNICAMENTE con un JSON valido, sin texto adicional, sin markdown, con esta forma exacta:
 {"respuesta": "tu respuesta conversacional en espanol para el cliente", "nombre": "nombre completo si ya lo dijo, o null", "telefono": "numero si ya lo dijo, o null", "servicio": "uno de los valores exactos de la lista, o null si no esta claro aun", "situacion": "resumen breve de su situacion si ya la conoces, o null"}`;
 
-    const keyPresente = Boolean(process.env.GEMINI_API_KEY);
-    const keyLargo = (process.env.GEMINI_API_KEY ?? "").length;
-
     const geminiRes = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent",
       {
@@ -92,36 +89,10 @@ Responde UNICAMENTE con un JSON valido, sin texto adicional, sin markdown, con e
       }
     );
 
-    const geminiTextoCrudo = await geminiRes.text();
-    let geminiData;
-    try {
-      geminiData = JSON.parse(geminiTextoCrudo);
-    } catch {
-      return NextResponse.json(
-        { respuesta: "Error tecnico", datos: { nombre: null, telefono: null, servicio: null, situacion: null }, completo: false, debugError: "Gemini no devolvio JSON", debugStatus: geminiRes.status, debugRaw: geminiTextoCrudo.slice(0, 800) },
-        { status: 200, headers: corsHeaders(req.headers.get("origin")) }
-      );
-    }
-
+    const geminiData = await geminiRes.json();
     const textoRaw: string = geminiData?.candidates?.[0]?.content?.parts?.[0]?.text ?? "";
-
-    if (!textoRaw) {
-      return NextResponse.json(
-        { respuesta: "Error tecnico", datos: { nombre: null, telefono: null, servicio: null, situacion: null }, completo: false, debugError: "Gemini sin texto", debugGeminiData: geminiData, debugKeyPresente: keyPresente, debugKeyLargo: keyLargo },
-        { status: 200, headers: corsHeaders(req.headers.get("origin")) }
-      );
-    }
-
     const limpio = textoRaw.replace(/```json|```/g, "").trim();
-    let parsed;
-    try {
-      parsed = JSON.parse(limpio);
-    } catch {
-      return NextResponse.json(
-        { respuesta: "Error tecnico", datos: { nombre: null, telefono: null, servicio: null, situacion: null }, completo: false, debugError: "No se pudo parsear respuesta de Gemini", debugRaw: limpio.slice(0, 800) },
-        { status: 200, headers: corsHeaders(req.headers.get("origin")) }
-      );
-    }
+    const parsed = JSON.parse(limpio);
 
     const nombre = typeof parsed.nombre === "string" ? parsed.nombre.trim() : null;
     const telefono = typeof parsed.telefono === "string" ? parsed.telefono.trim() : null;
@@ -150,7 +121,6 @@ Responde UNICAMENTE con un JSON valido, sin texto adicional, sin markdown, con e
         respuesta: "Hubo un problema tecnico. ¿Puedes escribirme de nuevo?",
         datos: { nombre: null, telefono: null, servicio: null, situacion: null },
         completo: false,
-        debugError: String(err),
       },
       { status: 200, headers: corsHeaders(req.headers.get("origin")) }
     );
