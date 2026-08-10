@@ -47,9 +47,9 @@ export default function EditarConsulta({
     return (
       <button
         onClick={() => setEditando(true)}
-        className="text-xs text-[#6b6b80] hover:text-[#6366f1] transition"
+        className="w-full flex items-center justify-center gap-1.5 rounded-lg border border-[#6366f1]/40 text-[#6366f1] text-xs font-medium py-2.5 hover:bg-[#6366f10f] transition"
       >
-        Editar
+        ✏️ Editar nombre, teléfono o situación
       </button>
     );
   }

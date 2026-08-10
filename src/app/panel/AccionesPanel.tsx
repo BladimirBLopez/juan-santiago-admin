@@ -74,7 +74,7 @@ export default function AccionesPanel({
 
               <AgregarCita consultaId={consultaId} servicio={servicio} fechaCitaActual={fechaCita ?? null} />
 
-              <div className="flex justify-end pt-1">
+              <div className="pt-2 border-t border-[#e5e5eb] dark:border-[#2a2a3d]">
                 <AccionesConsulta consultaId={consultaId} />
               </div>
             </div>

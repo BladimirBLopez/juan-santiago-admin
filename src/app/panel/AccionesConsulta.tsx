@@ -25,21 +25,23 @@ export default function AccionesConsulta({ consultaId }: { consultaId: string })
 
   if (confirmando) {
     return (
-      <div className="flex items-center gap-2 text-xs">
-        <span className="text-[#e8752c]">¿Eliminar esta consulta?</span>
-        <button
-          onClick={eliminar}
-          disabled={eliminando}
-          className="text-[#e8752c] font-medium underline disabled:opacity-50"
-        >
-          {eliminando ? "Eliminando..." : "Sí, eliminar"}
-        </button>
-        <button
-          onClick={() => setConfirmando(false)}
-          className="text-[#5d6573] underline"
-        >
-          Cancelar
-        </button>
+      <div className="rounded-lg border border-[#e8752c]/40 bg-[#e8752c]/5 p-3">
+        <p className="text-xs text-[#e8752c] mb-2">¿Eliminar esta consulta? No se puede deshacer.</p>
+        <div className="flex gap-2">
+          <button
+            onClick={eliminar}
+            disabled={eliminando}
+            className="flex-1 rounded-md bg-[#e8752c] text-white text-xs font-medium py-2 disabled:opacity-50"
+          >
+            {eliminando ? "Eliminando..." : "Sí, eliminar"}
+          </button>
+          <button
+            onClick={() => setConfirmando(false)}
+            className="flex-1 rounded-md border border-[#2a2a3d] text-[#9099a8] text-xs font-medium py-2"
+          >
+            Cancelar
+          </button>
+        </div>
       </div>
     );
   }
@@ -47,9 +49,9 @@ export default function AccionesConsulta({ consultaId }: { consultaId: string })
   return (
     <button
       onClick={() => setConfirmando(true)}
-      className="text-xs text-[#5d6573] hover:text-[#e8752c] transition"
+      className="w-full flex items-center justify-center gap-1.5 rounded-lg border border-[#e8752c]/40 text-[#e8752c] text-xs font-medium py-2.5 hover:bg-[#e8752c0f] transition"
     >
-      Eliminar consulta
+      🗑️ Eliminar consulta
     </button>
   );
 }
