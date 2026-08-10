@@ -9,6 +9,7 @@ const ESTADOS = [
   { value: "NUEVO", label: "Nuevo" },
   { value: "EN_PROCESO", label: "En proceso" },
   { value: "COMPLETADO", label: "Completado" },
+  { value: "ABANDONADA", label: "Abandonadas" },
 ];
 
 export default function FiltrosConsultas() {

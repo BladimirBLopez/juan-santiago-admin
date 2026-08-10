@@ -38,6 +38,7 @@ const ESTADO_BADGE: Record<string, { bg: string; text: string; label: string }> 
   NUEVO: { bg: "#fff7ed", text: "#c2410c", label: "Nuevo" },
   EN_PROCESO: { bg: "#eef2ff", text: "#4338ca", label: "En proceso" },
   COMPLETADO: { bg: "#f0fdf4", text: "#15803d", label: "Completado" },
+  ABANDONADA: { bg: "#f4f4f5", text: "#71717a", label: "Abandonada" },
 };
 
 function iniciales(nombre: string) {
@@ -62,7 +63,7 @@ export default async function PanelPage({
   const consultas = await prisma.consulta.findMany({
     where: {
       ...(estado
-        ? { estado: estado as "NUEVO" | "EN_PROCESO" | "COMPLETADO" }
+        ? { estado: estado as "NUEVO" | "EN_PROCESO" | "COMPLETADO" | "ABANDONADA" }
         : { estado: { not: "ABANDONADA" } }),
       ...(q
         ? { cliente: { nombre: { contains: q, mode: "insensitive" } } }
