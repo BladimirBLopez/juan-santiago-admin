@@ -20,8 +20,10 @@ export default async function CalendarioPage() {
     clienteId: c.cliente.id,
     nombre: c.cliente.nombre,
     servicio: c.servicio,
-    fecha: c.createdAt,
+    fecha: c.fechaCita ?? c.createdAt,
     fechaInicio: c.fechaInicio,
+    esCita: Boolean(c.fechaCita),
+    horaCita: c.fechaCita,
   }));
 
   return (

@@ -11,7 +11,17 @@ type Evento = {
   servicio: string;
   fecha: Date;
   fechaInicio: Date | null;
+  esCita?: boolean;
+  horaCita?: Date | null;
 };
+
+function formatearHoraCita(fecha: Date) {
+  return new Date(fecha).toLocaleTimeString("es-BO", {
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: true,
+  });
+}
 
 const SERVICIO_LABELS: Record<string, string> = {
   AMARRE: "Amarre de Amor",
@@ -77,9 +87,16 @@ export default function CalendarioConsultas({ eventos }: { eventos: Evento[] }) 
               href={`/panel/clientes/${e.clienteId}`}
               className="block rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#17171f] p-3 hover:border-[#6366f1]/40 transition"
             >
-              <p className="text-sm font-medium text-[#0f0f14] dark:text-[#e8eaed]">
-                {e.nombre}
-              </p>
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-medium text-[#0f0f14] dark:text-[#e8eaed]">
+                  {e.nombre}
+                </p>
+                {e.esCita && e.horaCita && (
+                  <span className="text-[10px] font-semibold text-white bg-[#6366f1] px-2 py-0.5 rounded-full">
+                    📹 {formatearHoraCita(e.horaCita)}
+                  </span>
+                )}
+              </div>
               <p className="text-xs text-[#6366f1] mt-0.5">
                 {SERVICIO_LABELS[e.servicio] ?? e.servicio}
               </p>
