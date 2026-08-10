@@ -97,7 +97,7 @@ export default function PagosConsulta({
           onClick={confirmarYAvanzarEstado}
           className="mt-3 flex items-center justify-center gap-2 rounded-lg bg-[#25D366] text-white text-xs font-semibold py-2.5"
         >
-          Confirmar cita por WhatsApp
+          {estadoActual === "NUEVO" ? "Confirmar cita por WhatsApp" : "Reenviar confirmación por WhatsApp"}
         </a>
       )}
 
