@@ -75,6 +75,9 @@ Nuevo mensaje del cliente: "${mensaje}"
 Responde UNICAMENTE con un JSON valido, sin texto adicional, sin markdown, con esta forma exacta:
 {"respuesta": "tu respuesta conversacional en espanol para el cliente", "nombre": "nombre completo si ya lo dijo, o null", "telefono": "numero si ya lo dijo, o null", "servicio": "uno de los valores exactos de la lista, o null si no esta claro aun", "situacion": "resumen breve de su situacion si ya la conoces, o null"}`;
 
+    const keyPresente = Boolean(process.env.GEMINI_API_KEY);
+    const keyLargo = (process.env.GEMINI_API_KEY ?? "").length;
+
     const geminiRes = await fetch(
       "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent",
       {
@@ -104,7 +107,7 @@ Responde UNICAMENTE con un JSON valido, sin texto adicional, sin markdown, con e
 
     if (!textoRaw) {
       return NextResponse.json(
-        { respuesta: "Error tecnico", datos: { nombre: null, telefono: null, servicio: null, situacion: null }, completo: false, debugError: "Gemini sin texto", debugGeminiData: geminiData },
+        { respuesta: "Error tecnico", datos: { nombre: null, telefono: null, servicio: null, situacion: null }, completo: false, debugError: "Gemini sin texto", debugGeminiData: geminiData, debugKeyPresente: keyPresente, debugKeyLargo: keyLargo },
         { status: 200, headers: corsHeaders(req.headers.get("origin")) }
       );
     }
