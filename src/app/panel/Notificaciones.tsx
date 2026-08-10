@@ -58,7 +58,7 @@ export default function Notificaciones() {
             className="fixed inset-0 z-10 bg-black/20"
             onClick={() => setAbierto(false)}
           />
-          <div className="fixed left-3 right-3 top-16 z-20 max-h-80 overflow-y-auto rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] shadow-xl sm:absolute sm:left-auto sm:right-0 sm:top-8 sm:w-72">
+          <div className="fixed right-3 top-16 z-20 w-[85vw] max-w-[300px] max-h-80 overflow-y-auto rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] shadow-xl sm:absolute sm:right-0 sm:top-8 sm:w-72">
             <div className="p-3 border-b border-[#e5e5eb] dark:border-[#2a2a3d]">
               <p className="text-xs font-medium text-[#0f0f14] dark:text-[#e8eaed]">
                 Últimos 7 días
