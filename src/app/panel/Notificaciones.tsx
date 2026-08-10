@@ -17,13 +17,24 @@ export default function Notificaciones() {
   const [abierto, setAbierto] = useState(false);
   const [notificaciones, setNotificaciones] = useState<Notificacion[]>([]);
   const [cargando, setCargando] = useState(false);
+  const [pendientes, setPendientes] = useState(0);
+
+  useEffect(() => {
+    fetch("/api/notificaciones")
+      .then((res) => res.json())
+      .then((data) => setPendientes(data.pendientes ?? 0))
+      .catch(() => {});
+  }, []);
 
   useEffect(() => {
     if (!abierto) return;
     setCargando(true);
     fetch("/api/notificaciones")
       .then((res) => res.json())
-      .then((data) => setNotificaciones(data.notificaciones ?? []))
+      .then((data) => {
+        setNotificaciones(data.notificaciones ?? []);
+        setPendientes(data.pendientes ?? 0);
+      })
       .finally(() => setCargando(false));
   }, [abierto]);
 
@@ -31,9 +42,14 @@ export default function Notificaciones() {
     <div className="relative">
       <button
         onClick={() => setAbierto(!abierto)}
-        className="text-[#6b6b80] hover:text-[#9099a8] transition"
+        className="relative text-[#6b6b80] hover:text-[#9099a8] transition"
       >
         <Bell className="h-4 w-4" strokeWidth={2} />
+        {pendientes > 0 && (
+          <span className="absolute -top-1.5 -right-1.5 flex h-4 min-w-[16px] items-center justify-center rounded-full bg-[#ef4444] px-1 text-[9px] font-bold text-white">
+            {pendientes > 9 ? "9+" : pendientes}
+          </span>
+        )}
       </button>
 
       {abierto && (

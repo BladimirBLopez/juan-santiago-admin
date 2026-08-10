@@ -11,7 +11,7 @@ export async function GET() {
   const desde = new Date();
   desde.setDate(desde.getDate() - 7);
 
-  const [consultas, pagos] = await Promise.all([
+  const [consultas, pagos, consultasNuevasCount, pagosPendientesCount] = await Promise.all([
     prisma.consulta.findMany({
       where: { createdAt: { gte: desde } },
       include: { cliente: true },
@@ -24,6 +24,8 @@ export async function GET() {
       orderBy: { createdAt: "desc" },
       take: 10,
     }),
+    prisma.consulta.count({ where: { estado: "NUEVO" } }),
+    prisma.pago.count({ where: { estado: "PENDIENTE" } }),
   ]);
 
   const notificaciones = [
@@ -45,5 +47,8 @@ export async function GET() {
     }),
   ].sort((a, b) => b.fecha.getTime() - a.fecha.getTime());
 
-  return NextResponse.json({ notificaciones });
+  return NextResponse.json({
+    notificaciones,
+    pendientes: consultasNuevasCount + pagosPendientesCount,
+  });
 }
