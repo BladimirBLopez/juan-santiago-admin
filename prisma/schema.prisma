@@ -46,6 +46,13 @@ model Admin {
   createdAt DateTime @default(now())
 }
 
+model CorreoAutorizado {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  nombre    String?
+  createdAt DateTime @default(now())
+}
+
 model Cliente {
   id              String   @id @default(cuid())
   nombre          String

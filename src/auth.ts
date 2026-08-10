@@ -49,6 +49,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     strategy: "jwt",
   },
   callbacks: {
+    async signIn({ user, account }) {
+      if (account?.provider === "google") {
+        if (!user.email) return false;
+        const autorizado = await prisma.correoAutorizado.findUnique({
+          where: { email: user.email.toLowerCase() },
+        });
+        return Boolean(autorizado);
+      }
+      return true;
+    },
     async jwt({ token, account }) {
       if (account?.provider === "google") {
         token.googleAccessToken = account.access_token;
