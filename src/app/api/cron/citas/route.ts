@@ -56,8 +56,21 @@ export async function GET(req: NextRequest) {
     data: { estado: "COMPLETADO" },
   });
 
+  const hace3Dias = new Date();
+  hace3Dias.setDate(hace3Dias.getDate() - 3);
+
+  const resultadoAbandonadas = await prisma.consulta.updateMany({
+    where: {
+      estado: "NUEVO",
+      createdAt: { lt: hace3Dias },
+      pagos: { none: {} },
+    },
+    data: { estado: "ABANDONADA" },
+  });
+
   return NextResponse.json({
     recordatoriosEnviados: citasHoy.length,
     citasCompletadasAutomaticamente: resultado.count,
+    consultasAbandonadas: resultadoAbandonadas.count,
   });
 }

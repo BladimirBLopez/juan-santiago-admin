@@ -69,6 +69,7 @@ enum ConsultaEstado {
   NUEVO
   EN_PROCESO
   COMPLETADO
+  ABANDONADA
 }
 
 model Consulta {

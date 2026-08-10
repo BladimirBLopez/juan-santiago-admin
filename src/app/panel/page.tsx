@@ -61,7 +61,9 @@ export default async function PanelPage({
 
   const consultas = await prisma.consulta.findMany({
     where: {
-      ...(estado ? { estado: estado as "NUEVO" | "EN_PROCESO" | "COMPLETADO" } : {}),
+      ...(estado
+        ? { estado: estado as "NUEVO" | "EN_PROCESO" | "COMPLETADO" }
+        : { estado: { not: "ABANDONADA" } }),
       ...(q
         ? { cliente: { nombre: { contains: q, mode: "insensitive" } } }
         : {}),
