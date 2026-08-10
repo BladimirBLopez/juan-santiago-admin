@@ -52,7 +52,7 @@ export default function FiltrosConsultas() {
         )}
       </div>
 
-      <div className="inline-flex p-0.5 rounded-lg bg-white dark:bg-[#131319] border border-[#e5e5eb] dark:border-[#2a2a3d] gap-0.5">
+      <div className="flex p-0.5 rounded-lg bg-white dark:bg-[#131319] border border-[#e5e5eb] dark:border-[#2a2a3d] gap-0.5 overflow-x-auto max-w-full">
         {ESTADOS.map((e) => {
           const activo = estadoActual === e.value;
           return (
