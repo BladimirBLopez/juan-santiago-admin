@@ -14,6 +14,7 @@ export default async function CalendarioPage() {
   await completarCitasVencidas();
 
   const consultas = await prisma.consulta.findMany({
+    where: { fechaCita: { not: null } },
     include: { cliente: true },
     orderBy: { createdAt: "desc" },
   });
