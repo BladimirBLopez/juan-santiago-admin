@@ -1,4 +1,5 @@
-import { NextResponse } from "next/server";
+path = "src/app/api/diagnostico/route.ts"
+content = '''import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { Resend } from "resend";
 
@@ -25,3 +26,9 @@ export async function GET() {
 
   return NextResponse.json(resultado);
 }
+'''
+
+with open(path, "w") as f:
+    f.write(content)
+
+print("OK")
