@@ -36,7 +36,7 @@ export default function FiltrosConsultas() {
           onKeyDown={(e) => {
             if (e.key === "Enter") aplicarFiltros(q, estadoActual);
           }}
-          placeholder="Buscar por nombre"
+          placeholder="Buscar por nombre o teléfono"
           className="w-full text-sm rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] text-[#0f0f14] dark:text-[#e8eaed] pl-9 pr-9 py-2.5 outline-none focus:border-[#6366f1]/50 transition placeholder:text-[#6b6b80]"
         />
         {q && (

@@ -66,7 +66,14 @@ export default async function PanelPage({
         ? { estado: estado as "NUEVO" | "EN_PROCESO" | "COMPLETADO" | "ABANDONADA" }
         : { estado: { not: "ABANDONADA" } }),
       ...(q
-        ? { cliente: { nombre: { contains: q, mode: "insensitive" } } }
+        ? {
+            cliente: {
+              OR: [
+                { nombre: { contains: q, mode: "insensitive" } },
+                { telefono: { contains: q } },
+              ],
+            },
+          }
         : {}),
     },
     include: { cliente: true, seguimientos: true, pagos: true },
