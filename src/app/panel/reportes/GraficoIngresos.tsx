@@ -40,7 +40,7 @@ export default function GraficoIngresos({ datos }: { datos: DatoMes[] }) {
               color: "#e8eaed",
             }}
             labelStyle={{ color: "#e8eaed" }}
-            formatter={(value: number) => [`Bs ${value}`, "Cobrado"]}
+            formatter={(value) => [`Bs ${value}`, "Cobrado"]}
           />
           <Line
             type="monotone"
