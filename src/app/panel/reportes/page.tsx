@@ -137,11 +137,11 @@ export default async function ReportesPage() {
       </div>
 
       <div className="rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4">
-        <h2 className="text-sm font-medium text-[#0f0f14] dark:text-[#e8eaed] mb-3">Conversión</h2>
+        <h2 className="text-sm font-medium text-[#0f0f14] dark:text-[#e8eaed] mb-3">Resultados</h2>
         <div className="space-y-3">
           <div>
             <div className="flex justify-between text-xs mb-1">
-              <span className="text-[#c4c9d4]">Consultas que iniciaron trabajo</span>
+              <span className="text-[#c4c9d4]">Personas que empezaron un trabajo</span>
               <span className="text-[#6b6b80]">{iniciados} de {totalConsultas} ({tasaInicio}%)</span>
             </div>
             <div className="h-1 rounded-full bg-[#2a2a3d] overflow-hidden">
@@ -150,7 +150,7 @@ export default async function ReportesPage() {
           </div>
           <div>
             <div className="flex justify-between text-xs mb-1">
-              <span className="text-[#c4c9d4]">Trabajos completados</span>
+              <span className="text-[#c4c9d4]">Trabajos terminados</span>
               <span className="text-[#6b6b80]">{completados} de {totalConsultas} ({tasaCompletado}%)</span>
             </div>
             <div className="h-1 rounded-full bg-[#2a2a3d] overflow-hidden">
