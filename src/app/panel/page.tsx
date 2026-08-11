@@ -1,6 +1,7 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { completarCitasVencidas } from "@/lib/completarCitasVencidas";
 import ProgresoTrabajo from "./ProgresoTrabajo";
 import FiltrosConsultas from "./FiltrosConsultas";
 import { MessageCircle, Calendar } from "lucide-react";
@@ -59,6 +60,8 @@ export default async function PanelPage({
   if (!session) redirect("/login");
 
   const { q, estado } = await searchParams;
+
+  await completarCitasVencidas();
 
   const consultas = await prisma.consulta.findMany({
     where: {
