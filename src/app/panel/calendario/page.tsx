@@ -28,6 +28,7 @@ export default async function CalendarioPage() {
     fechaInicio: c.fechaInicio,
     esCita: Boolean(c.fechaCita),
     horaCita: c.fechaCita,
+    estado: c.estado,
   }));
 
   return (

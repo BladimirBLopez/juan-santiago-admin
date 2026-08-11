@@ -13,6 +13,7 @@ type Evento = {
   fechaInicio: Date | null;
   esCita?: boolean;
   horaCita?: Date | null;
+  estado?: string;
 };
 
 function formatearHoraCita(fecha: Date) {
@@ -91,11 +92,18 @@ export default function CalendarioConsultas({ eventos }: { eventos: Evento[] }) 
                 <p className="text-sm font-medium text-[#0f0f14] dark:text-[#e8eaed]">
                   {e.nombre}
                 </p>
-                {e.esCita && e.horaCita && (
-                  <span className="text-[10px] font-semibold text-white bg-[#6366f1] px-2 py-0.5 rounded-full">
-                    📹 {formatearHoraCita(e.horaCita)}
-                  </span>
-                )}
+                <div className="flex items-center gap-1.5">
+                  {e.estado === "COMPLETADO" && (
+                    <span className="text-[10px] font-semibold text-[#16a34a] bg-[#dcfce7] px-2 py-0.5 rounded-full">
+                      ✓ Completado
+                    </span>
+                  )}
+                  {e.esCita && e.horaCita && (
+                    <span className="text-[10px] font-semibold text-white bg-[#6366f1] px-2 py-0.5 rounded-full">
+                      📹 {formatearHoraCita(e.horaCita)}
+                    </span>
+                  )}
+                </div>
               </div>
               <p className="text-xs text-[#6366f1] mt-0.5">
                 {SERVICIO_LABELS[e.servicio] ?? e.servicio}
