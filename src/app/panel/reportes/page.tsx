@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import RenovacionCard from "./RenovacionCard";
 import GraficoServicios from "./GraficoServicios";
+import GraficoIngresos from "./GraficoIngresos";
 
 const SERVICIO_COLOR: Record<string, string> = {
   AMARRE: "#e11d48",
@@ -46,6 +47,37 @@ export default async function ReportesPage() {
     prisma.consulta.count({ where: { fechaInicio: { not: null } } }),
     prisma.consulta.count({ where: { estado: "COMPLETADO" } }),
   ]);
+
+  const hace6Meses = new Date();
+  hace6Meses.setMonth(hace6Meses.getMonth() - 5);
+  hace6Meses.setDate(1);
+  hace6Meses.setHours(0, 0, 0, 0);
+
+  const pagosUltimos6Meses = await prisma.pago.findMany({
+    where: { estado: "APROBADO", createdAt: { gte: hace6Meses } },
+    select: { monto: true, createdAt: true },
+  });
+
+  const mesesArray = Array.from({ length: 6 }).map((_, i) => {
+    const d = new Date();
+    d.setDate(1);
+    d.setMonth(d.getMonth() - (5 - i));
+    return d;
+  });
+
+  const datosIngresos = mesesArray.map((d) => {
+    const total = pagosUltimos6Meses
+      .filter(
+        (p) =>
+          p.createdAt.getMonth() === d.getMonth() &&
+          p.createdAt.getFullYear() === d.getFullYear()
+      )
+      .reduce((sum, p) => sum + p.monto, 0);
+    return {
+      mes: d.toLocaleDateString("es-BO", { month: "short" }),
+      monto: total,
+    };
+  });
 
   const tasaInicio = totalConsultas > 0 ? Math.round((iniciados / totalConsultas) * 100) : 0;
   const tasaCompletado = totalConsultas > 0 ? Math.round((completados / totalConsultas) * 100) : 0;
@@ -126,6 +158,13 @@ export default async function ReportesPage() {
             </div>
           </div>
         </div>
+      </div>
+
+      <div className="rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4">
+        <h2 className="text-sm font-medium text-[#0f0f14] dark:text-[#e8eaed] mb-3">
+          Ingresos últimos 6 meses
+        </h2>
+        <GraficoIngresos datos={datosIngresos} />
       </div>
 
       <div className="rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] p-4">
