@@ -98,6 +98,11 @@ export default function CalendarioConsultas({ eventos }: { eventos: Evento[] }) 
                       ✓ Completado
                     </span>
                   )}
+                  {e.estado !== "COMPLETADO" && e.esCita && e.horaCita && new Date(e.horaCita) < new Date() && (
+                    <span className="text-[10px] font-semibold text-[#b45309] bg-[#fef3c7] px-2 py-0.5 rounded-full">
+                      ⏱ Vencida sin pago
+                    </span>
+                  )}
                   {e.esCita && e.horaCita && (
                     <span className="text-[10px] font-semibold text-white bg-[#6366f1] px-2 py-0.5 rounded-full">
                       📹 {formatearHoraCita(e.horaCita)}
