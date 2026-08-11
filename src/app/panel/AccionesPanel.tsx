@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Settings2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import EstadoSelector from "./EstadoSelector";
 import NotasConsulta from "./NotasConsulta";
@@ -38,7 +38,8 @@ export default function AccionesPanel({
         onClick={() => setAbierto(!abierto)}
         className="w-full flex items-center justify-center gap-1.5 text-xs font-medium text-[#818cf8] bg-[#6366f10f] border border-[#6366f1]/25 rounded-lg py-2 hover:bg-[#6366f11a] transition"
       >
-        Gestionar consulta
+        <Settings2 className="h-3.5 w-3.5" strokeWidth={2} />
+        Más opciones
         {abierto ? (
           <ChevronUp className="h-3.5 w-3.5" strokeWidth={2} />
         ) : (
@@ -63,20 +64,20 @@ export default function AccionesPanel({
                 servicio={servicio}
               />
 
-              <EditarConsulta
-                consultaId={consultaId}
-                nombreInicial={nombreCliente}
-                telefonoInicial={telefonoCliente}
-                situacionInicial={situacion}
-              />
+              <div className="grid grid-cols-3 gap-2">
+                <EditarConsulta
+                  consultaId={consultaId}
+                  nombreInicial={nombreCliente}
+                  telefonoInicial={telefonoCliente}
+                  situacionInicial={situacion}
+                />
 
-              <NotasConsulta consultaId={consultaId} notasIniciales={notas} />
+                <NotasConsulta consultaId={consultaId} notasIniciales={notas} />
 
-              <AgregarCita consultaId={consultaId} servicio={servicio} fechaCitaActual={fechaCita ?? null} />
-
-              <div className="pt-2 border-t border-[#e5e5eb] dark:border-[#2a2a3d]">
                 <AccionesConsulta consultaId={consultaId} />
               </div>
+
+              <AgregarCita consultaId={consultaId} servicio={servicio} fechaCitaActual={fechaCita ?? null} />
             </div>
           </motion.div>
         )}

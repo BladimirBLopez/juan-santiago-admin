@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { Trash2 } from "lucide-react";
 
 export default function AccionesConsulta({ consultaId }: { consultaId: string }) {
   const router = useRouter();
@@ -49,9 +50,10 @@ export default function AccionesConsulta({ consultaId }: { consultaId: string })
   return (
     <button
       onClick={() => setConfirmando(true)}
-      className="w-full flex items-center justify-center gap-1.5 rounded-lg border border-[#e8752c]/40 text-[#e8752c] text-xs font-medium py-2.5 hover:bg-[#e8752c0f] transition"
+      className="flex flex-col items-center justify-center gap-1.5 rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#17171f] py-3.5 hover:border-[#e8752c]/40 hover:bg-[#e8752c0a] transition"
     >
-      🗑️ Eliminar consulta
+      <Trash2 className="h-5 w-5 text-[#e8752c]" strokeWidth={2} />
+      <span className="text-xs font-medium text-[#0f0f14] dark:text-[#e8eaed]">Eliminar</span>
     </button>
   );
 }
