@@ -1,6 +1,19 @@
 import { Resend } from "resend";
+import { prisma } from "@/lib/prisma";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
+
+async function obtenerDestinatarios(): Promise<string[]> {
+  try {
+    const correos = await prisma.correoAutorizado.findMany({ select: { email: true } });
+    const lista = correos.map((c) => c.email);
+    if (lista.length > 0) return lista;
+  } catch (err) {
+    console.error("Error obteniendo correos autorizados:", err);
+  }
+  const fallback = process.env.NOTIFICACION_EMAIL;
+  return fallback ? [fallback] : [];
+}
 
 export async function notificarNuevoPago({
   nombreCliente,
@@ -11,13 +24,13 @@ export async function notificarNuevoPago({
   monto: number;
   comprobanteUrl: string;
 }) {
-  const destino = process.env.NOTIFICACION_EMAIL;
-  if (!destino) return;
+  const destinos = await obtenerDestinatarios();
+  if (destinos.length === 0) return;
 
   try {
     await resend.emails.send({
       from: "onboarding@resend.dev",
-      to: destino,
+      to: destinos,
       subject: `Nuevo pago pendiente: ${nombreCliente} (Bs ${monto})`,
       html: `
         <h2>Nuevo pago recibido</h2>
@@ -33,8 +46,8 @@ export async function notificarNuevoPago({
 }
 
 export async function notificarRecordatorioCitas(citas: { nombre: string; telefono: string | null; hora: string; servicio: string }[]) {
-  const destino = process.env.NOTIFICACION_EMAIL;
-  if (!destino || citas.length === 0) return;
+  const destinos = await obtenerDestinatarios();
+  if (destinos.length === 0 || citas.length === 0) return;
 
   const filas = citas
     .map((c) => {
@@ -48,7 +61,7 @@ export async function notificarRecordatorioCitas(citas: { nombre: string; telefo
   try {
     await resend.emails.send({
       from: "onboarding@resend.dev",
-      to: destino,
+      to: destinos,
       subject: `Recordatorio: ${citas.length} cita(s) hoy`,
       html: `
         <h2>Citas de hoy</h2>
@@ -72,8 +85,8 @@ export async function notificarNuevaCita({
   telefono: string | null;
   fechaCita: Date;
 }) {
-  const destino = process.env.NOTIFICACION_EMAIL;
-  if (!destino) return;
+  const destinos = await obtenerDestinatarios();
+  if (destinos.length === 0) return;
 
   const fechaFormateada = fechaCita.toLocaleString("es-BO", {
     dateStyle: "full",
@@ -84,7 +97,7 @@ export async function notificarNuevaCita({
   try {
     await resend.emails.send({
       from: "onboarding@resend.dev",
-      to: destino,
+      to: destinos,
       subject: `Nueva cita reservada: ${nombre} - ${fechaFormateada}`,
       html: `
         <h2>Nueva cita por videollamada reservada</h2>
@@ -112,13 +125,13 @@ export async function notificarNuevaConsulta({
   situacion: string;
   telefono: string | null;
 }) {
-  const destino = process.env.NOTIFICACION_EMAIL;
-  if (!destino) return;
+  const destinos = await obtenerDestinatarios();
+  if (destinos.length === 0) return;
 
   try {
     await resend.emails.send({
       from: "onboarding@resend.dev",
-      to: destino,
+      to: destinos,
       subject: `Nueva consulta: ${nombre} (${servicio})`,
       html: `
         <h2>Nueva consulta recibida</h2>
