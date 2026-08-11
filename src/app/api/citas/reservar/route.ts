@@ -76,40 +76,53 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const ocupada = await prisma.consulta.findFirst({
-      where: {
-        fechaCita: fechaCitaDate,
-        OR: [
-          { citaExpiraEn: { gt: new Date() } },
-          { pagos: { some: { estado: "APROBADO" } } },
-        ],
-      },
-    });
-
-    if (ocupada) {
-      return NextResponse.json(
-        { error: "Ese horario ya no esta disponible" },
-        { status: 409, headers: corsHeaders(req.headers.get("origin")) }
-      );
-    }
-
     const citaExpiraEn = new Date(Date.now() + MINUTOS_RESERVA * 60000);
 
-    const cliente = await prisma.cliente.create({
-      data: {
-        nombre: nombre.trim(),
-        telefono: telefono ? String(telefono).trim() : null,
-        consultas: {
-          create: {
-            servicio,
-            situacion: situacion ? String(situacion).trim() : "Cita por videollamada",
+    let cliente;
+    try {
+      cliente = await prisma.$transaction(async (tx) => {
+        const ocupada = await tx.consulta.findFirst({
+          where: {
             fechaCita: fechaCitaDate,
-            citaExpiraEn,
+            OR: [
+              { citaExpiraEn: { gt: new Date() } },
+              { pagos: { some: { estado: "APROBADO" } } },
+            ],
           },
-        },
-      },
-      include: { consultas: true },
-    });
+        });
+
+        if (ocupada) {
+          throw new Error("HORARIO_OCUPADO");
+        }
+
+        return tx.cliente.create({
+          data: {
+            nombre: nombre.trim(),
+            telefono: telefono ? String(telefono).trim() : null,
+            consultas: {
+              create: {
+                servicio,
+                situacion: situacion ? String(situacion).trim() : "Cita por videollamada",
+                fechaCita: fechaCitaDate,
+                citaExpiraEn,
+              },
+            },
+          },
+          include: { consultas: true },
+        });
+      }, { isolationLevel: "Serializable" });
+    } catch (err) {
+      const esConflicto =
+        (err instanceof Error && err.message === "HORARIO_OCUPADO") ||
+        (typeof err === "object" && err !== null && "code" in err && err.code === "P2034");
+      if (esConflicto) {
+        return NextResponse.json(
+          { error: "Ese horario ya no esta disponible" },
+          { status: 409, headers: corsHeaders(req.headers.get("origin")) }
+        );
+      }
+      throw err;
+    }
 
     const consulta = cliente.consultas[0];
 
