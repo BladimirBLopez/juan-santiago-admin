@@ -148,6 +148,12 @@ export default async function PanelPage({
                 {c.situacion}
               </p>
 
+              {(c.servicio === "CONSULTA_TAROT" || c.servicio === "CONSULTA_COCA") && !c.fechaCita && (
+                <div className="mt-2.5 inline-flex items-center gap-1.5 rounded-full bg-[#fef3c7] px-2.5 py-1 text-[11px] font-medium text-[#b45309]">
+                  📅 Pendiente de agendar cita
+                </div>
+              )}
+
               <div className="flex items-center gap-3 mt-3 text-xs text-[#a1a1aa]">
                 {c.cliente.telefono && (
                   <a
