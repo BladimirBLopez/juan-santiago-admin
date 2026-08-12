@@ -158,6 +158,7 @@ export async function POST(req: NextRequest) {
         consultaId: consulta.id,
         clienteId: cliente.id,
         citaExpiraEn: citaExpiraEn.toISOString(),
+        debugGoogleEventId: googleEventId,
       },
       { status: 201, headers: corsHeaders(req.headers.get("origin")) }
     );
