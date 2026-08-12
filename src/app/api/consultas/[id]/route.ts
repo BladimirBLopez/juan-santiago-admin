@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { eliminarEventoCalendario } from "@/lib/googleCalendar";
 
 const ESTADOS_VALIDOS = ["NUEVO", "EN_PROCESO", "COMPLETADO"];
 
@@ -129,6 +130,15 @@ export async function DELETE(
   }
 
   const { id } = await params;
+
+  const consultaAEliminar = await prisma.consulta.findUnique({
+    where: { id },
+    select: { googleEventId: true },
+  });
+
+  if (consultaAEliminar?.googleEventId) {
+    await eliminarEventoCalendario(consultaAEliminar.googleEventId);
+  }
 
   await prisma.consulta.delete({ where: { id } });
 

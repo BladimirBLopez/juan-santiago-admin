@@ -91,6 +91,7 @@ model Consulta {
   notas        String?
   fechaCita    DateTime?
   citaExpiraEn DateTime?
+  googleEventId String?
   createdAt    DateTime       @default(now())
   pagos        Pago[]
   seguimientos Seguimiento[]

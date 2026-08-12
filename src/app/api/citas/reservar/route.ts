@@ -134,11 +134,18 @@ export async function POST(req: NextRequest) {
       fechaCita: fechaCitaDate,
     });
 
-    await crearEventoCalendario({
+    const googleEventId = await crearEventoCalendario({
       titulo: `${servicio === "CONSULTA_TAROT" ? "Tarot" : "Hojas de Coca"} - ${cliente.nombre}`,
       descripcion: `Cliente: ${cliente.nombre}\nTeléfono: ${cliente.telefono ?? "no proporcionado"}`,
       inicio: fechaCitaDate,
     });
+
+    if (googleEventId) {
+      await prisma.consulta.update({
+        where: { id: consulta.id },
+        data: { googleEventId },
+      });
+    }
 
     return NextResponse.json(
       {
