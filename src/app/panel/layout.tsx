@@ -2,6 +2,7 @@ import { signOut } from "@/auth";
 import NavPanel from "./NavPanel";
 import ThemeToggle from "./ThemeToggle";
 import Notificaciones from "./Notificaciones";
+import BotonTutoriales from "./BotonTutoriales";
 
 export default function PanelLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -35,6 +36,7 @@ export default function PanelLayout({ children }: { children: React.ReactNode })
         <NavPanel />
       </header>
       {children}
+      <BotonTutoriales />
     </div>
   );
 }
