@@ -140,11 +140,16 @@ export async function POST(req: NextRequest) {
       inicio: fechaCitaDate,
     });
 
+    console.log("DEBUG_GOOGLE_EVENT_ID:", googleEventId);
+
     if (googleEventId) {
       await prisma.consulta.update({
         where: { id: consulta.id },
         data: { googleEventId },
       });
+      console.log("DEBUG_GUARDADO_OK");
+    } else {
+      console.log("DEBUG_NO_SE_GUARDO_PORQUE_ID_ES_NULL");
     }
 
     return NextResponse.json(
