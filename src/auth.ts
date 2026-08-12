@@ -63,6 +63,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account?.provider === "google") {
         token.googleAccessToken = account.access_token;
         token.googleRefreshToken = account.refresh_token;
+        if (account.refresh_token) {
+          await prisma.configuracion.upsert({
+            where: { clave: "google_refresh_token" },
+            update: { valor: account.refresh_token },
+            create: { clave: "google_refresh_token", valor: account.refresh_token },
+          });
+        }
       }
       return token;
     },

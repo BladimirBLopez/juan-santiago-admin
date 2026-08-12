@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { notificarNuevaCita } from "@/lib/email";
+import { crearEventoCalendario } from "@/lib/googleCalendar";
 
 const ALLOWED_ORIGINS = [
   "https://juansantiagoamarres.online",
@@ -131,6 +132,12 @@ export async function POST(req: NextRequest) {
       servicio,
       telefono: cliente.telefono,
       fechaCita: fechaCitaDate,
+    });
+
+    await crearEventoCalendario({
+      titulo: `${servicio === "CONSULTA_TAROT" ? "Tarot" : "Hojas de Coca"} - ${cliente.nombre}`,
+      descripcion: `Cliente: ${cliente.nombre}\nTeléfono: ${cliente.telefono ?? "no proporcionado"}`,
+      inicio: fechaCitaDate,
     });
 
     return NextResponse.json(
