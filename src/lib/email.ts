@@ -29,7 +29,7 @@ export async function notificarNuevoPago({
 
   try {
     await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: "Maestro Juan Santiago <notificaciones@juansantiagoamarres.online>",
       to: destinos,
       subject: `Nuevo pago pendiente: ${nombreCliente} (Bs ${monto})`,
       html: `
@@ -60,7 +60,7 @@ export async function notificarRecordatorioCitas(citas: { nombre: string; telefo
 
   try {
     await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: "Maestro Juan Santiago <notificaciones@juansantiagoamarres.online>",
       to: destinos,
       subject: `Recordatorio: ${citas.length} cita(s) hoy`,
       html: `
@@ -96,7 +96,7 @@ export async function notificarNuevaCita({
 
   try {
     await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: "Maestro Juan Santiago <notificaciones@juansantiagoamarres.online>",
       to: destinos,
       subject: `Nueva cita reservada: ${nombre} - ${fechaFormateada}`,
       html: `
@@ -130,7 +130,7 @@ export async function notificarNuevaConsulta({
 
   try {
     await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: "Maestro Juan Santiago <notificaciones@juansantiagoamarres.online>",
       to: destinos,
       subject: `Nueva consulta: ${nombre} (${servicio})`,
       html: `
