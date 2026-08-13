@@ -1,4 +1,4 @@
-import { Resend } from "resend";
+contenido = '''import { Resend } from "resend";
 import { prisma } from "@/lib/prisma";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -122,7 +122,7 @@ export async function notificarRecordatorioCitas(citas: { nombre: string; telefo
 
   const filas = citas
     .map((c) => {
-      const tel = (c.telefono ?? "").replace(/\D/g, "");
+      const tel = (c.telefono ?? "").replace(/\\D/g, "");
       const telConPrefijo = tel.startsWith("591") ? tel : `591${tel}`;
       const linkWa = `https://wa.me/${telConPrefijo}`;
       return `
@@ -236,3 +236,9 @@ export async function notificarNuevaConsulta({
     console.error("Error enviando email de notificación:", err);
   }
 }
+'''
+
+with open("src/lib/email.ts", "w") as f:
+    f.write(contenido)
+
+print("OK 6 -", len(contenido.splitlines()), "lineas escritas")
