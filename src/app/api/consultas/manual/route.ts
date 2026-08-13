@@ -28,26 +28,48 @@ export async function POST(req: NextRequest) {
 
   try {
     const body = await req.json();
-    const { clienteId, servicio, situacion, yaPagado } = body;
+    const { clienteId, nombre, telefono, servicio, situacion, yaPagado } = body;
 
-    if (!clienteId || typeof clienteId !== "string") {
-      return NextResponse.json({ error: "Cliente invalido" }, { status: 400 });
-    }
     if (!servicio || !(servicio in PRECIO_DEFECTO)) {
       return NextResponse.json({ error: "Servicio invalido" }, { status: 400 });
     }
 
-    const cliente = await prisma.cliente.findUnique({ where: { id: clienteId } });
-    if (!cliente) {
-      return NextResponse.json({ error: "Cliente no encontrado" }, { status: 404 });
+    let cliente;
+
+    if (clienteId && typeof clienteId === "string") {
+      // Se especifico un cliente existente puntual (ej. desde su perfil)
+      cliente = await prisma.cliente.findUnique({ where: { id: clienteId } });
+      if (!cliente) {
+        return NextResponse.json({ error: "Cliente no encontrado" }, { status: 404 });
+      }
+    } else {
+      // Alta manual: nombre + telefono
+      if (!nombre || typeof nombre !== "string" || nombre.trim().length < 2) {
+        return NextResponse.json({ error: "Nombre invalido" }, { status: 400 });
+      }
+
+      const telefonoLimpio = telefono ? String(telefono).replace(/\D/g, "") : null;
+
+      // Solo reutilizamos un cliente existente si coincide el TELEFONO (nunca por nombre)
+      if (telefonoLimpio) {
+        cliente = await prisma.cliente.findFirst({ where: { telefono: telefonoLimpio } });
+      }
+
+      if (!cliente) {
+        cliente = await prisma.cliente.create({
+          data: { nombre: nombre.trim(), telefono: telefonoLimpio },
+        });
+      }
     }
+
+    const clienteIdFinal = cliente.id;
 
     const precio = await prisma.precio.findUnique({ where: { servicio } });
     const monto = precio?.monto ?? PRECIO_DEFECTO[servicio];
 
     const consulta = await prisma.consulta.create({
       data: {
-        clienteId,
+        clienteId: clienteIdFinal,
         servicio,
         situacion: situacion?.trim() || "Agregado manualmente por el Maestro",
         estado: yaPagado ? "EN_PROCESO" : "NUEVO",

@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { completarCitasVencidas } from "@/lib/completarCitasVencidas";
+import NuevoClienteManual from "./NuevoClienteManual";
 import ProgresoTrabajo from "./ProgresoTrabajo";
 import FiltrosConsultas from "./FiltrosConsultas";
 import { MessageCircle, Calendar } from "lucide-react";
@@ -91,11 +92,14 @@ export default async function PanelPage({
         <h1 className="text-[22px] font-semibold tracking-tight text-[#18181b] dark:text-[#e8eaed]">
           Consultas
         </h1>
-        {nuevos > 0 && (
-          <span className="text-xs px-2.5 py-1 rounded-full bg-[#fff7ed] text-[#c2410c] font-medium">
-            {nuevos} nueva{nuevos > 1 ? "s" : ""}
-          </span>
-        )}
+        <div className="flex items-center gap-2">
+          {nuevos > 0 && (
+            <span className="text-xs px-2.5 py-1 rounded-full bg-[#fff7ed] text-[#c2410c] font-medium">
+              {nuevos} nueva{nuevos > 1 ? "s" : ""}
+            </span>
+          )}
+          <NuevoClienteManual />
+        </div>
       </div>
 
       <DashboardMetricas />
