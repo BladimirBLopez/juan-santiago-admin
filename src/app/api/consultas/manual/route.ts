@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { notificarNuevaConsulta } from "@/lib/email";
 
 const DIAS_POR_SERVICIO: Record<string, number> = {
   AMARRE: 21,
@@ -91,6 +92,13 @@ export async function POST(req: NextRequest) {
         },
       });
     }
+
+    await notificarNuevaConsulta({
+      nombre: cliente.nombre,
+      servicio,
+      situacion: consulta.situacion,
+      telefono: cliente.telefono,
+    });
 
     return NextResponse.json({ success: true, consultaId: consulta.id }, { status: 201 });
   } catch (err) {
