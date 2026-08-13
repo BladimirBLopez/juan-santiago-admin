@@ -67,14 +67,16 @@ export async function POST(req: NextRequest) {
     const precio = await prisma.precio.findUnique({ where: { servicio } });
     const monto = precio?.monto ?? PRECIO_DEFECTO[servicio];
 
+    const esConsulta = servicio === "CONSULTA_TAROT" || servicio === "CONSULTA_COCA";
+
     const consulta = await prisma.consulta.create({
       data: {
         clienteId: clienteIdFinal,
         servicio,
         situacion: situacion?.trim() || "Agregado manualmente por el Maestro",
-        estado: yaPagado ? "EN_PROCESO" : "NUEVO",
-        fechaInicio: yaPagado ? new Date() : null,
-        diasTrabajo: yaPagado ? DIAS_POR_SERVICIO[servicio] ?? null : null,
+        estado: yaPagado ? (esConsulta ? "COMPLETADO" : "EN_PROCESO") : "NUEVO",
+        fechaInicio: yaPagado && !esConsulta ? new Date() : null,
+        diasTrabajo: yaPagado && !esConsulta ? DIAS_POR_SERVICIO[servicio] ?? null : null,
       },
     });
 

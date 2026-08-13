@@ -5,7 +5,12 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { UserPlus, X } from "lucide-react";
 
-const SERVICIOS = [
+const CONSULTAS = [
+  { value: "CONSULTA_TAROT", label: "Consulta de Tarot" },
+  { value: "CONSULTA_COCA", label: "Consulta de Hojas de Coca" },
+];
+
+const TRABAJOS = [
   { value: "AMARRE", label: "Amarre de Amor" },
   { value: "ENDULZAMIENTO", label: "Endulzamiento" },
   { value: "RETORNO", label: "Retorno del Ser Amado" },
@@ -18,7 +23,7 @@ export default function NuevoClienteManual() {
   const [abierto, setAbierto] = useState(false);
   const [nombre, setNombre] = useState("");
   const [telefono, setTelefono] = useState("");
-  const [servicio, setServicio] = useState(SERVICIOS[0].value);
+  const [servicio, setServicio] = useState(CONSULTAS[0].value);
   const [situacion, setSituacion] = useState("");
   const [yaPagado, setYaPagado] = useState(false);
   const [enviando, setEnviando] = useState(false);
@@ -93,11 +98,20 @@ export default function NuevoClienteManual() {
           onChange={(e) => setServicio(e.target.value)}
           className="w-full rounded-md border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#0a0a0f] text-[#0f0f14] dark:text-[#e8eaed] text-sm px-3 py-2"
         >
-          {SERVICIOS.map((s) => (
-            <option key={s.value} value={s.value}>
-              {s.label}
-            </option>
-          ))}
+          <optgroup label="Consultas (primero siempre)">
+            {CONSULTAS.map((s) => (
+              <option key={s.value} value={s.value}>
+                {s.label}
+              </option>
+            ))}
+          </optgroup>
+          <optgroup label="Trabajos">
+            {TRABAJOS.map((s) => (
+              <option key={s.value} value={s.value}>
+                {s.label}
+              </option>
+            ))}
+          </optgroup>
         </select>
 
         <textarea
