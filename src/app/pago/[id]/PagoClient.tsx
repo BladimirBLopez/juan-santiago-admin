@@ -2,6 +2,10 @@
 
 import { useState, useEffect, use } from "react";
 import Tesseract from "tesseract.js";
+import { Cinzel, Inter } from "next/font/google";
+
+const cinzel = Cinzel({ subsets: ["latin"], weight: ["600", "700"] });
+const inter = Inter({ subsets: ["latin"] });
 
 const CLOUDINARY_CLOUD = "dkq95jus0";
 const CLOUDINARY_PRESET = "juan-santiago-comprobantes";
@@ -111,13 +115,18 @@ export default function PagoClient({ params, searchParams }: { params: Promise<{
 
   if (enviado) {
     return (
-      <main className="min-h-screen bg-[#0f1115] flex items-center justify-center px-6">
-        <div className="text-center">
-          <p className="text-2xl mb-2">✓</p>
-          <h1 className="text-lg font-semibold text-[#e8eaed]">
+      <main
+        className={`${inter.className} min-h-screen flex items-center justify-center px-6`}
+        style={{ background: "radial-gradient(circle at 50% 20%, #2a1a4a 0%, #1a0f30 35%, #1a0505 75%)" }}
+      >
+        <div className="text-center max-w-xs">
+          <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-[#c9a24b]/15 border border-[#c9a24b]/40">
+            <span className="text-2xl text-[#c9a24b]">✓</span>
+          </div>
+          <h1 className={`${cinzel.className} text-2xl text-[#f0d78c]`}>
             Comprobante recibido
           </h1>
-          <p className="text-sm text-[#9099a8] mt-2">
+          <p className="text-sm text-[#f5e6d3]/60 mt-3 leading-relaxed">
             El Maestro revisará tu pago y te confirmará por WhatsApp.
           </p>
         </div>
@@ -126,90 +135,99 @@ export default function PagoClient({ params, searchParams }: { params: Promise<{
   }
 
   return (
-    <main className="min-h-screen bg-[#0f1115] px-6 py-12">
+    <main
+      className={`${inter.className} min-h-screen px-5 py-14`}
+      style={{ background: "radial-gradient(circle at 50% 10%, #2a1a4a 0%, #1a0f30 35%, #1a0505 75%)" }}
+    >
       <div className="mx-auto max-w-sm">
-        <h1 className="text-xl font-semibold text-[#e8eaed] text-center mb-1">
+        <p className="text-xs text-center uppercase tracking-[0.3em] text-[#c9a24b] mb-2">
+          Maestro Juan Santiago
+        </p>
+        <h1 className={`${cinzel.className} text-2xl text-[#f0d78c] text-center mb-1`}>
           Confirmar tu pago
         </h1>
-        <p className="text-sm text-[#9099a8] text-center mb-6">
+        <p className="text-sm text-[#f5e6d3]/55 text-center mb-7">
           Escanea el QR para pagar, luego sube tu comprobante
         </p>
 
         <div className="mb-6 grid grid-cols-2 gap-3">
-          <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-3 text-center">
+          <div className="rounded-2xl border border-[#c9a24b]/25 border-t-4 border-t-[#c9a24b] bg-[#1a0a10]/70 backdrop-blur-md p-3 text-center shadow-[0_10px_30px_-8px_rgba(0,0,0,0.6)]">
             <img
               src="https://res.cloudinary.com/dkq95jus0/image/upload/qr-union"
               alt="QR Union"
               className="mx-auto rounded-lg w-full"
             />
-            <p className="text-xs text-[#9099a8] mt-2 font-medium">Unión / Transferencia</p>
+            <p className="text-xs text-[#f5e6d3]/70 mt-2 font-medium">Unión / Transferencia</p>
           </div>
-          <div className="rounded-xl border border-[#262b35] bg-[#161a22] p-3 text-center">
+          <div className="rounded-2xl border border-[#c9a24b]/25 border-t-4 border-t-[#c9a24b] bg-[#1a0a10]/70 backdrop-blur-md p-3 text-center shadow-[0_10px_30px_-8px_rgba(0,0,0,0.6)]">
             <img
               src="https://res.cloudinary.com/dkq95jus0/image/upload/qr-tigomoney"
               alt="QR Tigo Money"
               className="mx-auto rounded-lg w-full"
             />
-            <p className="text-xs text-[#9099a8] mt-2 font-medium">Tigo Money</p>
+            <p className="text-xs text-[#f5e6d3]/70 mt-2 font-medium">Tigo Money</p>
           </div>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4 rounded-2xl border border-[#c9a24b]/20 bg-[#1a0a10]/70 backdrop-blur-md p-5 shadow-[0_10px_30px_-8px_rgba(0,0,0,0.6)]"
+        >
           <div>
-            <label className="text-xs text-[#9099a8]">Monto pagado (Bs)</label>
+            <label className="text-[13px] font-medium text-[#f5e6d3]/50">Monto pagado (Bs)</label>
             <input
               type="number"
               required
               min="1"
               value={monto}
               onChange={(e) => setMonto(e.target.value)}
-              className="w-full mt-1 rounded-lg border border-[#262b35] bg-[#161a22] text-[#e8eaed] px-3 py-2.5 outline-none focus:border-[#c9a24b]/50"
+              className="w-full mt-1 rounded-lg border border-[#f5e6d3]/15 bg-white/5 text-[#f5ede0] px-3.5 py-2.5 text-[15px] outline-none placeholder:text-[#f5e6d3]/25 focus:border-[#c9a24b]"
               placeholder="Ej: 150"
             />
           </div>
 
           <div>
-            <label className="text-xs text-[#9099a8]">Foto del comprobante</label>
+            <label className="text-[13px] font-medium text-[#f5e6d3]/50">Foto del comprobante</label>
             <input
               type="file"
               accept="image/*"
               required
               onChange={(e) => setArchivo(e.target.files?.[0] ?? null)}
-              className="w-full mt-1 text-xs text-[#9099a8] file:mr-3 file:py-2 file:px-3 file:rounded-lg file:border-0 file:bg-[#c9a24b] file:text-[#0f1115] file:text-xs file:font-medium"
+              className="w-full mt-1 text-xs text-[#f5e6d3]/50 file:mr-3 file:py-2 file:px-3.5 file:rounded-lg file:border-0 file:bg-gradient-to-br file:from-[#e6c476] file:to-[#c9a24b] file:text-[#1a0505] file:text-xs file:font-semibold"
             />
           </div>
 
           {preview && (
-            <img src={preview} alt="Vista previa" className="rounded-lg max-h-48 mx-auto" />
+            <img src={preview} alt="Vista previa" className="rounded-lg max-h-48 mx-auto border border-[#c9a24b]/20" />
           )}
 
           {analizando && (
-            <p className="text-xs text-[#9099a8] text-center">Analizando comprobante...</p>
+            <p className="text-xs text-[#f5e6d3]/50 text-center">Analizando comprobante...</p>
           )}
 
           {!analizando && verificado === "si" && (
-            <p className="text-xs text-[#22c55e] text-center">
+            <p className="text-xs text-[#8ce0a0] text-center">
               ✓ Monto detectado coincide ({montoDetectado})
             </p>
           )}
 
           {!analizando && verificado === "no" && (
-            <p className="text-xs text-[#f97316] text-center">
+            <p className="text-xs text-[#f5c078] text-center">
               ⚠️ No pudimos confirmar el monto en la imagen (detectamos: {montoDetectado}). El Maestro lo revisará igual.
             </p>
           )}
 
-          <p className="text-[11px] text-[#5d6573] text-center leading-relaxed">
+          <p className="text-[11px] text-[#f5e6d3]/35 text-center leading-relaxed">
             Confirma que esta es una foto real de tu comprobante de pago.
             Subir una imagen falsa o incorrecta puede invalidar tu trabajo.
           </p>
 
-          {error && <p className="text-sm text-[#e8752c]">{error}</p>}
+          {error && <p className="text-sm text-[#ff8a70] text-center">{error}</p>}
 
           <button
             type="submit"
             disabled={enviando}
-            className="w-full rounded-lg bg-[#c9a24b] text-[#0f1115] font-medium text-sm py-3 disabled:opacity-50"
+            className="w-full rounded-lg bg-gradient-to-br from-[#e6c476] to-[#c9a24b] text-[#1a0505] font-semibold text-[15px] py-3 transition disabled:opacity-50"
           >
             {enviando ? "Enviando..." : "Enviar comprobante"}
           </button>
