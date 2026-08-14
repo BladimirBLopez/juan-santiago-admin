@@ -160,7 +160,7 @@ export default async function PanelPage({
 
               {c.estado === "ABANDONADA" && c.cliente.telefono && (
                 <a
-                  href={`https://wa.me/591${c.cliente.telefono.replace(/\D/g, "")}?text=${encodeURIComponent(
+                  href={`https://api.whatsapp.com/send?phone=591${c.cliente.telefono.replace(/\D/g, "")}&text=${encodeURIComponent(
                     `Hola ${c.cliente.nombre}, soy el Maestro Juan Santiago. Vi que no llegaste a confirmar tu consulta, ¿seguís interesado/a? Estoy para ayudarte. 🙏`
                   )}`}
                   target="_blank"
