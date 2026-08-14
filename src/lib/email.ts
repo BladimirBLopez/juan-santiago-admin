@@ -236,3 +236,64 @@ export async function notificarNuevaConsulta({
     console.error("Error enviando email de notificación:", err);
   }
 }
+
+export async function notificarSeguimientosPendientes({
+  avances,
+  testimonios,
+}: {
+  avances: { nombre: string; numeroWa: string; diaActual: number; diasTrabajo: number; consultaId: string }[];
+  testimonios: { nombre: string; numeroWa: string; consultaId: string }[];
+}) {
+  const destinos = await obtenerDestinatarios();
+  if (destinos.length === 0) return;
+  if (avances.length === 0 && testimonios.length === 0) return;
+
+  const filasAvances = avances
+    .map((a) => {
+      const mensaje = encodeURIComponent(
+        `Hola ${a.nombre}, soy el Maestro Juan Santiago. Te escribo para contarte que tu trabajo va en el día ${a.diaActual} de ${a.diasTrabajo}. Todo avanza según lo previsto. 🙏`
+      );
+      return `
+        <div style="padding:12px 0; border-bottom:1px solid #f0eee8;">
+          <div style="color:#1a0505; font-size:14px; font-weight:700;">${a.nombre}</div>
+          <div style="color:#8a8a95; font-size:12px; margin:2px 0 6px 0;">Día ${a.diaActual} de ${a.diasTrabajo}</div>
+          <a href="https://wa.me/${a.numeroWa}?text=${mensaje}" style="color:#1f9d55; font-size:12px; font-weight:700; text-decoration:none;">Enviar avance por WhatsApp →</a>
+        </div>`;
+    })
+    .join("");
+
+  const filasTestimonios = testimonios
+    .map((t) => {
+      const mensaje = encodeURIComponent(
+        `Hola ${t.nombre}, soy el Maestro Juan Santiago. Ya se cumplió el tiempo de tu trabajo espiritual. Me encantaría saber cómo te fue y si notaste resultados — tu testimonio ayuda a que más personas confíen en este camino. 🙏✨`
+      );
+      return `
+        <div style="padding:12px 0; border-bottom:1px solid #f0eee8;">
+          <div style="color:#1a0505; font-size:14px; font-weight:700;">${t.nombre}</div>
+          <div style="color:#8a8a95; font-size:12px; margin:2px 0 6px 0;">Trabajo completado, sin testimonio pedido</div>
+          <a href="https://wa.me/${t.numeroWa}?text=${mensaje}" style="color:#6366f1; font-size:12px; font-weight:700; text-decoration:none;">Pedir testimonio por WhatsApp →</a>
+        </div>`;
+    })
+    .join("");
+
+  const contenidoHtml = `
+    ${avances.length > 0 ? `<p style="margin:0 0 6px 0; color:#8a651f; font-size:12px; font-weight:700; text-transform:uppercase;">Avances por enviar (${avances.length})</p>${filasAvances}` : ""}
+    ${testimonios.length > 0 ? `<p style="margin:18px 0 6px 0; color:#8a651f; font-size:12px; font-weight:700; text-transform:uppercase;">Testimonios por pedir (${testimonios.length})</p>${filasTestimonios}` : ""}
+  `;
+
+  try {
+    await resend.emails.send({
+      from: "Maestro Juan Santiago <notificaciones@juansantiagoamarres.online>",
+      to: destinos,
+      subject: `Pendientes de seguimiento: ${avances.length + testimonios.length} cliente(s)`,
+      html: emailWrapper({
+        badge: "📋 Seguimiento pendiente",
+        titulo: "Clientes esperando tu mensaje",
+        contenidoHtml,
+        ctaTexto: "Ver todos los clientes",
+      }),
+    });
+  } catch (err) {
+    console.error("Error enviando email de seguimientos pendientes:", err);
+  }
+}

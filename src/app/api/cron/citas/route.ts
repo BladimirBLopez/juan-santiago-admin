@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { notificarRecordatorioCitas } from "@/lib/email";
+import { notificarRecordatorioCitas, notificarSeguimientosPendientes } from "@/lib/email";
 
 const SERVICIO_LABELS: Record<string, string> = {
   CONSULTA_TAROT: "Consulta de Tarot",
@@ -68,9 +68,74 @@ export async function GET(req: NextRequest) {
     data: { estado: "ABANDONADA" },
   });
 
+  const trabajosActivos = await prisma.consulta.findMany({
+    where: {
+      estado: "EN_PROCESO",
+      fechaInicio: { not: null },
+      diasTrabajo: { not: null },
+    },
+    include: { cliente: true, seguimientos: true },
+  });
+
+  const avancesPendientes: { nombre: string; numeroWa: string; diaActual: number; diasTrabajo: number; consultaId: string }[] = [];
+  const hace7Dias = new Date();
+  hace7Dias.setDate(hace7Dias.getDate() - 7);
+
+  for (const c of trabajosActivos) {
+    if (!c.cliente.telefono || !c.fechaInicio || !c.diasTrabajo) continue;
+    const diasTranscurridos = Math.floor((ahora.getTime() - new Date(c.fechaInicio).getTime()) / (1000 * 60 * 60 * 24));
+    const diaActual = Math.min(diasTranscurridos + 1, c.diasTrabajo);
+    const mitad = Math.floor(c.diasTrabajo / 2);
+    if (diaActual < mitad) continue;
+
+    const avancesEnviados = c.seguimientos.filter((s) => s.tipo === "RECORDATORIO_AVANCE");
+    const ultimoAvance = avancesEnviados.sort((a, b) => (b.fechaEnvio?.getTime() ?? 0) - (a.fechaEnvio?.getTime() ?? 0))[0];
+    if (ultimoAvance && ultimoAvance.fechaEnvio && ultimoAvance.fechaEnvio > hace7Dias) continue;
+
+    const telefonoLimpio = c.cliente.telefono.replace(/\D/g, "");
+    avancesPendientes.push({
+      nombre: c.cliente.nombre,
+      numeroWa: `591${telefonoLimpio}`,
+      diaActual,
+      diasTrabajo: c.diasTrabajo,
+      consultaId: c.id,
+    });
+  }
+
+  const trabajosCompletadosSinTestimonio = await prisma.consulta.findMany({
+    where: {
+      estado: "COMPLETADO",
+      diasTrabajo: { not: null },
+    },
+    include: { cliente: true, seguimientos: true },
+  });
+
+  const testimoniosPendientes: { nombre: string; numeroWa: string; consultaId: string }[] = [];
+  for (const c of trabajosCompletadosSinTestimonio) {
+    if (!c.cliente.telefono) continue;
+    const yaPidio = c.seguimientos.some((s) => s.tipo === "TESTIMONIO");
+    if (yaPidio) continue;
+
+    const telefonoLimpio = c.cliente.telefono.replace(/\D/g, "");
+    testimoniosPendientes.push({
+      nombre: c.cliente.nombre,
+      numeroWa: `591${telefonoLimpio}`,
+      consultaId: c.id,
+    });
+  }
+
+  if (avancesPendientes.length > 0 || testimoniosPendientes.length > 0) {
+    await notificarSeguimientosPendientes({
+      avances: avancesPendientes,
+      testimonios: testimoniosPendientes,
+    });
+  }
+
   return NextResponse.json({
     recordatoriosEnviados: citasHoy.length,
     citasCompletadasAutomaticamente: resultado.count,
     consultasAbandonadas: resultadoAbandonadas.count,
+    avancesPendientes: avancesPendientes.length,
+    testimoniosPendientes: testimoniosPendientes.length,
   });
 }
