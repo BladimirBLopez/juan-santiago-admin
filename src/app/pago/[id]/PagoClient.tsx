@@ -9,6 +9,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 const CLOUDINARY_CLOUD = "dkq95jus0";
 const CLOUDINARY_PRESET = "juan-santiago-comprobantes";
+const NUMERO_MAESTRO = "59175928656";
+const MINUTOS_AVISO = 20;
 
 async function descargarImagen(url: string, nombreArchivo: string) {
   try {
@@ -39,6 +41,12 @@ export default function PagoClient({ params, searchParams }: { params: Promise<{
   const [analizando, setAnalizando] = useState(false);
   const [montoDetectado, setMontoDetectado] = useState<string | null>(null);
   const [verificado, setVerificado] = useState<"si" | "no" | null>(null);
+  const [mostrarAvisoAyuda, setMostrarAvisoAyuda] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setMostrarAvisoAyuda(true), MINUTOS_AVISO * 60000);
+    return () => clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     if (!archivo) {
@@ -273,6 +281,24 @@ export default function PagoClient({ params, searchParams }: { params: Promise<{
             {enviando ? "Enviando..." : "Enviar comprobante"}
           </button>
         </form>
+
+        {mostrarAvisoAyuda && (
+          <div className="mt-4 rounded-2xl border border-[#c9a24b]/25 bg-[#1a0a10]/70 backdrop-blur-md p-4 text-center">
+            <p className="text-sm text-[#f5e6d3]/70 mb-3">
+              ¿Tenés dudas o problemas para pagar? Escribile directo al Maestro.
+            </p>
+            <a
+              href={`https://api.whatsapp.com/send?phone=${NUMERO_MAESTRO}&text=${encodeURIComponent(
+                "Hola Maestro Juan Santiago, tengo dudas para completar el pago de mi consulta."
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-2 rounded-lg bg-[#22c55e] text-white text-sm font-semibold py-2.5 px-5"
+            >
+              💬 Escribir al Maestro
+            </a>
+          </div>
+        )}
       </div>
     </main>
   );
