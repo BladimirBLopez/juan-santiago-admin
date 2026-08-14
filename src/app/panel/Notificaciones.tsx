@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { Bell } from "lucide-react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
@@ -18,6 +19,11 @@ export default function Notificaciones() {
   const [notificaciones, setNotificaciones] = useState<Notificacion[]>([]);
   const [cargando, setCargando] = useState(false);
   const [pendientes, setPendientes] = useState(0);
+  const [montado, setMontado] = useState(false);
+
+  useEffect(() => {
+    setMontado(true);
+  }, []);
 
   useEffect(() => {
     fetch("/api/notificaciones")
@@ -52,7 +58,7 @@ export default function Notificaciones() {
         )}
       </button>
 
-      {abierto && (
+      {abierto && montado && createPortal(
         <>
           <div
             className="fixed inset-0 z-40 bg-black/20"
@@ -97,7 +103,8 @@ export default function Notificaciones() {
               </p>
             )}
           </div>
-        </>
+        </>,
+        document.body
       )}
     </div>
   );
