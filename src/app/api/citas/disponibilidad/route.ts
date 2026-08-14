@@ -20,7 +20,10 @@ export async function OPTIONS(req: NextRequest) {
 }
 
 const DURACION_MIN = 30;
+const INTERVALO_SLOTS_MIN = 45;
 const OFFSET_BOLIVIA_HORAS = 4;
+const HORA_INICIO_ATENCION = 9;
+const HORA_FIN_ATENCION = 20;
 
 export async function GET(req: NextRequest) {
   try {
@@ -57,10 +60,13 @@ export async function GET(req: NextRequest) {
     let cursor = new Date(inicioDia);
 
     while (cursor < finDia) {
-      if (cursor > ahora && !ocupadasSet.has(cursor.toISOString())) {
+      const horaBolivia = (cursor.getUTCHours() - OFFSET_BOLIVIA_HORAS + 24) % 24;
+      const dentroDeHorario = horaBolivia >= HORA_INICIO_ATENCION && horaBolivia < HORA_FIN_ATENCION;
+
+      if (dentroDeHorario && cursor > ahora && !ocupadasSet.has(cursor.toISOString())) {
         slots.push(cursor.toISOString());
       }
-      cursor = new Date(cursor.getTime() + DURACION_MIN * 60000);
+      cursor = new Date(cursor.getTime() + INTERVALO_SLOTS_MIN * 60000);
     }
 
     return NextResponse.json(
