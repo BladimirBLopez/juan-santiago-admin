@@ -90,6 +90,12 @@ export default function Notificaciones() {
                   </p>
                 </Link>
               ))}
+
+            {!cargando && (
+              <p className="p-3 text-[10px] text-[#9099a8] bg-[#fafafa] dark:bg-[#0d0d12]">
+                El número baja cuando cambia el estado de la consulta o aprueba/rechaza el pago, no solo con mirar aquí.
+              </p>
+            )}
           </div>
         </>
       )}
