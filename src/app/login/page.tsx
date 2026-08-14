@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -10,6 +11,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [mostrarPassword, setMostrarPassword] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -62,13 +64,23 @@ export default function LoginPage() {
 
         <div>
           <label className="text-xs text-[#9099a8]">Contraseña</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="w-full mt-1 rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-[#fafafa] dark:bg-[#0a0a0f] text-[#0f0f14] dark:text-[#e8eaed] px-3 py-2 outline-none focus:border-[#6366f1]/50"
-            required
-          />
+          <div className="relative mt-1">
+            <input
+              type={mostrarPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full rounded-lg border border-[#e5e5eb] dark:border-[#2a2a3d] bg-[#fafafa] dark:bg-[#0a0a0f] text-[#0f0f14] dark:text-[#e8eaed] px-3 py-2 pr-10 outline-none focus:border-[#6366f1]/50"
+              required
+            />
+            <button
+              type="button"
+              onClick={() => setMostrarPassword(!mostrarPassword)}
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#9099a8] hover:text-[#6366f1] transition"
+              tabIndex={-1}
+            >
+              {mostrarPassword ? <EyeOff className="h-4 w-4" strokeWidth={2} /> : <Eye className="h-4 w-4" strokeWidth={2} />}
+            </button>
+          </div>
         </div>
 
         {error && <p className="text-sm text-[#f97316]">{error}</p>}

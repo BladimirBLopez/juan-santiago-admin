@@ -2,6 +2,39 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
+import { Eye, EyeOff } from "lucide-react";
+
+function CampoPassword({
+  value,
+  onChange,
+  placeholder,
+}: {
+  value: string;
+  onChange: (v: string) => void;
+  placeholder: string;
+}) {
+  const [visible, setVisible] = useState(false);
+
+  return (
+    <div className="relative">
+      <input
+        type={visible ? "text" : "password"}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        placeholder={placeholder}
+        className="w-full text-sm rounded-lg border border-[#e4e4e7] dark:border-[#2a2a3d] bg-[#fafafa] dark:bg-[#0a0a0f] text-[#18181b] dark:text-[#e8eaed] px-3 py-2 pr-10 outline-none focus:border-[#6366f1]/50"
+      />
+      <button
+        type="button"
+        onClick={() => setVisible(!visible)}
+        className="absolute right-2.5 top-1/2 -translate-y-1/2 text-[#9099a8] hover:text-[#6366f1] transition"
+        tabIndex={-1}
+      >
+        {visible ? <EyeOff className="h-4 w-4" strokeWidth={2} /> : <Eye className="h-4 w-4" strokeWidth={2} />}
+      </button>
+    </div>
+  );
+}
 
 export default function CambiarPassword() {
   const [passwordActual, setPasswordActual] = useState("");
@@ -44,27 +77,9 @@ export default function CambiarPassword() {
       </p>
 
       <div className="space-y-2.5">
-        <input
-          type="password"
-          value={passwordActual}
-          onChange={(e) => setPasswordActual(e.target.value)}
-          placeholder="Contraseña actual"
-          className="w-full text-sm rounded-lg border border-[#e4e4e7] dark:border-[#2a2a3d] bg-[#fafafa] dark:bg-[#0a0a0f] text-[#18181b] dark:text-[#e8eaed] px-3 py-2 outline-none focus:border-[#6366f1]/50"
-        />
-        <input
-          type="password"
-          value={passwordNueva}
-          onChange={(e) => setPasswordNueva(e.target.value)}
-          placeholder="Nueva contraseña"
-          className="w-full text-sm rounded-lg border border-[#e4e4e7] dark:border-[#2a2a3d] bg-[#fafafa] dark:bg-[#0a0a0f] text-[#18181b] dark:text-[#e8eaed] px-3 py-2 outline-none focus:border-[#6366f1]/50"
-        />
-        <input
-          type="password"
-          value={passwordConfirmar}
-          onChange={(e) => setPasswordConfirmar(e.target.value)}
-          placeholder="Confirmar nueva contraseña"
-          className="w-full text-sm rounded-lg border border-[#e4e4e7] dark:border-[#2a2a3d] bg-[#fafafa] dark:bg-[#0a0a0f] text-[#18181b] dark:text-[#e8eaed] px-3 py-2 outline-none focus:border-[#6366f1]/50"
-        />
+        <CampoPassword value={passwordActual} onChange={setPasswordActual} placeholder="Contraseña actual" />
+        <CampoPassword value={passwordNueva} onChange={setPasswordNueva} placeholder="Nueva contraseña" />
+        <CampoPassword value={passwordConfirmar} onChange={setPasswordConfirmar} placeholder="Confirmar nueva contraseña" />
       </div>
 
       <button
