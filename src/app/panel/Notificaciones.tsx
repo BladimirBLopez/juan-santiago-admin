@@ -55,10 +55,10 @@ export default function Notificaciones() {
       {abierto && (
         <>
           <div
-            className="fixed inset-0 z-10 bg-black/20"
+            className="fixed inset-0 z-40 bg-black/20"
             onClick={() => setAbierto(false)}
           />
-          <div className="fixed right-3 top-16 z-20 w-[min(85vw,300px)] max-h-80 overflow-y-auto rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] shadow-xl">
+          <div className="fixed right-3 top-16 z-50 w-[min(85vw,300px)] max-h-80 overflow-y-auto rounded-xl border border-[#e5e5eb] dark:border-[#2a2a3d] bg-white dark:bg-[#131319] shadow-xl">
             <div className="p-3 border-b border-[#e5e5eb] dark:border-[#2a2a3d]">
               <p className="text-xs font-medium text-[#0f0f14] dark:text-[#e8eaed]">
                 Últimos 7 días
