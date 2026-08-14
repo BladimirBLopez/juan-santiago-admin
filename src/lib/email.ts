@@ -297,3 +297,44 @@ export async function notificarSeguimientosPendientes({
     console.error("Error enviando email de seguimientos pendientes:", err);
   }
 }
+
+export async function notificarResumenSemanal({
+  ingresosSemana,
+  consultasNuevas,
+  trabajosCompletadosTotal,
+  servicioMasPedido,
+}: {
+  ingresosSemana: number;
+  consultasNuevas: number;
+  trabajosCompletadosTotal: number;
+  servicioMasPedido: string | null;
+}) {
+  const destinos = await obtenerDestinatarios();
+  if (destinos.length === 0) return;
+
+  const contenidoHtml = `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border-collapse:collapse;">
+      ${filaTabla("Cobrado esta semana", `Bs ${ingresosSemana}`)}
+      ${filaTabla("Consultas nuevas", String(consultasNuevas))}
+      ${filaTabla("Trabajos completados (total)", String(trabajosCompletadosTotal))}
+      ${servicioMasPedido ? filaTabla("Más pedido esta semana", servicioMasPedido) : ""}
+    </table>
+  `;
+
+  try {
+    await resend.emails.send({
+      from: "Maestro Juan Santiago <notificaciones@juansantiagoamarres.online>",
+      to: destinos,
+      subject: `Resumen semanal: Bs ${ingresosSemana} cobrados, ${consultasNuevas} consultas nuevas`,
+      html: emailWrapper({
+        badge: "📊 Resumen semanal",
+        titulo: "Cómo fue tu semana",
+        contenidoHtml,
+        ctaTexto: "Ver reportes completos",
+        ctaUrl: "https://juan-santiago-admin.vercel.app/panel/reportes",
+      }),
+    });
+  } catch (err) {
+    console.error("Error enviando resumen semanal:", err);
+  }
+}

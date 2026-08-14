@@ -1,11 +1,18 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { notificarRecordatorioCitas, notificarSeguimientosPendientes } from "@/lib/email";
+import { notificarRecordatorioCitas, notificarSeguimientosPendientes, notificarResumenSemanal } from "@/lib/email";
 
 const SERVICIO_LABELS: Record<string, string> = {
   CONSULTA_TAROT: "Consulta de Tarot",
   CONSULTA_COCA: "Consulta de Hojas de Coca",
+  AMARRE: "Amarre de Amor",
+  ENDULZAMIENTO: "Endulzamiento",
+  RETORNO: "Retorno del Ser Amado",
+  ALEJAMIENTO: "Alejamiento de Terceros",
+  UNION_PAREJA: "Unión de Parejas",
 };
+
+const OFFSET_BOLIVIA_HORAS_MS = 4 * 60 * 60000;
 
 export async function GET(req: NextRequest) {
   const authHeader = req.headers.get("authorization");
@@ -131,11 +138,47 @@ export async function GET(req: NextRequest) {
     });
   }
 
+  const diaSemanaBolivia = new Date(ahora.getTime() - OFFSET_BOLIVIA_HORAS_MS).getUTCDay();
+  let resumenEnviado = false;
+
+  if (diaSemanaBolivia === 1) {
+    const hace7Dias2 = new Date();
+    hace7Dias2.setDate(hace7Dias2.getDate() - 7);
+
+    const [pagosSemana, consultasSemana, trabajosCompletadosTotal, serviciosSemana] = await Promise.all([
+      prisma.pago.findMany({
+        where: { estado: "APROBADO", createdAt: { gte: hace7Dias2 } },
+        select: { monto: true },
+      }),
+      prisma.consulta.count({ where: { createdAt: { gte: hace7Dias2 } } }),
+      prisma.consulta.count({ where: { estado: "COMPLETADO" } }),
+      prisma.consulta.groupBy({
+        by: ["servicio"],
+        where: { createdAt: { gte: hace7Dias2 } },
+        _count: { servicio: true },
+        orderBy: { _count: { servicio: "desc" } },
+        take: 1,
+      }),
+    ]);
+
+    const ingresosSemana = pagosSemana.reduce((sum, p) => sum + p.monto, 0);
+    const servicioTop = serviciosSemana[0]?.servicio ?? null;
+
+    await notificarResumenSemanal({
+      ingresosSemana,
+      consultasNuevas: consultasSemana,
+      trabajosCompletadosTotal,
+      servicioMasPedido: servicioTop ? SERVICIO_LABELS[servicioTop] ?? servicioTop : null,
+    });
+    resumenEnviado = true;
+  }
+
   return NextResponse.json({
     recordatoriosEnviados: citasHoy.length,
     citasCompletadasAutomaticamente: resultado.count,
     consultasAbandonadas: resultadoAbandonadas.count,
     avancesPendientes: avancesPendientes.length,
     testimoniosPendientes: testimoniosPendientes.length,
+    resumenSemanalEnviado: resumenEnviado,
   });
 }
